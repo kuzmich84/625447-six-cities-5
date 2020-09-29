@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Кучуков](https://up.htmlacademy.ru/react/5/user/625447).
-* Наставник: `Неизвестно`.
+* Наставник: [Владимир Федин](https://htmlacademy.ru/profile/id1056177).
 
 ---
 
