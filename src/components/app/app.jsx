@@ -1,7 +1,7 @@
 import React from "react";
 import Main from "../main/main";
 import propTypes from "prop-types";
-import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Login from "../login/login";
 import Favorites from "../favorites/favorites";
 import Room from "../room/room";
