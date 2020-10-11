@@ -2,6 +2,7 @@ import React from "react";
 import propTypes from "prop-types";
 import ListCards from "../listCards/listCards";
 
+
 const Main = (props) => {
   const {placesCount, offers} = props;
   return (

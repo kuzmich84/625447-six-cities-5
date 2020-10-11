@@ -1,20 +1,22 @@
 import React from "react";
-import propTypes from "prop-types";
+import offerPropTypes from "../../customPropTypes/customPropTypes";
+import {transferRatingToPercent} from "../../utils/utils";
 
 const Card = (props) => {
-  const {title, images, price, type, markOfPremium} = props;
+  const {offer, handleHover} = props;
+  const {title, images, price, type, isPremium, isFavorite, rating} = offer;
 
-  const isMarkOfPremium = () => {
-    if (markOfPremium) {
+  const isisPremium = () => {
+    if (isPremium) {
       return (<div className="place-card__mark">
         <span>Premium</span>
       </div>);
     } else {
-      return ``;
+      return null;
     }
   };
-  return (<article className="cities__place-card place-card">
-    {isMarkOfPremium()}
+  return (<article className="cities__place-card place-card" onMouseOver={() => handleHover(offer)}>
+    {isisPremium()}
     <div className="cities__image-wrapper place-card__image-wrapper">
       <a href="#">
         <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image"/>
@@ -26,7 +28,9 @@ const Card = (props) => {
           <b className="place-card__price-value">&euro;{price}</b>
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
-        <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+        <button
+          className={`place-card__bookmark-button ${isFavorite ? `place-card__bookmark-button--active` : ``} button place-card__bookmark-button button`}
+          type="button">
           <svg className="place-card__bookmark-icon" width="18" height="19">
             <use xlinkHref="#icon-bookmark"/>
           </svg>
@@ -35,7 +39,7 @@ const Card = (props) => {
       </div>
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
-          <span style={{width: `80%`}}/>
+          <span style={{width: `${transferRatingToPercent(rating)}%`}}/>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>
@@ -48,13 +52,6 @@ const Card = (props) => {
 
 };
 
-Card.propTypes = {
-  title: propTypes.string,
-  images: propTypes.array,
-  price: propTypes.number,
-  type: propTypes.string,
-  markOfPremium: propTypes.bool,
-  isMarkOfPremium: propTypes.func
-};
+Card.propTypes = offerPropTypes;
 
 export default Card;

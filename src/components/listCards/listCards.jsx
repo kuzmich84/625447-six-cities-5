@@ -7,8 +7,15 @@ class ListCards extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      id: 1
+      offer: {},
     };
+    this.handleHover = this.handleHover.bind(this);
+  }
+
+  handleHover(offer) {
+    this.setState({
+      offer,
+    });
   }
 
 
@@ -16,13 +23,13 @@ class ListCards extends PureComponent {
     const {offers} = this.props;
 
     return offers.map((offer) => {
-      return <Card offer={offer} key={offer.id}/>;
+      return <Card offer={offer} key={offer.id} handleHover={this.handleHover}/>;
     });
   }
 }
 
 ListCards.propTypes = {
-  offers: PropTypes.array.isRequired
+  offers: PropTypes.array.isRequired,
 };
 
 export default ListCards;

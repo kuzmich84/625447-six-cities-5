@@ -5,7 +5,7 @@ import {offers} from "./mocks/offers";
 import {reviews} from "./mocks/reviews";
 
 
-const placesCount = 320;
+const placesCount = offers.length;
 
 const init = () => {
   ReactDOM.render(
