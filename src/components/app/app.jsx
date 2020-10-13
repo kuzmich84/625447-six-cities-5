@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Login from "../login/login";
 import Favorites from "../favorites/favorites";
 import Room from "../room/room";
-
+import {offersPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
 
 const App = (props) => {
   const {placesCount, offers, reviews} = props;
@@ -19,11 +19,12 @@ const App = (props) => {
           <Login/>
         </Route>
         <Route exact path="/favorites">
-          <Favorites/>
+          <Favorites offers={offers}/>
         </Route>
-        <Route exact path="/offer/:id">
-          <Room offer={offers[0]} reviews={reviews} offers={offers}/>
-        </Route>
+        <Route exact path="/offer/:id" render={({match}) => {
+          const {id} = match.params;
+          return <Room offerId={id} reviews={reviews} offers={offers}/>;
+        }}/>
       </Switch>
     </Router>
   );
@@ -31,8 +32,8 @@ const App = (props) => {
 
 App.propTypes = {
   placesCount: propTypes.number.isRequired,
-  offers: propTypes.array.isRequired,
-  reviews: propTypes.array.isRequired,
 };
+App.propTypes = offersPropTypes;
+App.propTypes = reviewsPropTypes;
 
 export default App;

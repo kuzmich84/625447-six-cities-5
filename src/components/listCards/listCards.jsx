@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import Card from "../card/card";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 
 class ListCards extends PureComponent {
@@ -9,10 +10,10 @@ class ListCards extends PureComponent {
     this.state = {
       offer: {},
     };
-    this.handleHover = this.handleHover.bind(this);
+    this.handleHoverCard = this.handleHoverCard.bind(this);
   }
 
-  handleHover(offer) {
+  handleHoverCard(offer) {
     this.setState({
       offer,
     });
@@ -23,7 +24,7 @@ class ListCards extends PureComponent {
     const {offers} = this.props;
 
     return offers.map((offer) => {
-      return <Card offer={offer} key={offer.id} handleHover={this.handleHover}/>;
+      return <Card offer={offer} key={offer.id} handleHoverCard={this.handleHoverCard}/>;
     });
   }
 }

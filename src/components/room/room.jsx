@@ -1,13 +1,14 @@
 import React from "react";
-import offerPropTypes from "../../customPropTypes/customPropTypes";
+import {offerPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent, setDateToString, getRandomNumber} from "../../utils/utils";
 
 
 const Room = (props) => {
-  const {offer, reviews, offers} = props;
-  const {title, images, isPremium, rating, type, bedrooms, adults, price, insideList, owner, isFavorite, description} = offer;
+  const {reviews, offers, offerId} = props;
+  const {title, images, isPremium, rating, type, bedrooms, adults, price, insideList, owner, isFavorite, description, id} = offers.find((offer) => offer.id === parseInt(offerId, 10));
   const {avatar, name, isPro} = owner;
   const newReviews = reviews.slice(0, getRandomNumber(0, reviews.length));
+
   return (
     <div className="page">
       <header className="header">
@@ -38,7 +39,7 @@ const Room = (props) => {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {images.map((image, i) => {
-                return (<div className="property__image-wrapper" key={offer.id + i}>
+                return (<div className="property__image-wrapper" key={id + i}>
                   <img className="property__image" src={image} alt="Photo studio"/>
                 </div>);
               })}
@@ -53,6 +54,7 @@ const Room = (props) => {
                 : null}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
+
                   {title}
                 </h1>
                 <button
@@ -201,10 +203,10 @@ const Room = (props) => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {offers.slice(1, offers.length).map((item)=>{
+              {offers.slice(1, offers.length).map((item) => {
                 return (<article className="near-places__card place-card" key={item.id}>
                   <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href="#">
+                    <a href={`/offer/${item.id}`}>
                       <img className="place-card__image" src={item.images[0]} width="260" height="200" alt="Place image"/>
                     </a>
                   </div>
@@ -228,7 +230,7 @@ const Room = (props) => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">{item.title}</a>
+                      <a href={`/offer/${item.id}`}>{item.title}</a>
                     </h2>
                     <p className="place-card__type">{item.type}</p>
                   </div>
@@ -243,5 +245,6 @@ const Room = (props) => {
 };
 
 Room.propTypes = offerPropTypes;
+Room.propTypes = reviewsPropTypes;
 
 export default Room;

@@ -2,16 +2,33 @@ import propTypes from "prop-types";
 
 const offerPropTypes = {
   offer: propTypes.shape({
+    id: propTypes.number.isRequired,
+    city: propTypes.string.isRequired,
     title: propTypes.string.isRequired,
     images: propTypes.arrayOf(propTypes.string).isRequired,
+    smallImages: propTypes.arrayOf(propTypes.string).isRequired,
     price: propTypes.number.isRequired,
     type: propTypes.string.isRequired,
+    rating: propTypes.number.isRequired,
     isPremium: propTypes.bool,
     isFavorite: propTypes.bool,
-    isisPremium: propTypes.func,
-    rating: propTypes.number.isRequired,
+    bedrooms: propTypes.number.isRequired,
+    adults: propTypes.number.isRequired,
+    insideList: propTypes.arrayOf(propTypes.string).isRequired,
+    owner: propTypes.shape({
+      avatar: propTypes.string,
+      name: propTypes.string.isRequired,
+      isPro: propTypes.bool.isRequired
+    }),
+    description: propTypes.arrayOf(propTypes.string).isRequired,
   }),
-  handleHover: propTypes.func,
+  handleHoverCard: propTypes.func,
 };
 
-export default offerPropTypes;
+const offersPropTypes = {
+  offers: propTypes.array.isRequired
+};
+const reviewsPropTypes = {reviews: propTypes.array.isRequired};
+
+
+export  {offerPropTypes, offersPropTypes, reviewsPropTypes};

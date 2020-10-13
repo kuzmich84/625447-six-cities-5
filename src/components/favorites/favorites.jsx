@@ -1,6 +1,9 @@
 import React from 'react';
+import propTypes from "prop-types";
+import {offersPropTypes} from "../../customPropTypes/customPropTypes";
 
-const Favorites = () => {
+const Favorites = (props) => {
+  const {offers} = props;
   return (
     <div className="page">
       <header className="header">
@@ -160,5 +163,5 @@ const Favorites = () => {
     </div>
   );
 };
-
+Favorites.propTypes = offersPropTypes;
 export default Favorites;

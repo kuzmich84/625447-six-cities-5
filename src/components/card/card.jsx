@@ -1,24 +1,20 @@
 import React from "react";
-import offerPropTypes from "../../customPropTypes/customPropTypes";
+import {offerPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent} from "../../utils/utils";
 
 const Card = (props) => {
-  const {offer, handleHover} = props;
+  const {offer, handleHoverCard} = props;
   const {title, images, price, type, isPremium, isFavorite, rating} = offer;
+  const link = `/offer/${offer.id}`;
 
-  const isisPremium = () => {
-    if (isPremium) {
-      return (<div className="place-card__mark">
+  return (<article className="cities__place-card place-card" onMouseOver={() => handleHoverCard(offer)}>
+    {isPremium
+      ? (<div className="place-card__mark">
         <span>Premium</span>
-      </div>);
-    } else {
-      return null;
-    }
-  };
-  return (<article className="cities__place-card place-card" onMouseOver={() => handleHover(offer)}>
-    {isisPremium()}
+      </div>)
+      : ``}
     <div className="cities__image-wrapper place-card__image-wrapper">
-      <a href="#">
+      <a href={link}>
         <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image"/>
       </a>
     </div>
@@ -44,7 +40,7 @@ const Card = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href="#">{title}</a>
+        <a href={link}>{title}</a>
       </h2>
       <p className="place-card__type">{type}</p>
     </div>
