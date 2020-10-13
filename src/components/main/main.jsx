@@ -2,12 +2,12 @@ import React from "react";
 import propTypes from "prop-types";
 import ListCards from "../listCards/listCards";
 import {CITIES} from "../../mocks/constants";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {toCapitalize} from "../../utils/utils";
 
 
 const Main = (props) => {
-  const {placesCount, offers} = props;
-  const firstOffers = offers.filter((offer)=>offer.city === CITIES[0]);
+  const {offers, cityName = `Paris`} = props;
+  const currentOffers = offers.filter((items) => items.city === toCapitalize(cityName));
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -15,7 +15,7 @@ const Main = (props) => {
           <div className="header__wrapper">
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/></a>
+                <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41"/></a>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -39,7 +39,7 @@ const Main = (props) => {
             <ul className="locations__list tabs__list">
               {CITIES.map((city, i) => {
                 return (<li className="locations__item" key={i}>
-                  <a className="locations__item-link tabs__item" href={`city/${city.toLowerCase()}`}>
+                  <a className="locations__item-link tabs__item" href={`/city/${city.toLowerCase()}`}>
                     <span>{city}</span>
                   </a>
                 </li>);
@@ -51,7 +51,7 @@ const Main = (props) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in {CITIES[0]}</b>
+              <b className="places__found">{currentOffers.length} places to stay in {toCapitalize(cityName)}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -68,7 +68,7 @@ const Main = (props) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <ListCards offers={offers}/>
+                <ListCards offers={currentOffers}/>
               </div>
             </section>
             <div className="cities__right-section">
@@ -82,8 +82,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  placesCount: propTypes.number.isRequired,
-  offers: propTypes.array.isRequired
+  offers: propTypes.array.isRequired,
+  cityName: propTypes.string
 };
 
 export default Main;

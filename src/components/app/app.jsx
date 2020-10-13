@@ -8,12 +8,18 @@ import Room from "../room/room";
 import {offersPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
 
 const App = (props) => {
-  const {placesCount, offers, reviews} = props;
+  const {offers, reviews} = props;
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Main placesCount={placesCount} offers={offers}/>
+          <Main offers={offers}/>
+        </Route>
+        <Route exact path="/city/:cityName" render={({match})=>{
+          const {cityName} = match.params;
+          return <Main offers={offers} cityName={cityName}/>;
+        }}>
+
         </Route>
         <Route exact path="/login">
           <Login/>
@@ -30,9 +36,6 @@ const App = (props) => {
   );
 };
 
-App.propTypes = {
-  placesCount: propTypes.number.isRequired,
-};
 App.propTypes = offersPropTypes;
 App.propTypes = reviewsPropTypes;
 

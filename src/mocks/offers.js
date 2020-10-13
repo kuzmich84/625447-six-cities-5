@@ -24,7 +24,7 @@ export const offers = [{
 },
 {
   id: 1,
-  city: `Paris`,
+  city: `Cologne`,
   title: `Wood and stone place`,
   images: [`/img/apartment-02.jpg`, `/img/apartment-01.jpg`, `/img/apartment-03.jpg`, `/img/room.jpg`, `/img/studio-01.jpg`],
   smallImages: [`/img/apartment-small-03.jpg`],
