@@ -1,5 +1,4 @@
 import React from 'react';
-import propTypes from "prop-types";
 import {offersPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent} from "../../utils/utils";
 

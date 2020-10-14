@@ -1,7 +1,6 @@
 import React, {PureComponent} from "react";
 import Card from "../card/card";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
 
 
 class ListCards extends PureComponent {

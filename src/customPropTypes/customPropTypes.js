@@ -31,4 +31,4 @@ const offersPropTypes = {
 const reviewsPropTypes = {reviews: propTypes.array.isRequired};
 
 
-export  {offerPropTypes, offersPropTypes, reviewsPropTypes};
+export {offerPropTypes, offersPropTypes, reviewsPropTypes};
