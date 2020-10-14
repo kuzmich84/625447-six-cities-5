@@ -6,7 +6,7 @@ const offerPropTypes = {
     city: propTypes.string.isRequired,
     title: propTypes.string.isRequired,
     images: propTypes.arrayOf(propTypes.string).isRequired,
-    smallImages: propTypes.arrayOf(propTypes.string).isRequired,
+    smallImage: propTypes.string.isRequired,
     price: propTypes.number.isRequired,
     type: propTypes.string.isRequired,
     rating: propTypes.number.isRequired,
