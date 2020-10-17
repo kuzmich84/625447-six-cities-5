@@ -1,7 +1,7 @@
 import React from "react";
 import propTypes from "prop-types";
 import ListCards from "../listCards/listCards";
-import {CITIES} from "../../mocks/constants";
+import {Cities} from "../../mocks/constants";
 import {toCapitalize} from "../../utils/utils";
 
 
@@ -37,7 +37,7 @@ const Main = (props) => {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {CITIES.map((city, i) => {
+              {Cities.map((city, i) => {
                 return (<li className="locations__item" key={i}>
                   <a className="locations__item-link tabs__item" href={`/city/${city.toLowerCase()}`}>
                     <span>{city}</span>
