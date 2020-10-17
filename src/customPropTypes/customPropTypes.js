@@ -4,6 +4,10 @@ const offerPropTypes = {
   offer: propTypes.shape({
     id: propTypes.number.isRequired,
     city: propTypes.string.isRequired,
+    geo: propTypes.shape({
+      latitude: propTypes.number.isRequired,
+      longitude: propTypes.number.isRequired
+    }),
     title: propTypes.string.isRequired,
     images: propTypes.arrayOf(propTypes.string).isRequired,
     smallImage: propTypes.string.isRequired,
