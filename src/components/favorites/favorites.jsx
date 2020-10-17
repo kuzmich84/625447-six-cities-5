@@ -7,6 +7,7 @@ const Favorites = (props) => {
 
   const uniqueCities = [...new Set(offers.filter((offer)=>offer.isFavorite === true).map((offer)=>offer.city))];
 
+
   return (
     <div className="page">
       <header className="header">
@@ -41,7 +42,7 @@ const Favorites = (props) => {
                 return (<li className="favorites__locations-items" key={city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href="#">
+                      <a className="locations__item-link" href={`/city/${city.toLowerCase()}`}>
                         <span>{city}</span>
                       </a>
                     </div>
@@ -50,7 +51,7 @@ const Favorites = (props) => {
                     {offers.filter((offer)=> offer.city === city && offer.isFavorite === true).map((offer)=>{
                       return (<article key={offer.id} className="favorites__card place-card">
                         <div className="favorites__image-wrapper place-card__image-wrapper">
-                          <a href="#">
+                          <a href={`/offer/${offer.id}`}>
                             <img className="place-card__image" src={offer.smallImage} width="150" height="110" alt="Place image"/>
                           </a>
                         </div>
@@ -74,7 +75,7 @@ const Favorites = (props) => {
                             </div>
                           </div>
                           <h2 className="place-card__name">
-                            <a href="#">{offer.title}</a>
+                            <a href={`/offer/${offer.id}`}>{offer.title}</a>
                           </h2>
                           <p className="place-card__type">{offer.type}</p>
                         </div>
@@ -89,7 +90,7 @@ const Favorites = (props) => {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <a className="footer__logo-link" href="/">
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
         </a>
       </footer>
