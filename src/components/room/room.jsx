@@ -1,5 +1,5 @@
 import React from "react";
-import {offerPropTypes, reviewsPropTypes, cityGeoCenterPropTypes} from "../../customPropTypes/customPropTypes";
+import {offerPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent, setDateToString, getRandomNumber} from "../../utils/utils";
 import ReviewsForm from "../reviewsForm/reviewsForm";
 import {cityGeoCenter} from "../../mocks/constants";
