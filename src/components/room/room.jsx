@@ -1,5 +1,5 @@
 import React from "react";
-import {offerPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
+import {offerPropTypes, reviewsPropTypes, cityGeoCenterPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent, setDateToString, getRandomNumber} from "../../utils/utils";
 import ReviewsForm from "../reviewsForm/reviewsForm";
 import {cityGeoCenter} from "../../mocks/constants";
@@ -155,7 +155,7 @@ const Room = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={offers} cityGeoCenter={cityGeoCenter[city]}/>
+            <Map offers={offers} geoCenterOfCity={cityGeoCenter[city]}/>
           </section>
         </section>
         <div className="container">

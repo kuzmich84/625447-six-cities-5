@@ -75,7 +75,7 @@ const Main = (props) => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={currentOffers} cityGeoCenter={cityGeoCenter[toCapitalize(cityName)]} />
+                <Map offers={currentOffers} geoCenterOfCity={cityGeoCenter[toCapitalize(cityName)]} />
               </section>
             </div>
           </div>
@@ -87,7 +87,7 @@ const Main = (props) => {
 
 Main.propTypes = {
   offers: propTypes.array.isRequired,
-  cityName: propTypes.string
+  cityName: propTypes.string,
 };
 
 export default Main;

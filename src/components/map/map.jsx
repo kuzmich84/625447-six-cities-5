@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import {offersPropTypes} from "../../customPropTypes/customPropTypes";
+import propTypes from "prop-types";
 
 const style = {
   width: `100%`,
@@ -19,10 +20,10 @@ class Map extends PureComponent {
   }
 
   componentDidMount() {
-    const {offers, cityGeoCenter} = this.props;
+    const {offers, geoCenterOfCity} = this.props;
 
     this.map = L.map(`map`, {
-      center: cityGeoCenter,
+      center: geoCenterOfCity,
       zoom: 12,
       zoomControl: false,
       marker: true,
@@ -51,5 +52,8 @@ class Map extends PureComponent {
 }
 
 Map.propTypes = offersPropTypes;
+Map.propTypes = {
+  geoCenterOfCity: propTypes.array.isRequired
+};
 
 export default Map;

@@ -31,5 +31,6 @@ const offersPropTypes = {
 };
 const reviewsPropTypes = {reviews: propTypes.array.isRequired};
 
+const cityGeoCenterPropTypes = {cityGeoCenter: propTypes.object.isRequired};
 
-export {offerPropTypes, offersPropTypes, reviewsPropTypes};
+export {offerPropTypes, offersPropTypes, reviewsPropTypes, cityGeoCenterPropTypes};
