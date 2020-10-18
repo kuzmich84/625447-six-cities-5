@@ -1,13 +1,15 @@
 import React from "react";
 import propTypes from "prop-types";
 import ListCards from "../listCards/listCards";
-import {Cities} from "../../mocks/constants";
+import {Cities, cityGeoCenter} from "../../mocks/constants";
 import {toCapitalize} from "../../utils/utils";
+import Map from "../map/map";
 
 
 const Main = (props) => {
   const {offers, cityName = `Paris`} = props;
   const currentOffers = offers.filter((items) => items.city === toCapitalize(cityName));
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -72,7 +74,9 @@ const Main = (props) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"/>
+              <section className="cities__map map">
+                <Map offers={currentOffers} cityGeoCenter={cityGeoCenter[toCapitalize(cityName)]} />
+              </section>
             </div>
           </div>
         </div>

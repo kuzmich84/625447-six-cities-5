@@ -3,10 +3,7 @@ import {getRandomNumber} from "../utils/utils";
 export const offers = [{
   id: 0,
   city: `Paris`,
-  geo: {
-    latitude: 52.3909553943508,
-    longitude: 4.85309666406198
-  },
+  geo: [48.87834157373697, 2.3446726838258543],
   title: `Beautiful & luxurious apartment at great location`,
   images: [`/img/apartment-01.jpg`, `/img/apartment-02.jpg`, `/img/apartment-03.jpg`, `/img/room.jpg`, `/img/studio-01.jpg`],
   smallImage: `/img/room-small.jpg`,
@@ -29,10 +26,7 @@ export const offers = [{
 {
   id: 1,
   city: `Cologne`,
-  geo: {
-    latitude: 52.369553943508,
-    longitude: 4.85309666406198
-  },
+  geo: [50.941950338899, 6.9525559435700695],
   title: `Wood and stone place`,
   images: [`/img/apartment-02.jpg`, `/img/apartment-01.jpg`, `/img/apartment-03.jpg`, `/img/room.jpg`, `/img/studio-01.jpg`],
   smallImage: `/img/apartment-small-03.jpg`,
@@ -55,10 +49,7 @@ export const offers = [{
 {
   id: 2,
   city: `Amsterdam`,
-  geo: {
-    latitude: 52.3909553943508,
-    longitude: 4.929309666406198
-  },
+  geo: [52.3909553943508, 4.929309666406198],
   title: `Canal View Prinsengracht`,
   images: [`/img/apartment-03.jpg`, `/img/apartment-02.jpg`, `/img/apartment-01.jpg`, `/img/room.jpg`, `/img/studio-01.jpg`],
   smallImage: `/img/apartment-small-04.jpg`,
@@ -82,10 +73,7 @@ export const offers = [{
 {
   id: 3,
   city: `Amsterdam`,
-  geo: {
-    latitude: 52.3809553943508,
-    longitude: 4.939309666406198,
-  },
+  geo: [52.3809553943508, 4.939309666406198],
   title: `Nice, cozy, warm big bed apartment`,
   images: [`/img/room.jpg`, `/img/apartment-02.jpg`, `/img/apartment-01.jpg`, `/img/apartment-03.jpg`, `/img/studio-01.jpg`],
   smallImage: `/img/apartment-small-04.jpg`,

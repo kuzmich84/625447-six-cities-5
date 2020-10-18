@@ -2,10 +2,13 @@ import React from "react";
 import {offerPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent, setDateToString, getRandomNumber} from "../../utils/utils";
 import ReviewsForm from "../reviewsForm/reviewsForm";
+import {cityGeoCenter} from "../../mocks/constants";
+import Map from "../map/map";
+
 
 const Room = (props) => {
   const {reviews, offers, offerId} = props;
-  const {title, images, isPremium, rating, type, bedrooms, adults, price, insideList, owner, isFavorite, description, id} = offers.find((offer) => offer.id === parseInt(offerId, 10));
+  const {title, images, isPremium, rating, type, bedrooms, adults, price, insideList, owner, isFavorite, description, id, city} = offers.find((offer) => offer.id === parseInt(offerId, 10));
   const {avatar, name, isPro} = owner;
   const newReviews = reviews.slice(0, getRandomNumber(0, reviews.length));
 
@@ -151,7 +154,9 @@ const Room = (props) => {
               </section>
             </div>
           </div>
-          <section className="property__map map"/>
+          <section className="property__map map">
+            <Map offers={offers} cityGeoCenter={cityGeoCenter[city]}/>
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
