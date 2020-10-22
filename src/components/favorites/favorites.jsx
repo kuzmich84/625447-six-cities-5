@@ -5,7 +5,7 @@ import {transferRatingToPercent} from "../../utils/utils";
 const Favorites = (props) => {
   const {offers} = props;
 
-  const uniqueCities = [...new Set(offers.filter((offer)=>offer.isFavorite === true).map((offer)=>offer.city))];
+  const uniqueCities = [...new Set(offers.filter((offer)=>offer.isFavorite).map((offer)=>offer.city))];
 
 
   return (
@@ -48,7 +48,7 @@ const Favorites = (props) => {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {offers.filter((offer)=> offer.city === city && offer.isFavorite === true).map((offer)=>{
+                    {offers.filter((offer)=> offer.city === city && offer.isFavorite).map((offer)=>{
                       return (<article key={offer.id} className="favorites__card place-card">
                         <div className="favorites__image-wrapper place-card__image-wrapper">
                           <a href={`/offer/${offer.id}`}>
