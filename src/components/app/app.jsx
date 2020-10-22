@@ -4,7 +4,8 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Login from "../login/login";
 import Favorites from "../favorites/favorites";
 import Room from "../room/room";
-import {offersPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
+import propTypes from "prop-types";
+
 
 const App = (props) => {
   const {offers, reviews} = props;
@@ -14,7 +15,7 @@ const App = (props) => {
         <Route exact path="/">
           <Main offers={offers}/>
         </Route>
-        <Route exact path="/city/:cityName" render={({match})=>{
+        <Route exact path="/city/:cityName" render={({match}) => {
           const {cityName} = match.params;
           return <Main offers={offers} cityName={cityName}/>;
         }}>
@@ -35,7 +36,12 @@ const App = (props) => {
   );
 };
 
-App.propTypes = offersPropTypes;
-App.propTypes = reviewsPropTypes;
+App.propTypes = {
+  offers: propTypes.arrayOf(
+      propTypes.object.isRequired),
+  reviews: propTypes.arrayOf(
+      propTypes.object.isRequired
+  )
+};
 
 export default App;
