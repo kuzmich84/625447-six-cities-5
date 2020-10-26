@@ -12,8 +12,11 @@ export const getRandomNumber = (min, max) => {
   return Math.round(min + Math.random() * (max - min));
 };
 
-export const toCapitalize = (string)=>{
+export const toCapitalize = (string) => {
   return string[0].toUpperCase() + string.slice(1);
 };
 
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};
 
