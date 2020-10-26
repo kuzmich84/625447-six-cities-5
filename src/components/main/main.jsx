@@ -2,13 +2,14 @@ import React from "react";
 import propTypes from "prop-types";
 import ListCards from "../listCards/listCards";
 import {Cities, cityGeoCenter} from "../../mocks/constants";
-import {toCapitalize} from "../../utils/utils";
+import {toCapitalize, getOffers} from "../../utils/utils";
 import Map from "../map/map";
+
 
 
 const Main = (props) => {
   const {offers, cityName = `Paris`} = props;
-  const currentOffers = offers.filter((items) => items.city === toCapitalize(cityName));
+  const currentOffers = getOffers(offers, cityName);
 
   return (
     <div className="page page--gray page--main">

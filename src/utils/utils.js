@@ -20,3 +20,6 @@ export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
+export const getOffers = (offers, city) => {
+  return offers.filter((items) => items.city === toCapitalize(city));
+};
