@@ -6,8 +6,6 @@ import {cityGeoCenter} from "../../mocks/constants";
 import Map from "../map/map";
 import {connect} from "react-redux";
 
-
-
 const Room = (props) => {
   const {reviews, offers, offerId} = props;
   const {title, images, isPremium, rating, type, bedrooms, adults, price, insideList, owner, isFavorite, description, id, city} = offers.find((offer) => offer.id === parseInt(offerId, 10));

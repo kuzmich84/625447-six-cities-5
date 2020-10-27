@@ -1,7 +1,6 @@
 import React from "react";
 import {offerPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent} from "../../utils/utils";
-import {preventDefault} from "leaflet/src/dom/DomEvent";
 
 const Card = (props) => {
   const {offer} = props;
