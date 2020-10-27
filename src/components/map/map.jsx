@@ -4,6 +4,7 @@ import L from "leaflet";
 import {offersPropTypes} from "../../customPropTypes/customPropTypes";
 import propTypes from "prop-types";
 
+
 const style = {
   width: `100%`,
   height: `100%`
@@ -33,9 +34,17 @@ class Map extends PureComponent {
         }),
       ]
     });
-
-
     this.renderMarkers(offers);
+  }
+
+  componentDidUpdate() {
+    const {offers, geoCenterOfCity} = this.props;
+    const [lat, lng] = geoCenterOfCity;
+
+    this.map.setView(new L.LatLng(lat, lng));
+    this.renderMarkers(offers);
+
+
   }
 
   renderMarkers(markersData) {
