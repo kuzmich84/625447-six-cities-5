@@ -1,6 +1,8 @@
 import React from 'react';
 import {offersPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent} from "../../utils/utils";
+import {connect} from "react-redux";
+
 
 const Favorites = (props) => {
   const {offers} = props;
@@ -97,5 +99,13 @@ const Favorites = (props) => {
     </div>
   );
 };
+
 Favorites.propTypes = offersPropTypes;
-export default Favorites;
+
+const mapStateToProps = (state) => ({
+  offers: state.offers
+});
+
+
+export {Favorites};
+export default connect(mapStateToProps)(Favorites);
