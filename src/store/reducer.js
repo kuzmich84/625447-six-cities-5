@@ -1,11 +1,12 @@
 import {extend} from "../utils/utils";
 import {ActionType} from "./action";
-import {getOffers} from "../utils/utils";
 import {offers} from "../mocks/offers";
+import {getOffersUtils} from "../utils/utils";
 
 const initialState = {
   city: `Paris`,
-  offers: getOffers(offers, `Paris`)
+  offersOfCity: getOffersUtils(offers, `Paris`),
+  offers,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -17,7 +18,7 @@ export const reducer = (state = initialState, action) => {
 
     case ActionType.GET_OFFERS:
       return extend(state, {
-        offers: getOffers(action.payload)
+        offersOfCity: getOffersUtils(state.offers, state.city)
       });
   }
   return state;
