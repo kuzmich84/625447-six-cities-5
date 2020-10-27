@@ -3,9 +3,11 @@ import {ActionType} from "./action";
 import {offers} from "../mocks/offers";
 import {getOffersUtils} from "../utils/utils";
 
+const defaultCity = `Paris`;
+
 const initialState = {
-  city: `Paris`,
-  offersOfCity: getOffersUtils(offers, `Paris`),
+  city: defaultCity,
+  offersOfCity: getOffersUtils(offers, defaultCity),
   offers,
 };
 
