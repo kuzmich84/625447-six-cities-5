@@ -1,20 +1,21 @@
 import React from "react";
 import {offerPropTypes} from "../../customPropTypes/customPropTypes";
 import {transferRatingToPercent} from "../../utils/utils";
+import {preventDefault} from "leaflet/src/dom/DomEvent";
 
 const Card = (props) => {
-  const {offer, handleHoverCard} = props;
+  const {offer} = props;
   const {title, images, price, type, isPremium, isFavorite, rating} = offer;
   const link = `/offer/${offer.id}`;
 
-  return (<article className="cities__place-card place-card" onMouseOver={() => handleHoverCard(offer)}>
+  return (<article className="cities__place-card place-card">
     {isPremium
       ? (<div className="place-card__mark">
         <span>Premium</span>
       </div>)
       : ``}
     <div className="cities__image-wrapper place-card__image-wrapper">
-      <a href={link}>
+      <a href={link} >
         <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image"/>
       </a>
     </div>
