@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../card/card";
 import PropTypes from "prop-types";
-
+import {withActiveItem} from "../../hocs/withActiveItem";
 
 const ListCards = (props) => {
   const {offersOfCity} = props;
@@ -15,4 +15,4 @@ ListCards.propTypes = {
   offersOfCity: PropTypes.array.isRequired,
 };
 
-export default ListCards;
+export default withActiveItem(ListCards);
