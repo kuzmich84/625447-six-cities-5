@@ -32,7 +32,7 @@ export const withActiveItem = (Component) => {
   }
 
   WithActiveItem.propTypes = {
-    offer: PropTypes.object.isRequired,
+    offer: PropTypes.object,
   };
 
   return WithActiveItem;
