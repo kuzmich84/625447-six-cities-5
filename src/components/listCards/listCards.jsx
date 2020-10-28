@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import {withActiveItem} from "../../hocs/withActiveItem";
 
 const ListCards = (props) => {
-  const {offersOfCity} = props;
+  const {offersOfCity, handleHoverCard} = props;
 
   return offersOfCity.map((offer) => {
-    return <Card offer={offer} key={offer.id}/>;
+    return <Card offer={offer} key={offer.id} handleHoverCard={handleHoverCard}/>;
   });
 };
 
