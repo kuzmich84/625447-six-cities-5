@@ -1,9 +1,8 @@
 import React, {PureComponent} from "react";
-import Card from "../components/card/card";
 import PropTypes from "prop-types";
 
 
-const withActiveItem = (Component) => {
+export const withActiveItem = (Component) => {
   class WithActiveItem extends PureComponent {
     constructor(props) {
       super(props);
@@ -20,27 +19,21 @@ const withActiveItem = (Component) => {
     }
 
     render() {
-      const {offersOfCity} = this.props;
       const {offer} = this.state;
 
       return (<Component
         {...this.props}
         offer={offer}
+        handleHoverCard={this.handleHoverCard}
       >
-        {offersOfCity.map((offerItem) => {
-          return <Card offer={offerItem} key={offer.id} handleHoverCard={this.handleHoverCard}/>;
-        })}
       </Component>);
     }
+
   }
 
   WithActiveItem.propTypes = {
-    offersOfCity: PropTypes.array.isRequired,
+    offer: PropTypes.object.isRequired,
   };
 
+  return WithActiveItem;
 };
-
-
-export default withActiveItem;
-
-
