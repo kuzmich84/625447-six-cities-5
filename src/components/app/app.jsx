@@ -5,7 +5,7 @@ import Login from "../login/login";
 import Favorites from "../favorites/favorites";
 import Room from "../room/room";
 import propTypes from "prop-types";
-
+import PageMain from "../pageMain/pageMain";
 
 const App = (props) => {
   const {reviews} = props;
@@ -13,11 +13,11 @@ const App = (props) => {
     <Router>
       <Switch>
         <Route exact path="/">
-          <Main />
+          <PageMain />
         </Route>
         <Route exact path="/city/:cityName" render={({match}) => {
           const {cityName} = match.params;
-          return <Main cityName={cityName}/>;
+          return <PageMain cityName={cityName}/>;
         }}>
 
         </Route>
