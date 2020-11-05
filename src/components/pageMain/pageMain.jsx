@@ -14,6 +14,6 @@ const PageMain = (props) => {
 };
 
 PageMain.propTypes = {
-  cityName: propTypes.string.isRequired
+  cityName: propTypes.string
 };
 export default PageMain;
