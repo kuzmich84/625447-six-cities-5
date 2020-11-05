@@ -1,11 +1,12 @@
 import React from "react";
 import propTypes from "prop-types";
 import ListCards from "../listCards/listCards";
-import {Cities, cityGeoCenter} from "../../mocks/constants";
+import {cityGeoCenter} from "../../mocks/constants";
 import {toCapitalize} from "../../utils/utils";
 import Map from "../map/map";
 import {ActionCreator} from "../../store/action";
 import {connect} from "react-redux";
+import MenuList from "../menuList/menuList";
 
 
 const Main = (props) => {
@@ -16,20 +17,7 @@ const Main = (props) => {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <ul className="locations__list tabs__list">
-            {Cities.map((cityItem) => {
-              return (<li className="locations__item" key={cityItem}>
-                <a className="locations__item-link tabs__item tabs__item--active" href={`/city/${cityItem.toLowerCase()}`}
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    changeCity(cityItem);
-                  }}
-                >
-                  <span>{cityItem}</span>
-                </a>
-              </li>);
-            })}
-          </ul>
+          <MenuList changeCity={changeCity} city={city}/>
         </section>
       </div>
       <div className="cities">
