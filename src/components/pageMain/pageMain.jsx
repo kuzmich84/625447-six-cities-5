@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../header/header";
 import Main from "../main/main";
+import propTypes from "prop-types";
 
 const PageMain = (props) => {
   const {cityName} = props;
@@ -12,4 +13,7 @@ const PageMain = (props) => {
   );
 };
 
+PageMain.propTypes = {
+  cityName: propTypes.string.isRequired
+};
 export default PageMain;
