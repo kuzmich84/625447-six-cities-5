@@ -8,16 +8,16 @@ import propTypes from "prop-types";
 
 
 const App = (props) => {
-  const {offers, reviews} = props;
+  const {reviews} = props;
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Main offers={offers}/>
+          <Main />
         </Route>
         <Route exact path="/city/:cityName" render={({match}) => {
           const {cityName} = match.params;
-          return <Main offers={offers} cityName={cityName}/>;
+          return <Main cityName={cityName}/>;
         }}>
 
         </Route>
@@ -25,11 +25,11 @@ const App = (props) => {
           <Login/>
         </Route>
         <Route exact path="/favorites">
-          <Favorites offers={offers}/>
+          <Favorites />
         </Route>
         <Route exact path="/offer/:id" render={({match}) => {
           const {id} = match.params;
-          return <Room offerId={id} reviews={reviews} offers={offers}/>;
+          return <Room offerId={id} reviews={reviews} />;
         }}/>
       </Switch>
     </Router>

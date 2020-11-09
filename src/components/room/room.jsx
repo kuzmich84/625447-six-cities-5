@@ -4,7 +4,7 @@ import {transferRatingToPercent, setDateToString, getRandomNumber} from "../../u
 import ReviewsForm from "../reviewsForm/reviewsForm";
 import {cityGeoCenter} from "../../mocks/constants";
 import Map from "../map/map";
-
+import {connect} from "react-redux";
 
 const Room = (props) => {
   const {reviews, offers, offerId} = props;
@@ -206,4 +206,10 @@ const Room = (props) => {
 Room.propTypes = offerPropTypes;
 Room.propTypes = reviewsPropTypes;
 
-export default Room;
+const mapStateToProps = (state) => ({
+  offers: state.offers
+});
+
+
+export {Room};
+export default connect(mapStateToProps)(Room);

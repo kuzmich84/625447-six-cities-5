@@ -4,11 +4,11 @@ import ListCards from "../listCards/listCards";
 import {Cities, cityGeoCenter} from "../../mocks/constants";
 import {toCapitalize} from "../../utils/utils";
 import Map from "../map/map";
-
+import {ActionCreator} from "../../store/action";
+import {connect} from "react-redux";
 
 const Main = (props) => {
-  const {offers, cityName = `Paris`} = props;
-  const currentOffers = offers.filter((items) => items.city === toCapitalize(cityName));
+  const {offersOfCity, changeCity, city} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -39,10 +39,15 @@ const Main = (props) => {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              {Cities.map((city, i) => {
+              {Cities.map((cityItem, i) => {
                 return (<li className="locations__item" key={i}>
-                  <a className="locations__item-link tabs__item" href={`/city/${city.toLowerCase()}`}>
-                    <span>{city}</span>
+                  <a className="locations__item-link tabs__item" href={`/city/${cityItem.toLowerCase()}`}
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      changeCity(cityItem);
+                    }}
+                  >
+                    <span>{cityItem}</span>
                   </a>
                 </li>);
               })}
@@ -53,7 +58,7 @@ const Main = (props) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffers.length} places to stay in {toCapitalize(cityName)}</b>
+              <b className="places__found">{offersOfCity.length} places to stay in {toCapitalize(city)}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -70,12 +75,12 @@ const Main = (props) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <ListCards offers={currentOffers}/>
+                <ListCards offersOfCity={offersOfCity}/>
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={currentOffers} geoCenterOfCity={cityGeoCenter[toCapitalize(cityName)]} />
+                <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
               </section>
             </div>
           </div>
@@ -86,9 +91,23 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  offers: propTypes.array.isRequired,
-  cityName: propTypes.string,
+  offersOfCity: propTypes.array.isRequired,
+  changeCity: propTypes.func.isRequired,
+  city: propTypes.string.isRequired
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  city: state.city,
+  offersOfCity: state.offersOfCity
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(city) {
+    dispatch(ActionCreator.changeCity(toCapitalize(city)));
+    dispatch(ActionCreator.getOffers());
+  }
+});
+
+export {Main};
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
 

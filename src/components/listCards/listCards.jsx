@@ -20,16 +20,16 @@ class ListCards extends PureComponent {
 
 
   render() {
-    const {offers} = this.props;
+    const {offersOfCity} = this.props;
 
-    return offers.map((offer) => {
+    return offersOfCity.map((offer) => {
       return <Card offer={offer} key={offer.id} handleHoverCard={this.handleHoverCard}/>;
     });
   }
 }
 
 ListCards.propTypes = {
-  offers: PropTypes.array.isRequired,
+  offersOfCity: PropTypes.array.isRequired,
 };
 
 export default ListCards;
