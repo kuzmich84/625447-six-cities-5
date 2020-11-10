@@ -23,6 +23,7 @@ class Map extends PureComponent {
   componentDidMount() {
     const {offers, geoCenterOfCity} = this.props;
 
+
     this.map = L.map(`map`, {
       center: geoCenterOfCity,
       zoom: 12,
@@ -40,7 +41,6 @@ class Map extends PureComponent {
   componentDidUpdate() {
     const {offers, geoCenterOfCity} = this.props;
     const [lat, lng] = geoCenterOfCity;
-
     this.map.setView(new L.LatLng(lat, lng));
     this.renderMarkers(offers);
 

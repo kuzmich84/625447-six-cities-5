@@ -12,6 +12,10 @@ import MenuList from "../menuList/menuList";
 const Main = (props) => {
   const {offersOfCity, changeCity, city} = props;
 
+  if (!offersOfCity || offersOfCity.length === 0) {
+    return null;
+  }
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -46,7 +50,7 @@ const Main = (props) => {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
+              {/*<Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>*/}
             </section>
           </div>
         </div>
