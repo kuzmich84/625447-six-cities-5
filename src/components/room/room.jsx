@@ -12,8 +12,8 @@ const Room = (props) => {
     return null;
   }
 
-  const {title, images, isPremium, rating, type, bedrooms, adults, price, insideList, owner, isFavorite, description, id, city} = offers.find((offer) => offer.id === parseInt(offerId, 10));
-  const {avatar, name, isPro} = owner;
+  const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offers.find((offer) => offer.id === parseInt(offerId, 10));
+  const {avatarUrl, name, isPro} = host;
   const newReviews = reviews.slice(0, getRandomNumber(0, reviews.length));
 
   return (
@@ -98,7 +98,7 @@ const Room = (props) => {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {insideList.map((inside) => {
+                  {goods.map((inside) => {
                     return (<li className="property__inside-item" key={inside}>
                       {inside}
                     </li>);
@@ -110,18 +110,16 @@ const Room = (props) => {
                 <div className="property__host-user user">
                   <div
                     className={`property__avatar-wrapper ${isPro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper property__avatar-wrapper user__avatar-wrapper`}>
-                    <img className="property__avatar user__avatar" src={avatar} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
                     {name}
                   </span>
                 </div>
                 <div className="property__description">
-                  {description.map((text, i) => {
-                    return (<p className="property__text" key={i}>
-                      {text}
-                    </p>);
-                  })}
+                  <p className="property__text">
+                    {description}
+                  </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
