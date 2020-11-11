@@ -4,24 +4,27 @@ import ListCards from "../listCards/listCards";
 import {cityGeoCenter} from "../../mocks/constants";
 import {toCapitalize} from "../../utils/utils";
 import Map from "../map/map";
-import {ActionCreator} from "../../store/action";
+import {getOffers, changeCity} from "../../store/action";
 import {connect} from "react-redux";
 import MenuList from "../menuList/menuList";
 
 
 const Main = (props) => {
-  const {offersOfCity, changeCity, city} = props;
+
+
+  const {offersOfCity, changeCityAction, city} = props;
 
   if (!offersOfCity || offersOfCity.length === 0) {
     return null;
   }
+
 
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <MenuList changeCity={changeCity} city={city}/>
+          <MenuList changeCity={changeCityAction} city={city}/>
         </section>
       </div>
       <div className="cities">
@@ -50,7 +53,7 @@ const Main = (props) => {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              {/*<Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>*/}
+              <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
             </section>
           </div>
         </div>
@@ -61,7 +64,7 @@ const Main = (props) => {
 
 Main.propTypes = {
   offersOfCity: propTypes.array.isRequired,
-  changeCity: propTypes.func.isRequired,
+  changeCityAction: propTypes.func.isRequired,
   city: propTypes.string.isRequired
 };
 
@@ -71,9 +74,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(toCapitalize(city)));
-    dispatch(ActionCreator.getOffers());
+  changeCityAction(city) {
+    dispatch(changeCity(toCapitalize(city)));
+    dispatch(getOffers());
   }
 });
 
