@@ -7,12 +7,12 @@ import propTypes from "prop-types";
 
 const style = {
   width: `100%`,
-  height: `100%`
+  height: `100%`,
 };
 
 const icon = L.icon({
   iconUrl: `/img/pin.svg`,
-  iconSize: [30, 30]
+  iconSize: [30, 30],
 });
 
 class Map extends PureComponent {
@@ -23,7 +23,6 @@ class Map extends PureComponent {
   componentDidMount() {
     const {offers, geoCenterOfCity} = this.props;
 
-
     this.map = L.map(`map`, {
       center: geoCenterOfCity,
       zoom: 12,
@@ -31,9 +30,9 @@ class Map extends PureComponent {
       marker: true,
       layers: [
         L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
-          attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
+          attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`,
         }),
-      ]
+      ],
     });
     this.renderMarkers(offers);
   }
@@ -49,7 +48,7 @@ class Map extends PureComponent {
 
   renderMarkers(markersData) {
     markersData.map((marker) => {
-      return L.marker(marker.geo, {icon}).addTo(this.map);
+      return L.marker([marker.location.latitude, marker.location.longitude], {icon}).addTo(this.map);
     });
   }
 
@@ -62,7 +61,7 @@ class Map extends PureComponent {
 
 Map.propTypes = offersPropTypes;
 Map.propTypes = {
-  geoCenterOfCity: propTypes.array.isRequired
+  geoCenterOfCity: propTypes.array,
 };
 
 export default Map;

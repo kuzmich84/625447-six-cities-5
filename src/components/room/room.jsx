@@ -5,6 +5,8 @@ import ReviewsForm from "../reviewsForm/reviewsForm";
 import {cityGeoCenter} from "../../mocks/constants";
 import Map from "../map/map";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import Header from "../header/header";
 
 const Room = (props) => {
   const {reviews, offers, offerId} = props;
@@ -15,32 +17,9 @@ const Room = (props) => {
   const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offers.find((offer) => offer.id === parseInt(offerId, 10));
   const {avatarUrl, name, isPro} = host;
   const newReviews = reviews.slice(0, getRandomNumber(0, reviews.length));
-
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="/">
-                <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header/>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -110,7 +89,8 @@ const Room = (props) => {
                 <div className="property__host-user user">
                   <div
                     className={`property__avatar-wrapper ${isPro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper property__avatar-wrapper user__avatar-wrapper`}>
-                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74"
+                         alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
                     {name}
@@ -130,7 +110,8 @@ const Room = (props) => {
                     return (<li className="reviews__item" key={review.id}>
                       <div className="reviews__user user">
                         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img className="reviews__avatar user__avatar" src={review.userAvatar} width="54" height="54" alt="Reviews avatar"/>
+                          <img className="reviews__avatar user__avatar" src={review.userAvatar} width="54" height="54"
+                               alt="Reviews avatar"/>
                         </div>
                         <span className="reviews__user-name">
                           {review.userName}
@@ -157,7 +138,7 @@ const Room = (props) => {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={offers} geoCenterOfCity={cityGeoCenter[city]}/>
+            <Map offers={offers} geoCenterOfCity={cityGeoCenter[city.name]}/>
           </section>
         </section>
         <div className="container">
@@ -167,9 +148,10 @@ const Room = (props) => {
               {offers.slice(1, offers.length).map((item) => {
                 return (<article className="near-places__card place-card" key={item.id}>
                   <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href={`/offer/${item.id}`}>
-                      <img className="place-card__image" src={item.images[0]} width="260" height="200" alt="Place image"/>
-                    </a>
+                    <Link to={`/offer/${item.id}`}>
+                      <img className="place-card__image" src={item.images[0]} width="260" height="200"
+                           alt="Place image"/>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -177,7 +159,9 @@ const Room = (props) => {
                         <b className="place-card__price-value">&euro;{item.price}</b>
                         <span className="place-card__price-text">&#47;&nbsp;night</span>
                       </div>
-                      <button className={`place-card__bookmark-button ${item.isFavorite ? `place-card__bookmark-button--active` : ``}  button`} type="button">
+                      <button
+                        className={`place-card__bookmark-button ${item.isFavorite ? `place-card__bookmark-button--active` : ``}  button`}
+                        type="button">
                         <svg className="place-card__bookmark-icon" width="18" height="19">
                           <use xlinkHref="#icon-bookmark"/>
                         </svg>
@@ -191,7 +175,7 @@ const Room = (props) => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href={`/offer/${item.id}`}>{item.title}</a>
+                      <Link to={`/offer/${item.id}`}>{item.title}</Link>
                     </h2>
                     <p className="place-card__type">{item.type}</p>
                   </div>
@@ -209,7 +193,7 @@ Room.propTypes = offerPropTypes;
 Room.propTypes = reviewsPropTypes;
 
 const mapStateToProps = (state) => ({
-  offers: state.offers
+  offers: state.offers,
 });
 
 
