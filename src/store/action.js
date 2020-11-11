@@ -1,7 +1,9 @@
-
 export const ActionType = {
   CHANGE_CITY: `CHANGE_CITY`,
-  GET_OFFERS: `GET_OFFERS`
+  GET_OFFERS: `GET_OFFERS`,
+  LOAD_OFFERS: `LOAD_OFFERS`,
+  GET_OFFERS_OF_CITY: `GET_OFFERS_OF_CITY`,
+  REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
 };
 
 export const ActionCreator = {
@@ -13,3 +15,13 @@ export const ActionCreator = {
     type: ActionType.GET_OFFERS
   })
 };
+
+export const loadOffers = (offers)=> ({
+  type: ActionType.LOAD_OFFERS,
+  payload: offers,
+});
+
+export const getOffersOfCity = (offers) => ({
+  type: ActionType.GET_OFFERS_OF_CITY,
+  payload: offers
+});

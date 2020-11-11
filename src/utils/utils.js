@@ -21,5 +21,15 @@ export const extend = (a, b) => {
 };
 
 export const getOffersUtils = (offers, city) => {
-  return offers.filter((items) => items.city === toCapitalize(city));
+  return offers.filter((items) => items.city.name === toCapitalize(city));
 };
+
+export const toCamelCase = (s) => {
+  return s.replace(/([-_][a-z])/ig, (symbol) => {
+    return symbol.toUpperCase()
+      .replace(`-`, ``)
+      .replace(`_`, ``);
+  });
+};
+
+

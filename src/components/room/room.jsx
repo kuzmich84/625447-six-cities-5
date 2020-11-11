@@ -8,6 +8,10 @@ import {connect} from "react-redux";
 
 const Room = (props) => {
   const {reviews, offers, offerId} = props;
+  if (!offers || offers.length === 0) {
+    return null;
+  }
+
   const {title, images, isPremium, rating, type, bedrooms, adults, price, insideList, owner, isFavorite, description, id, city} = offers.find((offer) => offer.id === parseInt(offerId, 10));
   const {avatar, name, isPro} = owner;
   const newReviews = reviews.slice(0, getRandomNumber(0, reviews.length));
