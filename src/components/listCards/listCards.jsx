@@ -2,17 +2,23 @@ import React from "react";
 import Card from "../card/card";
 import PropTypes from "prop-types";
 import {withActiveItem} from "../../hocs/withActiveItem";
+import {connect} from "react-redux";
+import {getFilteredOffersOfCity} from "../../selectors/offers-selectors";
 
 const ListCards = (props) => {
-  const {offersOfCity, handleHoverCard} = props;
-
-  return offersOfCity.map((offer) => {
+  const {handleHoverCard, filteredOffersOfCity} = props;
+  return filteredOffersOfCity.map((offer) => {
     return <Card offer={offer} key={offer.id} handleHoverCard={handleHoverCard}/>;
   });
 };
 
 ListCards.propTypes = {
-  offersOfCity: PropTypes.array.isRequired,
+  filteredOffersOfCity: PropTypes.array.isRequired
 };
 
-export default withActiveItem(ListCards);
+const mapStateToProps = (state) => ({
+  filteredOffersOfCity: getFilteredOffersOfCity(state),
+});
+
+export {ListCards};
+export default connect(mapStateToProps)(withActiveItem(ListCards));

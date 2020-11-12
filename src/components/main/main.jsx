@@ -8,6 +8,7 @@ import {getOffers, changeCity} from "../../store/action";
 import {connect} from "react-redux";
 import MenuList from "../menuList/menuList";
 import Filter from "../filter/filter";
+import {getCity, getOffersOfCity} from "../../selectors/offers-selectors";
 
 
 const Main = (props) => {
@@ -35,7 +36,7 @@ const Main = (props) => {
             <b className="places__found">{offersOfCity.length} places to stay in {toCapitalize(city)}</b>
             <Filter/>
             <div className="cities__places-list places__list tabs__content">
-              <ListCards offersOfCity={offersOfCity}/>
+              <ListCards />
             </div>
           </section>
           <div className="cities__right-section">
@@ -56,8 +57,8 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  offersOfCity: state.offersOfCity,
+  city: getCity(state),
+  offersOfCity: getOffersOfCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
