@@ -5,6 +5,7 @@ import {reviews} from "./mocks/reviews";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import {reducer} from "./store/reducer";
+// import rootReducer from "./store/reducers/root-reducer";
 import thunk from "redux-thunk";
 import {createAPI} from "./services/api";
 import {fetchOffersList} from "./store/api-actions";
