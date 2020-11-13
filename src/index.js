@@ -7,10 +7,14 @@ import {Provider} from "react-redux";
 import rootReducer from "./store/reducers/root-reducer";
 import thunk from "redux-thunk";
 import {createAPI} from "./services/api";
-import {fetchOffersList} from "./store/api-actions";
+import {checkAuth, fetchOffersList} from "./store/api-actions";
 import {composeWithDevTools} from "redux-devtools-extension";
+import {requireAuthorization} from "./store/action";
+import {AuthorizationStatus} from "./store/const";
 
-const api = createAPI();
+const api = createAPI(
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
+);
 
 const store = createStore(
     rootReducer,
@@ -18,7 +22,7 @@ const store = createStore(
 );
 
 store.dispatch(fetchOffersList());
-
+store.dispatch(checkAuth());
 
 const init = () => {
   ReactDOM.render(

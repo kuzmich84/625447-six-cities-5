@@ -1,6 +1,12 @@
 import React from "react";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {AuthorizationStatus} from "../../store/const";
+import propTypes from "prop-types";
 
-const Header = () => {
+const Header = (props) => {
+  const {authorizationStatus} = props;
+
   return (
     <header className="header">
       <div className="container">
@@ -12,11 +18,23 @@ const Header = () => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="#">
+                <Link className="header__nav-link header__nav-link--profile" to={
+                  authorizationStatus === AuthorizationStatus.AUTH
+                    ? `/favorites`
+                    : `/login`
+                }>
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                </a>
+                  <span className={
+                    authorizationStatus === AuthorizationStatus.AUTH
+                      ? `header__user-name user__name`
+                      : `header__login`
+                  }>{
+                      authorizationStatus === AuthorizationStatus.AUTH
+                        ? `Oliver.conner@gmail.com`
+                        : `Sign in`
+                    }</span>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -26,4 +44,15 @@ const Header = () => {
   );
 };
 
-export default Header;
+Header.propTypes = {
+  authorizationStatus: propTypes.string.isRequired,
+};
+
+
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus,
+});
+
+
+export {Header};
+export default connect(mapStateToProps)(Header);

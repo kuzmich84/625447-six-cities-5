@@ -25,3 +25,8 @@ export const changeFilter = (value) => ({
   type: ActionType.CHANGE_FILTER,
   payload: value,
 });
+
+export const requireAuthorization = (status) => ({
+  type: ActionType.REQUIRED_AUTHORIZATION,
+  payload: status,
+});
