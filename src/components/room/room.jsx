@@ -192,8 +192,8 @@ const Room = (props) => {
 Room.propTypes = offerPropTypes;
 Room.propTypes = reviewsPropTypes;
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
+const mapStateToProps = ({DATA}) => ({
+  offers: DATA.offers,
 });
 
 
