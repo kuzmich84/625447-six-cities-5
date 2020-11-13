@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {changeFilter} from "../../store/action";
 import propTypes from "prop-types";
+import {getFilterValue} from "../../store/selectors/offers-selectors";
 
 const Filter = (props) => {
   const {changeFilterAction, value} = props;
@@ -28,7 +29,7 @@ Filter.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  value: state.value,
+  value: getFilterValue(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

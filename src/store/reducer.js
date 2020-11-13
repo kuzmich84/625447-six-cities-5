@@ -1,6 +1,6 @@
 import {extend} from "../utils/utils";
 import {ActionType} from "./action";
-import {getOffersUtils} from "../utils/utils";
+
 
 const defaultCity = `Paris`;
 
@@ -18,12 +18,6 @@ export const reducer = (state = initialState, action) => {
       return extend(state, {
         city: action.payload,
       });
-
-    case ActionType.GET_OFFERS:
-      return extend(state, {
-        offersOfCity: getOffersUtils(state.offers, state.city),
-      });
-
     case ActionType.LOAD_OFFERS:
       return extend(state, {
         offers: action.payload,

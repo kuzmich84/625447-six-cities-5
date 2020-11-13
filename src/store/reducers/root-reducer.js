@@ -1,14 +1,14 @@
 import {combineReducers} from "redux";
 import {loadData} from "./load-data/load-data";
-import {offersProcess} from "./offers-process/offers-process";
+import {appProcess} from "./app-process/app-process";
 
 export const NameSpace = {
   DATA: `DATA`,
-  PROCESS: `PROCESS`,
+  APP: `APP`,
 };
 
 export default combineReducers({
   [NameSpace.DATA]: loadData,
-  [NameSpace.PROCESS]: offersProcess,
+  [NameSpace.APP]: appProcess,
 });
 

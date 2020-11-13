@@ -4,8 +4,7 @@ import App from "./components/app/app";
 import {reviews} from "./mocks/reviews";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
-import {reducer} from "./store/reducer";
-// import rootReducer from "./store/reducers/root-reducer";
+import rootReducer from "./store/reducers/root-reducer";
 import thunk from "redux-thunk";
 import {createAPI} from "./services/api";
 import {fetchOffersList} from "./store/api-actions";
@@ -14,7 +13,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 const api = createAPI();
 
 const store = createStore(
-    reducer,
+    rootReducer,
     composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)))
 );
 

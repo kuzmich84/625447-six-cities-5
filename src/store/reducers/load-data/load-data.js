@@ -13,10 +13,6 @@ export const loadData = (state = initialState, action) => {
       return extend(state, {
         offers: action.payload,
       });
-
-
-
-
   }
   return state;
 };

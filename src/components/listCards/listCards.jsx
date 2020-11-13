@@ -3,7 +3,7 @@ import Card from "../card/card";
 import PropTypes from "prop-types";
 import {withActiveItem} from "../../hocs/withActiveItem";
 import {connect} from "react-redux";
-import {getFilteredOffersOfCity} from "../../selectors/offers-selectors";
+import {getFilteredOffersOfCity} from "../../store/selectors/offers-selectors";
 
 const ListCards = (props) => {
   const {handleHoverCard, filteredOffersOfCity} = props;

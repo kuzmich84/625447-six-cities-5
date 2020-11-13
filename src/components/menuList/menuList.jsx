@@ -1,9 +1,12 @@
 import React from "react";
 import {Cities} from "../../mocks/constants";
 import propTypes from "prop-types";
+import {connect} from "react-redux";
+import {getOffers} from "../../store/selectors/offers-selectors";
+
 
 const MenuList = (props) => {
-  const {changeCity, city} = props;
+  const {changeCity, city, offers} = props;
 
   return (
     <ul className="locations__list tabs__list">
@@ -12,7 +15,7 @@ const MenuList = (props) => {
           <a className={`locations__item-link tabs__item ${city === cityItem ? `tabs__item--active` : ``} `} href={`/city/${cityItem.toLowerCase()}`}
             onClick={(evt) => {
               evt.preventDefault();
-              changeCity(cityItem);
+              changeCity(cityItem, offers);
             }}
           >
             <span>{cityItem}</span>
@@ -26,7 +29,13 @@ const MenuList = (props) => {
 
 MenuList.propTypes = {
   changeCity: propTypes.func.isRequired,
-  city: propTypes.string.isRequired
+  city: propTypes.string.isRequired,
+  offers: propTypes.array.isRequired
 };
 
-export default MenuList;
+const mapStateToProps = (state)=>({
+  offers: getOffers(state)
+});
+
+export {MenuList};
+export default connect(mapStateToProps)(MenuList);

@@ -1,12 +1,12 @@
 import {createSelector} from "reselect";
 
+export const getOffers = (state)=> state.DATA.offers;
+export const getOffersOfCity = (state) => state.APP.offersOfCity;
+export const getCity = (state) => state.APP.city;
+export const getFilterValue = (state) => state.APP.value;
 
-export const getOffersOfCity = (state) => state.offersOfCity;
-export const getCity = (state) => state.city;
-export const filterValue = (state) => state.value;
 
-
-export const getFilteredOffersOfCity = createSelector([getOffersOfCity, filterValue], (offers, value) => {
+export const getFilteredOffersOfCity = createSelector([getOffersOfCity, getFilterValue], (offers, value) => {
 
   switch (value) {
     case `to-high`:
@@ -18,6 +18,4 @@ export const getFilteredOffersOfCity = createSelector([getOffersOfCity, filterVa
     default:
       return offers;
   }
-
-
 });

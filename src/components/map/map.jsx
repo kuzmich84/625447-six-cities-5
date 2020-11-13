@@ -3,6 +3,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import {offersPropTypes} from "../../customPropTypes/customPropTypes";
 import propTypes from "prop-types";
+import {getOffersOfCity} from "../../store/selectors/offers-selectors";
+import {connect} from "react-redux";
 
 
 const style = {
@@ -21,7 +23,7 @@ class Map extends PureComponent {
   }
 
   componentDidMount() {
-    const {offers, geoCenterOfCity} = this.props;
+    const {offersOfCity, geoCenterOfCity} = this.props;
 
     this.map = L.map(`map`, {
       center: geoCenterOfCity,
@@ -34,14 +36,14 @@ class Map extends PureComponent {
         }),
       ],
     });
-    this.renderMarkers(offers);
+    this.renderMarkers(offersOfCity);
   }
 
   componentDidUpdate() {
-    const {offers, geoCenterOfCity} = this.props;
+    const {offersOfCity, geoCenterOfCity} = this.props;
     const [lat, lng] = geoCenterOfCity;
     this.map.setView(new L.LatLng(lat, lng));
-    this.renderMarkers(offers);
+    this.renderMarkers(offersOfCity);
 
 
   }
@@ -64,4 +66,10 @@ Map.propTypes = {
   geoCenterOfCity: propTypes.array,
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  offersOfCity: getOffersOfCity(state),
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);
+

@@ -2,13 +2,13 @@ import React from "react";
 import propTypes from "prop-types";
 import ListCards from "../listCards/listCards";
 import {cityGeoCenter} from "../../mocks/constants";
-import {toCapitalize} from "../../utils/utils";
+import {getOffersUtils, toCapitalize} from "../../utils/utils";
 import Map from "../map/map";
-import {getOffers, changeCity} from "../../store/action";
+import {changeCity, loadOffersOfCity} from "../../store/action";
 import {connect} from "react-redux";
 import MenuList from "../menuList/menuList";
 import Filter from "../filter/filter";
-import {getCity, getOffersOfCity} from "../../selectors/offers-selectors";
+import {getCity, getOffersOfCity} from "../../store/selectors/offers-selectors";
 
 
 const Main = (props) => {
@@ -41,7 +41,7 @@ const Main = (props) => {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
+              <Map geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
             </section>
           </div>
         </div>
@@ -62,9 +62,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCityAction(city) {
+  changeCityAction(city, offers) {
     dispatch(changeCity(toCapitalize(city)));
-    dispatch(getOffers());
+    dispatch(loadOffersOfCity(getOffersUtils(offers, city)));
   },
 });
 
