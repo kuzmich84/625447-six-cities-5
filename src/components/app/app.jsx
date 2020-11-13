@@ -5,6 +5,7 @@ import Favorites from "../favorites/favorites";
 import Room from "../room/room";
 import propTypes from "prop-types";
 import PageMain from "../pageMain/pageMain";
+import PrivateRoute from "../private-root/private-root";
 
 const App = (props) => {
   const {reviews} = props;
@@ -23,9 +24,13 @@ const App = (props) => {
         <Route exact path="/login">
           <Login/>
         </Route>
-        <Route exact path="/favorites">
-          <Favorites />
-        </Route>
+        <PrivateRoute
+          exact
+          path="/favorites"
+          render = {()=> {
+            return <Favorites/>;
+          }}
+        />
         <Route exact path="/offer/:id" render={({match}) => {
           const {id} = match.params;
           return <Room offerId={id} reviews={reviews} />;
