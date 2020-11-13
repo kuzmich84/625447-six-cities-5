@@ -90,7 +90,7 @@ const Room = (props) => {
                   <div
                     className={`property__avatar-wrapper ${isPro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper property__avatar-wrapper user__avatar-wrapper`}>
                     <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74"
-                         alt="Host avatar"/>
+                      alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
                     {name}
@@ -111,7 +111,7 @@ const Room = (props) => {
                       <div className="reviews__user user">
                         <div className="reviews__avatar-wrapper user__avatar-wrapper">
                           <img className="reviews__avatar user__avatar" src={review.userAvatar} width="54" height="54"
-                               alt="Reviews avatar"/>
+                            alt="Reviews avatar"/>
                         </div>
                         <span className="reviews__user-name">
                           {review.userName}
@@ -150,7 +150,7 @@ const Room = (props) => {
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <Link to={`/offer/${item.id}`}>
                       <img className="place-card__image" src={item.images[0]} width="260" height="200"
-                           alt="Place image"/>
+                        alt="Place image"/>
                     </Link>
                   </div>
                   <div className="place-card__info">
