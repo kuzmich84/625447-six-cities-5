@@ -1,4 +1,4 @@
-import {loadOffers, loadOffersOfCity, requireAuthorization} from "./action";
+import {loadOffers, loadOffersOfCity, redirectToRoute, requireAuthorization} from "./action";
 import {getOffersUtils} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
 import {AuthorizationStatus} from "./const";
@@ -18,4 +18,5 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(`/`)))
 );

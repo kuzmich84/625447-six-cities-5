@@ -4,6 +4,7 @@ export const ActionType = {
   LOAD_OFFERS_OF_CITY: `GET_OFFERS_OF_CITY`,
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   CHANGE_FILTER: `CHANGE_FILTER`,
+  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
 };
 
 export const changeCity = (city) => ({
@@ -29,4 +30,9 @@ export const changeFilter = (value) => ({
 export const requireAuthorization = (status) => ({
   type: ActionType.REQUIRED_AUTHORIZATION,
   payload: status,
+});
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
 });
