@@ -1,12 +1,11 @@
 import {extend} from "../../../utils/utils";
 import {ActionType} from "../../action";
-
-const defaultCity = `Paris`;
+import {defaultCity, defaultFilter} from "../../const";
 
 const initialState = {
   city: defaultCity,
   offersOfCity: [],
-  value: `popular`,
+  value: defaultFilter,
 };
 
 
