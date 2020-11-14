@@ -26,7 +26,7 @@ const App = (props) => {
         </Route>
         <RouteLoginToMain
           exact
-          path={AppRoute.ROOT}
+          path={AppRoute.LOGIN}
           render={() => <Login/>}
         />
         <PrivateRoute
