@@ -1,5 +1,5 @@
 import React from "react";
-import {offerPropTypes} from "../../customPropTypes/customPropTypes";
+import {offerPropTypes} from "../../custom-prop-types/custom-prop-types";
 import {transferRatingToPercent} from "../../utils/utils";
 import {Link} from "react-router-dom";
 

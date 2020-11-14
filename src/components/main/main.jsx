@@ -1,12 +1,12 @@
 import React from "react";
 import propTypes from "prop-types";
-import ListCards from "../listCards/listCards";
+import ListCards from "../list-cards/list-cards";
 import {cityGeoCenter} from "../../mocks/constants";
 import {getOffersUtils, toCapitalize} from "../../utils/utils";
 import Map from "../map/map";
 import {changeCity, loadOffersOfCity} from "../../store/action";
 import {connect} from "react-redux";
-import MenuList from "../menuList/menuList";
+import MenuList from "../menu-list/menu-list";
 import Filter from "../filter/filter";
 import {getCity, getOffersOfCity} from "../../store/selectors/offers-selectors";
 

@@ -1,7 +1,7 @@
 import React from "react";
-import {offerPropTypes, reviewsPropTypes} from "../../customPropTypes/customPropTypes";
+import {offerPropTypes, reviewsPropTypes} from "../../custom-prop-types/custom-prop-types";
 import {transferRatingToPercent, setDateToString, getRandomNumber} from "../../utils/utils";
-import ReviewsForm from "../reviewsForm/reviewsForm";
+import ReviewsForm from "../reviews-form/reviews-form";
 import {cityGeoCenter} from "../../mocks/constants";
 import Map from "../map/map";
 import {connect} from "react-redux";

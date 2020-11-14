@@ -1,5 +1,5 @@
 import React from 'react';
-import {offersPropTypes} from "../../customPropTypes/customPropTypes";
+import {offersPropTypes} from "../../custom-prop-types/custom-prop-types";
 import {transferRatingToPercent} from "../../utils/utils";
 import {connect} from "react-redux";
 import Header from "../header/header";

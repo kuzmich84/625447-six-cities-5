@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import {offersPropTypes} from "../../customPropTypes/customPropTypes";
+import {offersPropTypes} from "../../custom-prop-types/custom-prop-types";
 import propTypes from "prop-types";
 import {getOffersOfCity} from "../../store/selectors/offers-selectors";
 import {connect} from "react-redux";
