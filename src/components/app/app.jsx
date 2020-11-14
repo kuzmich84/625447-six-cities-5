@@ -5,7 +5,7 @@ import Favorites from "../favorites/favorites";
 import Room from "../room/room";
 import propTypes from "prop-types";
 import PageMain from "../pageMain/pageMain";
-import PrivateRoute from "../private-root/private-root";
+import PrivateRoute from "../private-route/private-route";
 
 const App = (props) => {
   const {reviews} = props;
@@ -21,6 +21,13 @@ const App = (props) => {
         }}>
 
         </Route>
+        <PrivateRoute
+          exact
+          path = "/login"
+          render={()=>{
+            return <PageMain />;
+          }}
+        />
         <Route exact path="/login">
           <Login/>
         </Route>
