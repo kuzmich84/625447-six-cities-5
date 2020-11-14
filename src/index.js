@@ -11,6 +11,7 @@ import {checkAuth, fetchOffersList} from "./store/api-actions";
 import {composeWithDevTools} from "redux-devtools-extension";
 import {requireAuthorization} from "./store/action";
 import {AuthorizationStatus} from "./store/const";
+import {redirect} from "./store/middlewares/redirect";
 
 const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -18,7 +19,10 @@ const api = createAPI(
 
 const store = createStore(
     rootReducer,
-    composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)))
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
+    )
 );
 
 store.dispatch(fetchOffersList());
