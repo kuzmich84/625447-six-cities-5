@@ -14,25 +14,23 @@ import {AuthorizationStatus} from "./store/const";
 import {redirect} from "./store/middlewares/redirect";
 
 const api = createAPI(
-  () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 
 const store = createStore(
-  rootReducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect),
-  ),
+    rootReducer,
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect))
 );
 
 const init = () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <App
-        reviews={reviews}/>
-    </Provider>,
-    document.querySelector(`#root`),
-  );
+      <Provider store={store}>
+        <App
+          reviews={reviews}/>
+      </Provider>,
+      document.querySelector(`#root`));
 };
 
 
