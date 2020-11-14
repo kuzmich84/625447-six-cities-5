@@ -2,11 +2,12 @@ import React from "react";
 import {offerPropTypes} from "../../custom-prop-types/custom-prop-types";
 import {transferRatingToPercent} from "../../utils/utils";
 import {Link} from "react-router-dom";
+import {AppRoute} from "../../store/const";
 
 const Card = (props) => {
   const {offer, handleHoverCard} = props;
   const {title, images, price, type, isPremium, isFavorite, rating} = offer;
-  const link = `/offer/${offer.id}`;
+  const link = `${AppRoute.OFFER}/${offer.id}`;
 
   return (<article className="cities__place-card place-card" onMouseOver={() => handleHoverCard(offer)}>
     {isPremium

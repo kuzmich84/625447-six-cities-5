@@ -36,7 +36,7 @@ const App = (props) => {
             return <Favorites/>;
           }}
         />
-        <Route exact path={AppRoute.OFFER} render={({match}) => {
+        <Route exact path={`${AppRoute.OFFER}/:id`} render={({match}) => {
           const {id} = match.params;
           return <Room offerId={id} reviews={reviews}/>;
         }}/>

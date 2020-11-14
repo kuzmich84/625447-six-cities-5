@@ -10,7 +10,7 @@ export const AppRoute = {
   LOGIN: `/login`,
   ROOT: `/`,
   FAVORITES: `/favorites`,
-  OFFER: `/offer/:id`,
+  OFFER: `/offer`,
   CITY: `/city/:cityName`,
 };
 
