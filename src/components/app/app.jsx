@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {Router, Switch, Route} from "react-router-dom";
 import Login from "../login/login";
 import Favorites from "../favorites/favorites";
 import Room from "../room/room";
@@ -7,11 +7,12 @@ import propTypes from "prop-types";
 import PageMain from "../pageMain/pageMain";
 import PrivateRoute from "../private-route/private-route";
 import RouteLoginToMain from "../route-login-to-main/route-login-to-main";
+import browserHistory from "../../browser-history";
 
 const App = (props) => {
   const {reviews} = props;
   return (
-    <Router>
+    <Router history={browserHistory}>
       <Switch>
         <Route exact path="/">
           <PageMain/>
