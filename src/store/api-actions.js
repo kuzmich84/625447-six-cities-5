@@ -1,4 +1,4 @@
-import {loadOffer, loadOffers, loadOffersOfCity, redirectToRoute, requireAuthorization} from "./action";
+import {isLoading, loadOffer, loadOffers, loadOffersOfCity, redirectToRoute, requireAuthorization} from "./action";
 import {getOffersUtils} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
 import {APIRoute, AppRoute, AuthorizationStatus, defaultCity} from "./const";
@@ -24,5 +24,6 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const fetchOffer = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.HOTELS}/${offerId}`)
     .then(({data}) => dispatch(loadOffer(data)))
+    .then(()=>dispatch(isLoading()))
     .catch(() => {})
 );

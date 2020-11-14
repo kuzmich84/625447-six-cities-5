@@ -11,7 +11,7 @@ import browserHistory from "../../browser-history";
 import {AppRoute} from "../../store/const";
 
 const App = (props) => {
-  const {reviews} = props;
+  const {reviews, isLoading} = props;
   return (
     <Router history={browserHistory}>
       <Switch>

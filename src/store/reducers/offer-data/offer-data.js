@@ -5,6 +5,7 @@ const initialState = {
   offer: {},
   reviews: [],
   nearby: [],
+  isLoading: false
 };
 
 
@@ -22,6 +23,10 @@ export const offerData = (state = initialState, action) => {
     case ActionType.LOAD_NEAR_BY:
       return extend(state, {
         nearby: action.payload,
+      });
+    case ActionType.IS_LOADING:
+      return extend(state, {
+        isLoading: true,
       });
   }
   return state;
