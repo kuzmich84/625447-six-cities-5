@@ -8,16 +8,17 @@ import PageMain from "../pageMain/pageMain";
 import PrivateRoute from "../private-route/private-route";
 import RouteLoginToMain from "../route-login-to-main/route-login-to-main";
 import browserHistory from "../../browser-history";
+import {AppRoute} from "../../store/const";
 
 const App = (props) => {
   const {reviews} = props;
   return (
     <Router history={browserHistory}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.ROOT}>
           <PageMain/>
         </Route>
-        <Route exact path="/city/:cityName" render={({match}) => {
+        <Route exact path={AppRoute.CITY} render={({match}) => {
           const {cityName} = match.params;
           return <PageMain cityName={cityName}/>;
         }}>
@@ -25,17 +26,17 @@ const App = (props) => {
         </Route>
         <RouteLoginToMain
           exact
-          path="/login"
+          path={AppRoute.ROOT}
           render={() => <Login/>}
         />
         <PrivateRoute
           exact
-          path="/favorites"
+          path={AppRoute.FAVORITES}
           render={() => {
             return <Favorites/>;
           }}
         />
-        <Route exact path="/offer/:id" render={({match}) => {
+        <Route exact path={AppRoute.OFFER} render={({match}) => {
           const {id} = match.params;
           return <Room offerId={id} reviews={reviews}/>;
         }}/>

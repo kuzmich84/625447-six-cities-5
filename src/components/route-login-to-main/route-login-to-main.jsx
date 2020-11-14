@@ -1,6 +1,6 @@
 import React from "react";
 import {Redirect, Route} from "react-router-dom";
-import {AuthorizationStatus} from "../../store/const";
+import {AppRoute, AuthorizationStatus} from "../../store/const";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
 
@@ -11,7 +11,7 @@ const RouteLoginToMain = (props) => {
 
 
   if (authorizationStatus === AuthorizationStatus.AUTH) {
-    return <Redirect to={`/`}/>;
+    return <Redirect to={AppRoute.ROOT}/>;
   } else {
     return <Route {...props} />;
   }

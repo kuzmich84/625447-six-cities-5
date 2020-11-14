@@ -1,7 +1,7 @@
 import React from "react";
 import {Redirect, Route} from "react-router-dom";
 import propTypes from "prop-types";
-import {AuthorizationStatus} from "../../store/const";
+import {AppRoute, AuthorizationStatus} from "../../store/const";
 import {connect} from "react-redux";
 
 
@@ -16,7 +16,7 @@ const PrivateRoute = (props) => {
         return (
           authorizationStatus === AuthorizationStatus.AUTH
             ? render(routeProps)
-            : <Redirect to={`/login`} />
+            : <Redirect to={AppRoute.LOGIN} />
         );
       }}
     />

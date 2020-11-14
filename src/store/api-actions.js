@@ -1,22 +1,22 @@
 import {loadOffers, loadOffersOfCity, redirectToRoute, requireAuthorization} from "./action";
 import {getOffersUtils} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
-import {AuthorizationStatus} from "./const";
+import {APIRoute, AppRoute, AuthorizationStatus} from "./const";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
-  api.get(`/hotels`)
+  api.get(APIRoute.HOTELS)
     .then(({data}) => dispatch(loadOffers(camelcaseKeys(data, {deep: true}))))
     .then(({payload}) => dispatch(loadOffersOfCity(getOffersUtils(payload, `Paris`))))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
-  api.get(`/login`)
+  api.get(APIRoute.LOGIN)
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.post(`/login`, {email, password})
+  api.post(APIRoute.LOGIN, {email, password})
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(`/`)))
+    .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
 );

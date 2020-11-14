@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import {AuthorizationStatus} from "../../store/const";
+import {AppRoute, AuthorizationStatus} from "../../store/const";
 import propTypes from "prop-types";
 
 const Header = (props) => {
@@ -12,7 +12,7 @@ const Header = (props) => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Link to={`/`} className="header__logo-link header__logo-link--active">
+            <Link to={AppRoute.ROOT} className="header__logo-link header__logo-link--active">
               <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41"/></Link>
           </div>
           <nav className="header__nav">
@@ -20,8 +20,8 @@ const Header = (props) => {
               <li className="header__nav-item user">
                 <Link className="header__nav-link header__nav-link--profile" to={
                   authorizationStatus === AuthorizationStatus.AUTH
-                    ? `/favorites`
-                    : `/login`
+                    ? AppRoute.FAVORITES
+                    : AppRoute.LOGIN
                 }>
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
