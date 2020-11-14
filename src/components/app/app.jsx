@@ -6,6 +6,7 @@ import Room from "../room/room";
 import propTypes from "prop-types";
 import PageMain from "../pageMain/pageMain";
 import PrivateRoute from "../private-route/private-route";
+import RouteLoginToMain from "../route-login-to-main/route-login-to-main";
 
 const App = (props) => {
   const {reviews} = props;
@@ -13,7 +14,7 @@ const App = (props) => {
     <Router>
       <Switch>
         <Route exact path="/">
-          <PageMain />
+          <PageMain/>
         </Route>
         <Route exact path="/city/:cityName" render={({match}) => {
           const {cityName} = match.params;
@@ -21,26 +22,21 @@ const App = (props) => {
         }}>
 
         </Route>
-        <PrivateRoute
+        <RouteLoginToMain
           exact
-          path = "/login"
-          render={()=>{
-            return <PageMain />;
-          }}
+          path="/login"
+          render={() => <Login/>}
         />
-        <Route exact path="/login">
-          <Login/>
-        </Route>
         <PrivateRoute
           exact
           path="/favorites"
-          render = {()=> {
+          render={() => {
             return <Favorites/>;
           }}
         />
         <Route exact path="/offer/:id" render={({match}) => {
           const {id} = match.params;
-          return <Room offerId={id} reviews={reviews} />;
+          return <Room offerId={id} reviews={reviews}/>;
         }}/>
       </Switch>
     </Router>
@@ -48,11 +44,8 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  offers: propTypes.arrayOf(
-      propTypes.object.isRequired),
   reviews: propTypes.arrayOf(
-      propTypes.object.isRequired
-  )
+      propTypes.object.isRequired),
 };
 
 export default App;
