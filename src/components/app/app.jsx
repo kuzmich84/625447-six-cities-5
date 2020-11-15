@@ -11,7 +11,7 @@ import browserHistory from "../../browser-history";
 import {AppRoute} from "../../store/const";
 
 const App = (props) => {
-  const {reviews, isLoading} = props;
+  const {reviews} = props;
   return (
     <Router history={browserHistory}>
       <Switch>
@@ -36,9 +36,8 @@ const App = (props) => {
             return <Favorites/>;
           }}
         />
-        <Route exact path={`${AppRoute.OFFER}/:id`} render={({match}) => {
-          const {id} = match.params;
-          return <Room offerId={id} reviews={reviews}/>;
+        <Route exact path={`${AppRoute.OFFER}/:id`} render={() => {
+          return (<Room reviews={reviews}/>);
         }}/>
       </Switch>
     </Router>

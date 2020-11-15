@@ -9,6 +9,7 @@ export const ActionType = {
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   LOAD_NEAR_BY: `LOAD_NEAR_BY`,
   IS_LOADING: `IS_LOADING`,
+  ACTIVE_ID: `ACTIVE_ID`
 };
 
 export const changeCity = (city) => ({
@@ -58,4 +59,9 @@ export const loadNearby = (nearby) => ({
 
 export const isLoading = () => ({
   type: ActionType.IS_LOADING,
+});
+
+export const activeId = (id) => ({
+  type: ActionType.ACTIVE_ID,
+  payload: id,
 });

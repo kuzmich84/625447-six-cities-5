@@ -11,7 +11,7 @@ import ListReviews from "../list-reviews/list-reviews";
 
 
 const Room = (props) => {
-  const {reviews, offer, offerId} = props;
+  const {reviews, offer} = props;
 
 
   const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;

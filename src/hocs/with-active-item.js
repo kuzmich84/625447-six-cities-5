@@ -1,39 +1,52 @@
 import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
+import {activeId, loadOffer} from "../store/action";
+import {connect} from "react-redux";
+import {fetchOffer} from "../store/api-actions";
 
 
 export const withActiveItem = (Component) => {
   class WithActiveItem extends PureComponent {
     constructor(props) {
       super(props);
-      this.state = {
-        offer: {},
-      };
       this.handleHoverCard = this.handleHoverCard.bind(this);
     }
 
-    handleHoverCard(offer) {
-      this.setState({
-        offer,
-      });
+    componentDidMount(offerId) {
+      this.props.loadOfferServer(offerId);
+    }
+
+    handleHoverCard(offer, offerId) {
+      this.props.setActiveId(offerId);
+      this.props.loadOfferActive(offer);
     }
 
     render() {
-      const {offer} = this.state;
-
       return (<Component
         {...this.props}
-        offer={offer}
+
         handleHoverCard={this.handleHoverCard}
       >
       </Component>);
     }
-
   }
 
   WithActiveItem.propTypes = {
-    offer: PropTypes.object,
+    loadOfferActive: propTypes.func.isRequired,
+    setActiveId: propTypes.func.isRequired,
+    loadOfferServer: propTypes.func.isRequired
   };
 
-  return WithActiveItem;
+  const mapDispatchToProps = (dispatch) => ({
+    loadOfferActive(offer) {
+      dispatch(loadOffer(offer));
+    },
+    loadOfferServer(offerId) {
+      dispatch(fetchOffer(offerId));
+    },
+    setActiveId(offerId) {
+      dispatch(activeId(offerId));
+    }
+  });
+  return connect(null, mapDispatchToProps)(WithActiveItem);
 };

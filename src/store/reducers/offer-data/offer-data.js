@@ -3,9 +3,9 @@ import {ActionType} from "../../action";
 
 const initialState = {
   offer: {},
+  activeId: 0,
   reviews: [],
   nearby: [],
-  isLoading: false
 };
 
 
@@ -27,6 +27,10 @@ export const offerData = (state = initialState, action) => {
     case ActionType.IS_LOADING:
       return extend(state, {
         isLoading: true,
+      });
+    case ActionType.ACTIVE_ID:
+      return extend(state, {
+        activeId: action.payload,
       });
   }
   return state;
