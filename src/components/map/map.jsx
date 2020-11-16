@@ -60,7 +60,7 @@ class Map extends PureComponent {
 
   renderMarkers(markersData) {
     markersData.map((marker) => {
-      return L.marker([marker.location.latitude, marker.location.longitude], {icon: iconDefault}).addTo(this.map);
+      return L.marker([marker.location.latitude, marker.location.longitude], {icon: iconDefault}).addTo(this.map).on(`mouseover`, this.handlerHoverMarker).on(`mouseout`, this.handlerUnHoverMarker);
     });
   }
 
