@@ -57,8 +57,9 @@ export const loadNearby = (nearby) => ({
   payload: nearby,
 });
 
-export const isLoading = () => ({
+export const isLoading = (bool) => ({
   type: ActionType.IS_LOADING,
+  payload: bool,
 });
 
 export const activeId = (id) => ({

@@ -24,6 +24,6 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const fetchOffer = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.HOTELS}/${offerId}`)
     .then(({data}) => dispatch(loadOffer(data)))
-    .then(()=>dispatch(isLoading()))
+    .then(()=>dispatch(isLoading(false)))
     .catch(() => {})
 );
