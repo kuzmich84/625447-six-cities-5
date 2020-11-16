@@ -12,6 +12,7 @@ export const AppRoute = {
   FAVORITES: `/favorites`,
   OFFER: `/offer`,
   CITY: `/city/:cityName`,
+  COMMENTS: `/comments`,
 };
 
 export const APIRoute = {

@@ -5,25 +5,26 @@ import {reviewsPropTypes} from "../../custom-prop-types/custom-prop-types";
 
 const Review = (props) => {
   const {review} = props;
+  const {name, avatarUrl} = review.user;
   return (<li className="reviews__item" key={review.id}>
     <div className="reviews__user user">
       <div className="reviews__avatar-wrapper user__avatar-wrapper">
-        <img className="reviews__avatar user__avatar" src={review.userAvatar} width="54" height="54"
+        <img className="reviews__avatar user__avatar" src={avatarUrl} width="54" height="54"
           alt="Reviews avatar"/>
       </div>
       <span className="reviews__user-name">
-        {review.userName}
+        {name}
       </span>
     </div>
     <div className="reviews__info">
       <div className="reviews__rating rating">
         <div className="reviews__stars rating__stars">
-          <span style={{width: `${transferRatingToPercent(review.userRating)}%`}}/>
+          <span style={{width: `${transferRatingToPercent(review.rating)}%`}}/>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>
       <p className="reviews__text">
-        {review.textReview}
+        {review.comment}
       </p>
       <time className="reviews__time" dateTime={review.date}>{setDateToString(review.date)}</time>
     </div>

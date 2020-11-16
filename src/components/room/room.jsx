@@ -5,12 +5,10 @@ import ReviewsForm from "../reviews-form/reviews-form";
 import {cityGeoCenter} from "../../mocks/constants";
 import Map from "../map/map";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
 import Header from "../header/header";
 import ListReviews from "../list-reviews/list-reviews";
-import {withActiveLoad} from "../../hocs/with-active-load";
-import {fetchOffer} from "../../store/api-actions";
-import {isLoading as isLoadingAction} from "../../store/action";
+import {fetchOffer, fetchOfferReviews} from "../../store/api-actions";
+import {activeId, isLoading as isLoadingAction} from "../../store/action";
 
 class Room extends PureComponent {
   constructor(props) {
@@ -22,21 +20,21 @@ class Room extends PureComponent {
     const {offerId} = this.props;
     this.props.setIsLoading(true);
     this.props.loadOfferServer(offerId);
+    this.props.loadReviews(offerId);
   }
 
   renderTemplate() {
-    const {isLoading} = this.props;
-    const {reviews, offer} = this.props;
-
-
-    const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
-    const {avatarUrl, name, isPro} = host;
-    const newReviews = reviews.slice(0, getRandomNumber(0, reviews.length));
-
-
+    const {isLoading, getActiveId} = this.props;
     if (isLoading) {
       return <p>Загружаю...</p>;
-    } else {
+
+    } else if (getActiveId) {
+
+      const {reviews, offer} = this.props;
+      const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
+      const {avatarUrl, name, isPro} = host;
+      console.log(avatarUrl)
+
       return (
         <div className="page">
           <Header/>
@@ -109,8 +107,7 @@ class Room extends PureComponent {
                     <div className="property__host-user user">
                       <div
                         className={`property__avatar-wrapper ${isPro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper property__avatar-wrapper user__avatar-wrapper`}>
-                        <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74"
-                          alt="Host avatar"/>
+                        <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
                       </div>
                       <span className="property__user-name">
                         {name}
@@ -124,8 +121,8 @@ class Room extends PureComponent {
                   </div>
                   <section className="property__reviews reviews">
                     <h2 className="reviews__title">Reviews &middot; <span
-                      className="reviews__amount">{newReviews.length}</span></h2>
-                    <ListReviews reviews={newReviews}/>
+                      className="reviews__amount">{reviews.length}</span></h2>
+                    <ListReviews reviews={reviews}/>
                     <ReviewsForm/>
                   </section>
                 </div>
@@ -180,6 +177,8 @@ class Room extends PureComponent {
           </main>
         </div>
       );
+    } else {
+      return <p>Загружаю...</p>;
     }
   }
 
@@ -196,6 +195,8 @@ Room.propTypes = reviewsPropTypes;
 const mapStateToProps = ({DATA, OFFER}) => ({
   offers: DATA.offers,
   offer: OFFER.offer,
+  getActiveId: OFFER.activeId,
+  reviews: OFFER.reviews,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -204,6 +205,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setIsLoading(bull) {
     dispatch(isLoadingAction(bull));
+  },
+  setActiveId(offerId) {
+    dispatch(activeId(offerId));
+  },
+  loadReviews(offerId) {
+    dispatch(fetchOfferReviews(offerId));
   }
 });
 

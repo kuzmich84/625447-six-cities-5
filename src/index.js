@@ -36,6 +36,6 @@ const init = () => {
 
 Promise.all([
   store.dispatch(fetchOffersList()),
-  store.dispatch(checkAuth()),
+  store.dispatch(checkAuth())
 ])
   .then(init);

@@ -3,7 +3,7 @@ import {ActionType} from "../../action";
 
 const initialState = {
   offer: {},
-  activeId: 0,
+  activeId: null,
   reviews: [],
   nearby: [],
   isLoading: false
