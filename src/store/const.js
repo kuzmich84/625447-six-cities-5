@@ -13,6 +13,7 @@ export const AppRoute = {
   OFFER: `/offer`,
   CITY: `/city/:cityName`,
   COMMENTS: `/comments`,
+  NEARBY: `/nearby`,
 };
 
 export const APIRoute = {

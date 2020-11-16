@@ -41,7 +41,7 @@ const Main = (props) => {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
+              <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
             </section>
           </div>
         </div>

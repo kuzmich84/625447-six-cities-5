@@ -1,4 +1,4 @@
-import {activeId, isLoading, loadOffer, loadOffers, loadOffersOfCity, loadReviews, redirectToRoute, requireAuthorization} from "./action";
+import {activeId, isLoading, loadNearby, loadOffer, loadOffers, loadOffersOfCity, loadReviews, redirectToRoute, requireAuthorization} from "./action";
 import {getOffersUtils} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
 import {APIRoute, AppRoute, AuthorizationStatus, defaultCity} from "./const";
@@ -34,3 +34,10 @@ export const fetchOfferReviews = (offerId)=>(dispatch, _getState, api) =>(
     .then(({data})=> dispatch(loadReviews((camelcaseKeys(data, {deep: true})))))
     .catch(() => {})
 );
+
+export const fetchOfferNearby = (offerId)=>(dispatch, _getState, api) =>(
+  api.get(`${APIRoute.HOTELS}/${offerId}${AppRoute.NEARBY}`)
+    .then(({data})=> dispatch(loadNearby((camelcaseKeys(data, {deep: true})))))
+    .catch(() => {})
+);
+

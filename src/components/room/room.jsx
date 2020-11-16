@@ -7,7 +7,7 @@ import Map from "../map/map";
 import {connect} from "react-redux";
 import Header from "../header/header";
 import ListReviews from "../list-reviews/list-reviews";
-import {fetchOffer, fetchOfferReviews} from "../../store/api-actions";
+import {fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-actions";
 import {activeId, isLoading as isLoadingAction} from "../../store/action";
 
 class Room extends PureComponent {
@@ -21,6 +21,7 @@ class Room extends PureComponent {
     this.props.setIsLoading(true);
     this.props.loadOfferServer(offerId);
     this.props.loadReviews(offerId);
+    this.props.loadNearby(offerId);
   }
 
   renderTemplate() {
@@ -30,10 +31,10 @@ class Room extends PureComponent {
 
     } else if (getActiveId) {
 
-      const {reviews, offer} = this.props;
+      const {reviews, offer, nearby} = this.props;
       const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
       const {avatarUrl, name, isPro} = host;
-      console.log(avatarUrl)
+
 
       return (
         <div className="page">
@@ -128,7 +129,7 @@ class Room extends PureComponent {
                 </div>
               </div>
               <section className="property__map map">
-                <Map offers={offer} geoCenterOfCity={cityGeoCenter[city.name]}/>
+                <Map offers={nearby} geoCenterOfCity={cityGeoCenter[city.name]}/>
               </section>
             </section>
             <div className="container">
@@ -197,6 +198,7 @@ const mapStateToProps = ({DATA, OFFER}) => ({
   offer: OFFER.offer,
   getActiveId: OFFER.activeId,
   reviews: OFFER.reviews,
+  nearby: OFFER.nearby
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -211,6 +213,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadReviews(offerId) {
     dispatch(fetchOfferReviews(offerId));
+  },
+  loadNearby(offerId) {
+    dispatch(fetchOfferNearby(offerId));
   }
 });
 
