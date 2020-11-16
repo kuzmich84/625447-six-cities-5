@@ -7,11 +7,11 @@ import {connect} from "react-redux";
 import {fetchOffer} from "../../store/api-actions";
 
 const Card = (props) => {
-  const {offer, handleHoverCard, loadOfferAction} = props;
+  const {offer, handleHoverCard} = props;
   const {title, images, price, type, isPremium, isFavorite, rating} = offer;
   const link = `${AppRoute.OFFER}/${offer.id}`;
 
-  return (<article className="cities__place-card place-card" onMouseOver={() => handleHoverCard(offer, offer.id)}>
+  return (<article className="cities__place-card place-card" onMouseOver={() => handleHoverCard(offer.id)}>
     {isPremium
       ? (<div className="place-card__mark">
         <span>Premium</span>
@@ -44,7 +44,7 @@ const Card = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <Link to={link} onClick={() => loadOfferAction(offer.id)}>{title}</Link>
+        <Link to={link}>{title}</Link>
       </h2>
       <p className="place-card__type">{type}</p>
     </div>

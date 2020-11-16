@@ -3,15 +3,14 @@ import {Router, Switch, Route} from "react-router-dom";
 import Login from "../login/login";
 import Favorites from "../favorites/favorites";
 import Room from "../room/room";
-import propTypes from "prop-types";
 import PageMain from "../page-main/page-main";
 import PrivateRoute from "../private-route/private-route";
 import RouteLoginToMain from "../route-login-to-main/route-login-to-main";
 import browserHistory from "../../browser-history";
 import {AppRoute} from "../../store/const";
 
-const App = (props) => {
-  const {reviews} = props;
+const App = () => {
+
   return (
     <Router history={browserHistory}>
       <Switch>
@@ -38,16 +37,11 @@ const App = (props) => {
         />
         <Route exact path={`${AppRoute.OFFER}/:id`} render={({match}) => {
           const {id} = match.params;
-          return <Room offerId={id} reviews={reviews}/>;
+          return <Room offerId={id}/>;
         }}/>
       </Switch>
     </Router>
   );
-};
-
-App.propTypes = {
-  reviews: propTypes.arrayOf(
-      propTypes.object.isRequired),
 };
 
 export default App;

@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import {offerPropTypes, reviewsPropTypes} from "../../custom-prop-types/custom-prop-types";
-import {transferRatingToPercent, getRandomNumber} from "../../utils/utils";
+import {transferRatingToPercent} from "../../utils/utils";
 import ReviewsForm from "../reviews-form/reviews-form";
 import {cityGeoCenter} from "../../mocks/constants";
 import Map from "../map/map";
@@ -9,6 +9,7 @@ import Header from "../header/header";
 import ListReviews from "../list-reviews/list-reviews";
 import {fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-actions";
 import {activeId, isLoading as isLoadingAction} from "../../store/action";
+import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
 
 class Room extends PureComponent {
   constructor(props) {
@@ -34,7 +35,6 @@ class Room extends PureComponent {
       const {reviews, offer, nearby} = this.props;
       const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
       const {avatarUrl, name, isPro} = host;
-
 
       return (
         <div className="page">
@@ -135,44 +135,7 @@ class Room extends PureComponent {
             <div className="container">
               <section className="near-places places">
                 <h2 className="near-places__title">Other places in the neighbourhood</h2>
-                <div className="near-places__list places__list">
-                  {/* {offers.slice(1, offers.length).map((item) => {*/}
-                  {/*  return (<article className="near-places__card place-card" key={item.id}>*/}
-                  {/*    <div className="near-places__image-wrapper place-card__image-wrapper">*/}
-                  {/*      <Link to={`/offer/${item.id}`}>*/}
-                  {/*        <img className="place-card__image" src={item.images[0]} width="260" height="200"*/}
-                  {/*             alt="Place image"/>*/}
-                  {/*      </Link>*/}
-                  {/*    </div>*/}
-                  {/*    <div className="place-card__info">*/}
-                  {/*      <div className="place-card__price-wrapper">*/}
-                  {/*        <div className="place-card__price">*/}
-                  {/*          <b className="place-card__price-value">&euro;{item.price}</b>*/}
-                  {/*          <span className="place-card__price-text">&#47;&nbsp;night</span>*/}
-                  {/*        </div>*/}
-                  {/*        <button*/}
-                  {/*          className={`place-card__bookmark-button ${item.isFavorite ? `place-card__bookmark-button--active` : ``}  button`}*/}
-                  {/*          type="button">*/}
-                  {/*          <svg className="place-card__bookmark-icon" width="18" height="19">*/}
-                  {/*            <use xlinkHref="#icon-bookmark"/>*/}
-                  {/*          </svg>*/}
-                  {/*          <span className="visually-hidden">In bookmarks</span>*/}
-                  {/*        </button>*/}
-                  {/*      </div>*/}
-                  {/*      <div className="place-card__rating rating">*/}
-                  {/*        <div className="place-card__stars rating__stars">*/}
-                  {/*          <span style={{width: `${transferRatingToPercent(item.rating)}%`}}/>*/}
-                  {/*          <span className="visually-hidden">Rating</span>*/}
-                  {/*        </div>*/}
-                  {/*      </div>*/}
-                  {/*      <h2 className="place-card__name">*/}
-                  {/*        <Link to={`/offer/${item.id}`}>{item.title}</Link>*/}
-                  {/*      </h2>*/}
-                  {/*      <p className="place-card__type">{item.type}</p>*/}
-                  {/*    </div>*/}
-                  {/*  </article>);*/}
-                  {/* })}*/}
-                </div>
+                <ListCardsNearby offers={nearby}/>
               </section>
             </div>
           </main>
@@ -193,8 +156,7 @@ class Room extends PureComponent {
 Room.propTypes = offerPropTypes;
 Room.propTypes = reviewsPropTypes;
 
-const mapStateToProps = ({DATA, OFFER}) => ({
-  offers: DATA.offers,
+const mapStateToProps = ({OFFER}) => ({
   offer: OFFER.offer,
   getActiveId: OFFER.activeId,
   reviews: OFFER.reviews,

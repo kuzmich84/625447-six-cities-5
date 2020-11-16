@@ -3,6 +3,7 @@ import propTypes from "prop-types";
 import {activeId, loadOffer} from "../store/action";
 import {connect} from "react-redux";
 
+
 export const withActiveItem = (Component) => {
   class WithActiveItem extends PureComponent {
     constructor(props) {
@@ -36,7 +37,7 @@ export const withActiveItem = (Component) => {
     },
     setActiveId(offerId) {
       dispatch(activeId(offerId));
-    }
+    },
   });
   return connect(null, mapDispatchToProps)(WithActiveItem);
 };

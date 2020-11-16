@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/app/app";
-import {reviews} from "./mocks/reviews";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import rootReducer from "./store/reducers/root-reducer";
@@ -27,8 +26,7 @@ const store = createStore(
 const init = () => {
   ReactDOM.render(
       <Provider store={store}>
-        <App
-          reviews={reviews}/>
+        <App />
       </Provider>,
       document.querySelector(`#root`));
 };
