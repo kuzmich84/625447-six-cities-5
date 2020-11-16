@@ -9,14 +9,21 @@ const style = {
   height: `100%`,
 };
 
-const icon = L.icon({
+const iconDefault = new L.Icon({
   iconUrl: `/img/pin.svg`,
   iconSize: [30, 30],
 });
 
+const iconActive = new L.Icon({
+  iconUrl: `img/pin-active.svg`,
+});
+
+
 class Map extends PureComponent {
   constructor(props) {
     super(props);
+    this.handlerHoverMarker = this.handlerHoverMarker.bind(this);
+    this.handlerUnHoverMarker = this.handlerUnHoverMarker.bind(this);
   }
 
   componentDidMount() {
@@ -41,13 +48,19 @@ class Map extends PureComponent {
     const [lat, lng] = geoCenterOfCity;
     this.map.setView(new L.LatLng(lat, lng));
     this.renderMarkers(offers);
+  }
 
+  handlerHoverMarker(e) {
+    e.target.setIcon(iconActive);
+  }
 
+  handlerUnHoverMarker(e) {
+    e.target.setIcon(iconDefault);
   }
 
   renderMarkers(markersData) {
     markersData.map((marker) => {
-      return L.marker([marker.location.latitude, marker.location.longitude], {icon}).addTo(this.map);
+      return L.marker([marker.location.latitude, marker.location.longitude], {icon: iconDefault}).addTo(this.map);
     });
   }
 
@@ -57,7 +70,6 @@ class Map extends PureComponent {
     );
   }
 }
-
 
 Map.propTypes = {
   geoCenterOfCity: propTypes.array,
