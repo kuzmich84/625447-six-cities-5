@@ -11,6 +11,8 @@ import {fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-a
 import {activeId as activeIdAction, isLoading as isLoadingAction} from "../../store/action";
 import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
 import {getActiveId, getNearbyOffers, getOffer, getSortedReviewsOfDate} from "../../store/selectors/offers-selectors";
+import {getAuthorizationStatus} from "../../store/selectors/user-selectors";
+import {AuthorizationStatus} from "../../store/const";
 
 class Room extends PureComponent {
   constructor(props) {
@@ -33,10 +35,9 @@ class Room extends PureComponent {
 
     } else if (activeId) {
 
-      const {reviews, offer, nearby} = this.props;
+      const {reviews, offer, nearby, authorizationStatus} = this.props;
       const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
       const {avatarUrl, name, isPro} = host;
-
 
       return (
         <div className="page">
@@ -61,7 +62,6 @@ class Room extends PureComponent {
                     : null}
                   <div className="property__name-wrapper">
                     <h1 className="property__name">
-
                       {title}
                     </h1>
                     <button
@@ -126,7 +126,10 @@ class Room extends PureComponent {
                     <h2 className="reviews__title">Reviews &middot; <span
                       className="reviews__amount">{reviews.length}</span></h2>
                     <ListReviews reviews={reviews}/>
-                    <ReviewsForm/>
+                    {authorizationStatus === AuthorizationStatus.AUTH
+                      ? <ReviewsForm/>
+                      : null
+                    }
                   </section>
                 </div>
               </div>
@@ -163,6 +166,7 @@ const mapStateToProps = (state) => ({
   activeId: getActiveId(state),
   reviews: getSortedReviewsOfDate(state),
   nearby: getNearbyOffers(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

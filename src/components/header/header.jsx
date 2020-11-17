@@ -48,7 +48,6 @@ Header.propTypes = {
   authorizationStatus: propTypes.string.isRequired,
 };
 
-
 const mapStateToProps = ({USER}) => ({
   authorizationStatus: USER.authorizationStatus,
 });
