@@ -20,3 +20,15 @@ export const APIRoute = {
   HOTELS: `/hotels`,
   LOGIN: `/login`,
 };
+
+export const Index = {
+  start: 0,
+  end: 9
+};
+
+export const Filter = {
+  TO_HIGH: `to-high`,
+  TO_LOW: `to-low`,
+  TOP_RATED: `top-rated`
+};
+

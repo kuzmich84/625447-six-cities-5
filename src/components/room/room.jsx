@@ -8,8 +8,9 @@ import {connect} from "react-redux";
 import Header from "../header/header";
 import ListReviews from "../list-reviews/list-reviews";
 import {fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-actions";
-import {activeId, isLoading as isLoadingAction} from "../../store/action";
+import {activeId as activeIdAction, isLoading as isLoadingAction} from "../../store/action";
 import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
+import {getActiveId, getNearbyOffers, getOffer, getSortedReviewsOfDate} from "../../store/selectors/offers-selectors";
 
 class Room extends PureComponent {
   constructor(props) {
@@ -26,15 +27,16 @@ class Room extends PureComponent {
   }
 
   renderTemplate() {
-    const {isLoading, getActiveId} = this.props;
+    const {isLoading, activeId} = this.props;
     if (isLoading) {
       return <p>Загружаю...</p>;
 
-    } else if (getActiveId) {
+    } else if (activeId) {
 
       const {reviews, offer, nearby} = this.props;
       const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
       const {avatarUrl, name, isPro} = host;
+
 
       return (
         <div className="page">
@@ -156,11 +158,11 @@ class Room extends PureComponent {
 Room.propTypes = offerPropTypes;
 Room.propTypes = reviewsPropTypes;
 
-const mapStateToProps = ({OFFER}) => ({
-  offer: OFFER.offer,
-  getActiveId: OFFER.activeId,
-  reviews: OFFER.reviews,
-  nearby: OFFER.nearby
+const mapStateToProps = (state) => ({
+  offer: getOffer(state),
+  activeId: getActiveId(state),
+  reviews: getSortedReviewsOfDate(state),
+  nearby: getNearbyOffers(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -171,7 +173,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(isLoadingAction(bull));
   },
   setActiveId(offerId) {
-    dispatch(activeId(offerId));
+    dispatch(activeIdAction(offerId));
   },
   loadReviews(offerId) {
     dispatch(fetchOfferReviews(offerId));
@@ -179,6 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadNearby(offerId) {
     dispatch(fetchOfferNearby(offerId));
   }
+
 });
 
 export {Room};
