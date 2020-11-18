@@ -27,9 +27,9 @@ export default class ReviewsForm extends PureComponent {
         touched: false,
         validation: {
           minLength: 50,
-          maxLength: 300
+          maxLength: 300,
         },
-      }
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,7 +44,7 @@ export default class ReviewsForm extends PureComponent {
     let isValid = true;
 
     if (validation.minLength) {
-      isValid = value.length >= validation.maxLength && isValid;
+      isValid = value.length >= validation.minLength && isValid;
     }
 
     if (validation.maxLength) {
@@ -58,26 +58,26 @@ export default class ReviewsForm extends PureComponent {
     return isValid;
   }
 
-  handleChange(event, controlName) {
+  handleChange(event) {
     const describe = Object.assign({}, this.state.describe);
-    const control = Object.assign({}, describe[controlName]);
-    control.value = event.target.value;
-    control.touched = true;
-    control.valid = this.validateControl(control.value, control.validation);
-    describe[controlName] = control;
+    describe.value = event.target.value;
+    describe.touched = true;
+    describe.valid = this.validateControl(describe.value, describe.validation);
+
     this.setState({
-      describe
+      describe,
     });
 
 
   }
 
   handleChecked(event) {
-    this.setState(extend(this.state.rating, {
-        checkedValue: event.target.value,
-        valid: this.validateControl(this.value, this.validation),
-      })
-    );
+    const rating = Object.assign({}, this.state.rating);
+    rating.checkedValue = event.target.value;
+    rating.valid = this.validateControl(rating.value, true);
+    this.setState({
+      rating,
+    });
   }
 
   handleSubmit(event) {
@@ -106,7 +106,7 @@ export default class ReviewsForm extends PureComponent {
         {this.renderInputs()}
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review" onChange={this.handleChange}
-                placeholder="Tell how was your stay, what you like and what can be improved"/>
+        placeholder="Tell how was your stay, what you like and what can be improved"/>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
