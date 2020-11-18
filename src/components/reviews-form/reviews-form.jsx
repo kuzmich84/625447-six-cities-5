@@ -74,6 +74,7 @@ export default class ReviewsForm extends PureComponent {
   handleChecked(event) {
     const rating = Object.assign({}, this.state.rating);
     rating.checkedValue = event.target.value;
+    console.log(rating.checkedValue)
     rating.valid = this.validateControl(rating.value, true);
     this.setState({
       rating,
