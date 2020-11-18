@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import Input from "../input/input";
-import {extend} from "../../utils/utils";
+
 
 const star = <svg className="form__star-image" width="37" height="33">
   <use xlinkHref="#icon-star"/>
@@ -13,35 +13,39 @@ export default class ReviewsForm extends PureComponent {
     super(props);
     this.state = {
       isFormValid: false,
-      rating: {
-        checkedValue: 0,
-        errorMessage: `You have to set rating`,
-        valid: false,
-        touched: false,
-        validation: true,
-      },
-      describe: {
-        value: ``,
-        errorMessage: `You have to describe at least 50 and no more than 300 characters`,
-        valid: false,
-        touched: false,
-        validation: {
-          minLength: 50,
-          maxLength: 300,
+      formControls: {
+        rating: {
+          value: null,
+          valid: false,
+          validation: {
+            value: 0,
+          },
+        },
+        describe: {
+          value: ``,
+          valid: false,
+          validation: {
+            minLength: 50,
+            maxLength: 300,
+          },
         },
       },
+
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChecked = this.handleChecked.bind(this);
+
   }
 
   validateControl(value, validation) {
+
     if (!validation) {
       return true;
     }
+
     let isValid = true;
+
 
     if (validation.minLength) {
       isValid = value.length >= validation.minLength && isValid;
@@ -51,39 +55,33 @@ export default class ReviewsForm extends PureComponent {
       isValid = value.length <= validation.maxLength && isValid;
     }
 
-    if (validation) {
-      isValid = value.checkedValue >= 0 && isValid;
+    if (validation.value) {
+      isValid = value > 0 && isValid;
     }
 
     return isValid;
   }
 
-  handleChange(event) {
-    const describe = Object.assign({}, this.state.describe);
-    describe.value = event.target.value;
-    describe.touched = true;
-    describe.valid = this.validateControl(describe.value, describe.validation);
+  handleChange(event, controlName) {
+    const formControls = Object.assign({}, this.state.formControls);
+    const control = Object.assign({}, formControls[controlName]);
 
-    this.setState({
-      describe,
+    control.value = event.target.value;
+    control.valid = this.validateControl(control.value, control.validation);
+    formControls[controlName] = control;
+
+    let isFormValid = true;
+    Object.keys(formControls).forEach((name) => {
+      isFormValid = formControls[name].valid && isFormValid;
     });
 
-
-  }
-
-  handleChecked(event) {
-    const rating = Object.assign({}, this.state.rating);
-    rating.checkedValue = event.target.value;
-    console.log(rating.checkedValue)
-    rating.valid = this.validateControl(rating.value, true);
     this.setState({
-      rating,
+      formControls, isFormValid,
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-
   }
 
   renderInputs() {
@@ -94,7 +92,7 @@ export default class ReviewsForm extends PureComponent {
       name={`rating`}
       value={`${index + 1}`}
       type={`radio`}
-      onChange={this.handleChecked}
+      onChange={(event) => this.handleChange(event, `rating`)}
       htmlFor={`${index + 1}-stars`}
       title={`${title}`}
       label={star}/>).reverse();
@@ -106,14 +104,18 @@ export default class ReviewsForm extends PureComponent {
       <div className="reviews__rating-form form__rating">
         {this.renderInputs()}
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" onChange={this.handleChange}
+      <textarea className="reviews__textarea form__textarea" id="review" name="review"
+        onChange={(event) => this.handleChange(event, `describe`)}
         placeholder="Tell how was your stay, what you like and what can be improved"/>
+
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit"
+          disabled={this.state.isFormValid ? null : `disabled`}>Submit
+        </button>
       </div>
     </form>);
   }
