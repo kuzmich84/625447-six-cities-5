@@ -10,7 +10,13 @@ import ListReviews from "../list-reviews/list-reviews";
 import {fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-actions";
 import {activeId as activeIdAction, isLoading as isLoadingAction} from "../../store/action";
 import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
-import {getActiveId, getNearbyOffers, getOffer, getSortedReviewsOfDate} from "../../store/selectors/offers-selectors";
+import {
+  getActiveId,
+  getIsLoading,
+  getNearbyOffers,
+  getOffer,
+  getSortedReviewsOfDate,
+} from "../../store/selectors/offers-selectors";
 import {getAuthorizationStatus} from "../../store/selectors/user-selectors";
 import {AuthorizationStatus} from "../../store/const";
 
@@ -110,7 +116,8 @@ class Room extends PureComponent {
                     <div className="property__host-user user">
                       <div
                         className={`property__avatar-wrapper ${isPro ? `property__avatar-wrapper--pro` : ``} user__avatar-wrapper property__avatar-wrapper user__avatar-wrapper`}>
-                        <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
+                        <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74"
+                             alt="Host avatar"/>
                       </div>
                       <span className="property__user-name">
                         {name}
@@ -167,6 +174,7 @@ const mapStateToProps = (state) => ({
   reviews: getSortedReviewsOfDate(state),
   nearby: getNearbyOffers(state),
   authorizationStatus: getAuthorizationStatus(state),
+  isLoading: getIsLoading(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -184,7 +192,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadNearby(offerId) {
     dispatch(fetchOfferNearby(offerId));
-  }
+  },
 
 });
 

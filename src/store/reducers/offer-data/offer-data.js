@@ -6,7 +6,8 @@ const initialState = {
   activeId: null,
   reviews: [],
   nearby: [],
-  isLoading: false
+  isLoading: false,
+  isSending: false,
 };
 
 
@@ -32,6 +33,10 @@ export const offerData = (state = initialState, action) => {
     case ActionType.ACTIVE_ID:
       return extend(state, {
         activeId: action.payload,
+      });
+    case ActionType.IS_SENDING:
+      return extend(state, {
+        isSending: action.payload,
       });
   }
   return state;

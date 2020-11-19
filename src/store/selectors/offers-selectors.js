@@ -9,6 +9,8 @@ export const getReviews = (state) => state.OFFER.reviews;
 export const getOffer = (state) => state.OFFER.offer;
 export const getNearbyOffers = (state) => state.OFFER.nearby;
 export const getActiveId = (state) => state.OFFER.activeId;
+export const getIsLoading = (state) => state.OFFER.isLoading;
+export const getIsSending = (state) => state.OFFER.isSending;
 
 
 export const getFilteredOffersOfCity = createSelector([getOffersOfCity, getFilterValue], (offers, value) => {

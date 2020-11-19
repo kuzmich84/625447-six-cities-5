@@ -5,7 +5,7 @@ const Button = (props) => {
   const {disabled = false, type = `submit`, title} = props;
   return (
     <button className="reviews__submit form__submit button" type={type}
-            disabled={disabled}>{title}
+      disabled={disabled}>{title}
     </button>
   );
 };

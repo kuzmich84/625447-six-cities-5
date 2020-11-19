@@ -9,7 +9,8 @@ export const ActionType = {
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   LOAD_NEAR_BY: `LOAD_NEAR_BY`,
   IS_LOADING: `IS_LOADING`,
-  ACTIVE_ID: `ACTIVE_ID`
+  ACTIVE_ID: `ACTIVE_ID`,
+  IS_SENDING: `IS_SENDING`,
 };
 
 export const changeCity = (city) => ({
@@ -65,4 +66,10 @@ export const isLoading = (bool) => ({
 export const activeId = (id) => ({
   type: ActionType.ACTIVE_ID,
   payload: id,
+});
+
+
+export const isSending = (bool) => ({
+  type: ActionType.IS_SENDING,
+  payload: bool,
 });

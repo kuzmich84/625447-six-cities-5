@@ -1,4 +1,14 @@
-import {activeId, isLoading, loadNearby, loadOffer, loadOffers, loadOffersOfCity, loadReviews, redirectToRoute, requireAuthorization} from "./action";
+import {
+  activeId,
+  isLoading, isSending,
+  loadNearby,
+  loadOffer,
+  loadOffers,
+  loadOffersOfCity,
+  loadReviews,
+  redirectToRoute,
+  requireAuthorization,
+} from "./action";
 import {getOffersUtils} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
 import {APIRoute, AppRoute, AuthorizationStatus, defaultCity} from "./const";
@@ -12,7 +22,8 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {})
+    .catch(() => {
+    })
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
@@ -23,21 +34,32 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 
 export const fetchOffer = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.HOTELS}/${offerId}`)
-    .then(({data}) => dispatch(loadOffer(camelcaseKeys(data, {deep: true}))))
-    .then(()=>dispatch(isLoading(false)))
-    .then(()=>dispatch(activeId(offerId)))
-    .catch(() => {})
+    .then(({data}) => {
+      dispatch(loadOffer(camelcaseKeys(data, {deep: true})));
+    })
+    .then(() => dispatch(isLoading(false)))
+    .then(() => dispatch(activeId(offerId)))
+    .catch(({}) => {
+    })
 );
 
-export const fetchOfferReviews = (offerId)=>(dispatch, _getState, api) =>(
+export const fetchOfferReviews = (offerId) => (dispatch, _getState, api) => (
   api.get(`${AppRoute.COMMENTS}/${offerId}`)
-    .then(({data})=> dispatch(loadReviews((camelcaseKeys(data, {deep: true})))))
-    .catch(() => {})
+    .then(({data}) => dispatch(loadReviews((camelcaseKeys(data, {deep: true})))))
+    .catch(() => {
+    })
 );
 
-export const fetchOfferNearby = (offerId)=>(dispatch, _getState, api) =>(
+export const fetchOfferNearby = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.HOTELS}/${offerId}${AppRoute.NEARBY}`)
-    .then(({data})=> dispatch(loadNearby((camelcaseKeys(data, {deep: true})))))
-    .catch(() => {})
+    .then(({data}) => dispatch(loadNearby((camelcaseKeys(data, {deep: true})))))
+    .catch(() => {
+    })
 );
 
+export const commentPost = (offerId, {comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`${AppRoute.COMMENTS}/${offerId}`, {comment, rating})
+    .then(() => dispatch(isSending(false)))
+    .catch((response) => console.log(response.status))
+
+);
