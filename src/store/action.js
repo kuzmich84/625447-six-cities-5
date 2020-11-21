@@ -10,7 +10,11 @@ export const ActionType = {
   LOAD_NEAR_BY: `LOAD_NEAR_BY`,
   IS_LOADING: `IS_LOADING`,
   ACTIVE_ID: `ACTIVE_ID`,
-  IS_SENDING: `IS_SENDING`,
+  IS_SENDING_REVIEW: `IS_SENDING_REVIEW`,
+  IS_SENDING_OFFER: `IS_SENDING_OFFER`,
+  GET_ERROR_OFFER: `GET_ERROR_OFFER`,
+  SET_ERROR_REVIEWS: `GET_ERROR_REVIEWS`,
+  IS_SEND_REVIEW: `IS_SEND_REVIEW`,
 };
 
 export const changeCity = (city) => ({
@@ -69,7 +73,27 @@ export const activeId = (id) => ({
 });
 
 
-export const isSending = (bool) => ({
-  type: ActionType.IS_SENDING,
+export const isSendingReview = (bool) => ({
+  type: ActionType.IS_SENDING_REVIEW,
+  payload: bool,
+});
+
+export const isSendingOffer = (bool) => ({
+  type: ActionType.IS_SENDING_OFFER,
+  payload: bool,
+});
+
+export const getErrorOffer = (bool) => ({
+  type: ActionType.GET_ERROR_OFFER,
+  payload: bool,
+});
+
+export const setErrorReviews = (bool) => ({
+  type: ActionType.SET_ERROR_REVIEWS,
+  payload: bool,
+});
+
+export const isSendReview = (bool) => ({
+  type: ActionType.IS_SEND_REVIEW,
   payload: bool,
 });

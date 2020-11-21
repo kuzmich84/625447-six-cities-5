@@ -5,12 +5,12 @@ export const getOffers = (state) => state.DATA.offers;
 export const getOffersOfCity = (state) => state.APP.offersOfCity;
 export const getCity = (state) => state.APP.city;
 export const getFilterValue = (state) => state.APP.value;
-export const getReviews = (state) => state.OFFER.reviews;
 export const getOffer = (state) => state.OFFER.offer;
 export const getNearbyOffers = (state) => state.OFFER.nearby;
 export const getActiveId = (state) => state.OFFER.activeId;
 export const getIsLoading = (state) => state.OFFER.isLoading;
 export const getIsSending = (state) => state.OFFER.isSending;
+export const getError = (state) => state.OFFER.error;
 
 
 export const getFilteredOffersOfCity = createSelector([getOffersOfCity, getFilterValue], (offers, value) => {
@@ -24,10 +24,6 @@ export const getFilteredOffersOfCity = createSelector([getOffersOfCity, getFilte
     default:
       return offers;
   }
-});
-
-export const getSortedReviewsOfDate = createSelector(getReviews, (reviews) => {
-  return reviews.slice(Index.start, Index.end).sort((prev, next) => Date.parse(next.date) - Date.parse(prev.date));
 });
 
 

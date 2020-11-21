@@ -2,7 +2,7 @@ import React from "react";
 import propTypes from "prop-types";
 
 const Input = (props) => {
-  const {inputClassName, name, value, type, onChange, htmlFor, labelClassName, title, label, required,  disabled} = props;
+  const {inputClassName, name, value, type, onChange, htmlFor, labelClassName, title, label, required, disabled, checked} = props;
   return (
     <><input
       className={inputClassName}
@@ -13,6 +13,7 @@ const Input = (props) => {
       onChange={onChange}
       required={required}
       disabled={disabled}
+      checked={checked}
     />
       <label htmlFor={htmlFor} className={labelClassName} title={title}>
         {label}
@@ -33,6 +34,7 @@ Input.propTypes = {
   label: propTypes.any,
   required: propTypes.bool,
   disabled: propTypes.bool,
+  checked: propTypes.string,
 };
 
 export default Input;

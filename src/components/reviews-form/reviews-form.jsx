@@ -4,8 +4,9 @@ import Button from "../button/button";
 import {connect} from "react-redux";
 import {commentPost, fetchOfferReviews} from "../../store/api-actions";
 import propTypes from "prop-types";
-import {getActiveId, getIsLoading, getIsSending} from "../../store/selectors/offers-selectors";
-import {isSending as isSendingAction} from "../../store/action";
+import {getActiveId} from "../../store/selectors/offers-selectors";
+import {getErrorReviews, isSendingReview as isSendingAction} from "../../store/action";
+import {getErrorOfReviews, getIsSendingOfReviews, getIsSendReview} from "../../store/selectors/reviews-selectors";
 
 const star = <svg className="form__star-image" width="37" height="33">
   <use xlinkHref="#icon-star"/>
@@ -18,14 +19,14 @@ const defaultState = () => {
     isFormValid: false,
     formControls: {
       rating: {
-        value: null,
+        value: ``,
         valid: false,
         validation: {
           value: 0,
         },
       },
       describe: {
-        value: null,
+        value: ``,
         valid: false,
         validation: {
           minLength: 50,
@@ -33,8 +34,9 @@ const defaultState = () => {
         },
       },
     },
-  }
+  };
 };
+
 
 class ReviewsForm extends PureComponent {
   constructor(props) {
@@ -45,7 +47,6 @@ class ReviewsForm extends PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
   validateControl(value, validation) {
 
     if (!validation) {
@@ -53,16 +54,12 @@ class ReviewsForm extends PureComponent {
     }
 
     let isValid = true;
-
-
     if (validation.minLength) {
       isValid = value.length >= validation.minLength && isValid;
     }
-
     if (validation.maxLength) {
       isValid = value.length <= validation.maxLength && isValid;
     }
-
     if (validation.value) {
       isValid = value > 0 && isValid;
     }
@@ -88,23 +85,27 @@ class ReviewsForm extends PureComponent {
     });
   }
 
-  handleSubmit(event) {
+  sendReview() {
+    const {onSentComment, offerId, error} = this.props;
+    if (!error) {
 
-    const {onSentComment, offerId, setIsSending, isSending} = this.props;
-    event.preventDefault();
-    setIsSending(true);
+      onSentComment(offerId, {
+        comment: this.state.formControls.describe.value,
+        rating: this.state.formControls.rating.value,
+      });
 
-    onSentComment(offerId, {
-      comment: this.state.formControls.describe.value,
-      rating: this.state.formControls.rating.value,
-    });
-
-    if (!isSending) {
-
-      this.setState(
-        defaultState()
-      );
+    } else {
+      console.log(error);
     }
+  }
+
+  clearForm() {
+    return this.setState(defaultState());
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.sendReview();
   }
 
   renderInputs() {
@@ -120,6 +121,7 @@ class ReviewsForm extends PureComponent {
       title={`${title}`}
       label={star}
       disabled={this.props.isSending}
+      checked={this.state.formControls.rating.value}
     />).reverse();
   }
 
@@ -130,9 +132,11 @@ class ReviewsForm extends PureComponent {
         {this.renderInputs()}
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
-                onChange={(event) => this.handleChange(event, `describe`)}
-                placeholder="Tell how was your stay, what you like and what can be improved"
-                disabled={this.props.isSending}/>
+        onChange={(event) => this.handleChange(event, `describe`)}
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={this.props.isSending}
+        value={this.state.formControls.describe.value}
+      />
 
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -150,19 +154,27 @@ ReviewsForm.propTypes = {
   offerId: propTypes.string.isRequired,
   setIsSending: propTypes.func.isRequired,
   isSending: propTypes.bool.isRequired,
+  loadReviews: propTypes.func.isRequired,
+  error: propTypes.any,
+  isSend: propTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offerId: getActiveId(state),
-  isSending: getIsSending(state),
+  isSending: getIsSendingOfReviews(state),
+  error: getErrorOfReviews(state),
+  isSend: getIsSendReview(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSentComment(offerId, comment) {
-    dispatch(commentPost(offerId, comment));
+  onSentComment(offerId, comment, func) {
+    dispatch(commentPost(offerId, comment, func));
   },
   setIsSending(bull) {
     dispatch(isSendingAction(bull));
+  },
+  loadReviews(offerId) {
+    dispatch(fetchOfferReviews(offerId));
   },
 });
 
