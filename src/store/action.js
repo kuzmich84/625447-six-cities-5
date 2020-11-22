@@ -15,6 +15,9 @@ export const ActionType = {
   GET_ERROR_OFFER: `GET_ERROR_OFFER`,
   SET_ERROR_REVIEWS: `GET_ERROR_REVIEWS`,
   IS_SEND_REVIEW: `IS_SEND_REVIEW`,
+  LOAD_EMAIL: `LOAD_EMAIL`,
+  LOAD_AVATAR: `LOAD_AVATAR`,
+
 };
 
 export const changeCity = (city) => ({
@@ -96,4 +99,14 @@ export const setErrorReviews = (bool) => ({
 export const isSendReview = (bool) => ({
   type: ActionType.IS_SEND_REVIEW,
   payload: bool,
+});
+
+export const loadEmail = (email) => ({
+  type: ActionType.LOAD_EMAIL,
+  payload: email,
+});
+
+export const loadAvatar = (image) => ({
+  type: ActionType.LOAD_AVATAR,
+  payload: image,
 });

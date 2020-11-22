@@ -1,6 +1,6 @@
 import {
   activeId, getError, getErrorOffer, getErrorReviews,
-  isLoading, isSendingReview, isSendReview,
+  isLoading, isSendingReview, isSendReview, loadAvatar, loadEmail,
   loadNearby,
   loadOffer,
   loadOffers,
@@ -26,11 +26,21 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     })
 );
 
+export const fetchLogin = () => (dispatch, _getState, api) => {
+  api.get(APIRoute.LOGIN)
+    .then(({data}) => {
+      dispatch(loadEmail(data.email));
+      dispatch(loadAvatar(data.avatar_url));
+    });
+};
+
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(fetchLogin()))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
 );
+
 
 export const fetchOffer = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.HOTELS}/${offerId}`)
@@ -63,6 +73,6 @@ export const commentPost = (offerId, {comment, rating}, func) => (dispatch, _get
   api.post(`${AppRoute.COMMENT}/${offerId}`, {comment, rating})
     .then(() => dispatch(isSendReview(true)))
     .then(() => dispatch(fetchOfferReviews(offerId)))
-    .then(()=>console.log(`false`))
+    .then(() => console.log(`false`))
     .catch(({response}) => dispatch(setErrorReviews(response.status)))
 );

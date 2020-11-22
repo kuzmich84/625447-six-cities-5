@@ -5,7 +5,7 @@ import {AppRoute, AuthorizationStatus} from "../../store/const";
 import propTypes from "prop-types";
 
 const Header = (props) => {
-  const {authorizationStatus} = props;
+  const {authorizationStatus, email, avatar} = props;
 
   return (
     <header className="header">
@@ -23,7 +23,8 @@ const Header = (props) => {
                     ? AppRoute.FAVORITES
                     : AppRoute.LOGIN
                 }>
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
+                  <div className="header__avatar-wrapper user__avatar-wrapper"
+                    style={{backgroundImage: `url(${avatar})`}}>
                   </div>
                   <span className={
                     authorizationStatus === AuthorizationStatus.AUTH
@@ -31,7 +32,7 @@ const Header = (props) => {
                       : `header__login`
                   }>{
                       authorizationStatus === AuthorizationStatus.AUTH
-                        ? `Oliver.conner@gmail.com`
+                        ? email
                         : `Sign in`
                     }</span>
                 </Link>
@@ -46,10 +47,14 @@ const Header = (props) => {
 
 Header.propTypes = {
   authorizationStatus: propTypes.string.isRequired,
+  email: propTypes.string,
+  avatar: propTypes.string,
 };
 
 const mapStateToProps = ({USER}) => ({
   authorizationStatus: USER.authorizationStatus,
+  email: USER.email,
+  avatar: USER.avatar,
 });
 
 
