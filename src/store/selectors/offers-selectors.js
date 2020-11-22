@@ -1,5 +1,5 @@
 import {createSelector} from "reselect";
-import {Index, Filter} from "../const";
+import {Filter} from "../const";
 
 export const getOffers = (state) => state.DATA.offers;
 export const getOffersOfCity = (state) => state.APP.offersOfCity;
@@ -11,6 +11,7 @@ export const getActiveId = (state) => state.OFFER.activeId;
 export const getIsLoading = (state) => state.OFFER.isLoading;
 export const getIsSending = (state) => state.OFFER.isSending;
 export const getError = (state) => state.OFFER.error;
+export const getIsFavorite = (state) => state.OFFER.isFavorite;
 
 
 export const getFilteredOffersOfCity = createSelector([getOffersOfCity, getFilterValue], (offers, value) => {

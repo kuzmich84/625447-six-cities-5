@@ -7,11 +7,11 @@ import Map from "../map/map";
 import {connect} from "react-redux";
 import Header from "../header/header";
 import ListReviews from "../list-reviews/list-reviews";
-import {fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-actions";
+import {favorite, fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-actions";
 import {activeId as activeIdAction, isLoading as isLoadingAction} from "../../store/action";
 import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
 import {
-  getActiveId, getError,
+  getActiveId, getError, getIsFavorite,
   getIsLoading,
   getNearbyOffers,
   getOffer,
@@ -19,6 +19,13 @@ import {
 import {getAuthorizationStatus} from "../../store/selectors/user-selectors";
 import {AuthorizationStatus} from "../../store/const";
 import {getSortedReviewsOfDate} from "../../store/selectors/reviews-selectors";
+import ButtonFavorite from "../button-favorite/button-favorite";
+
+const buttonTitle = (<>
+  <svg className="property__bookmark-icon" width="31" height="33">
+    <use xlinkHref="#icon-bookmark"/>
+  </svg>
+  <span className="visually-hidden">To bookmarks</span></>);
 
 class Room extends PureComponent {
   constructor(props) {
@@ -32,10 +39,11 @@ class Room extends PureComponent {
     this.props.loadOfferServer(offerId);
     this.props.loadReviews(offerId);
     this.props.loadNearby(offerId);
+
   }
 
   renderTemplate() {
-    const {isLoading, activeId, error} = this.props;
+    const {isLoading, activeId, error, isFavorite} = this.props;
     if (!error) {
       if (isLoading) {
         return <p>Загружаю...</p>;
@@ -43,7 +51,7 @@ class Room extends PureComponent {
       } else if (activeId) {
 
         const {reviews, offer, nearby, authorizationStatus} = this.props;
-        const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
+        const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, description, id, city} = offer;
         const {avatarUrl, name, isPro} = host;
 
         const getImages = shuffle(images).slice(0, 6);
@@ -73,14 +81,8 @@ class Room extends PureComponent {
                       <h1 className="property__name">
                         {title}
                       </h1>
-                      <button
-                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`}
-                        type="button">
-                        <svg className="property__bookmark-icon" width="31" height="33">
-                          <use xlinkHref="#icon-bookmark"/>
-                        </svg>
-                        <span className="visually-hidden">To bookmarks</span>
-                      </button>
+                      <ButtonFavorite disabled={false} title={buttonTitle} type={`button`} activeId={activeId} isFavorite={isFavorite}
+                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`}/>
                     </div>
                     <div className="property__rating rating">
                       <div className="property__stars rating__stars">
@@ -182,6 +184,7 @@ const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   isLoading: getIsLoading(state),
   error: getError(state),
+  isFavorite: getIsFavorite(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -199,6 +202,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadNearby(offerId) {
     dispatch(fetchOfferNearby(offerId));
+  },
+  setFavorite(offerId, isFavorite) {
+    dispatch(favorite(offerId, isFavorite));
   },
 
 });

@@ -143,7 +143,7 @@ class ReviewsForm extends PureComponent {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <Button disabled={!this.state.isFormValid || this.props.isSending} title={`Submit`}/>
+        <Button disabled={!this.state.isFormValid || this.props.isSending} title={`Submit`} className={`reviews__submit form__submit button`}/>
       </div>
     </form>);
   }
@@ -151,7 +151,7 @@ class ReviewsForm extends PureComponent {
 
 ReviewsForm.propTypes = {
   onSentComment: propTypes.func.isRequired,
-  offerId: propTypes.string.isRequired,
+  offerId: propTypes.number,
   setIsSending: propTypes.func.isRequired,
   isSending: propTypes.bool.isRequired,
   loadReviews: propTypes.func.isRequired,

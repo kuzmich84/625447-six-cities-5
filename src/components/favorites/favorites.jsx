@@ -7,9 +7,7 @@ import Header from "../header/header";
 
 const Favorites = (props) => {
   const {offers} = props;
-  if (!offers || offers.length === 0) {
-    return null;
-  }
+
   const uniqueCities = [...new Set(offers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
 
   return (

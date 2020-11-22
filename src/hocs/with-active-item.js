@@ -12,7 +12,7 @@ export const withActiveItem = (Component) => {
     }
 
     handleHoverCard(offer, offerId) {
-      this.props.setActiveId(offerId);
+      this.props.setActiveId(parseInt(offerId, 10));
       this.props.loadOfferActive(offer);
     }
 

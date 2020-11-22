@@ -51,7 +51,6 @@ class Map extends PureComponent {
     this.map.setView(new L.LatLng(lat, lng));
     if (offer) {
       L.marker([offer.location.latitude, offer.location.longitude], {icon: iconActive}).addTo(this.map);
-      console.log(offer)
     }
     this.renderMarkers(offers);
 

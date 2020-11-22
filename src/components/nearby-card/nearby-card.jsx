@@ -5,11 +5,11 @@ import {offerPropTypes} from "../../custom-prop-types/custom-prop-types";
 
 
 const NearbyCard = (props) => {
-  const {offer, handleHoverCard} = props;
+  const {offer} = props;
   const {previewImage, price, isFavorite, rating, title, type, id} = offer;
   const link = `${AppRoute.OFFER}/${id}`;
   return (
-    <article className="near-places__card place-card" onMouseOver={() => handleHoverCard(offer, offer.id)}>
+    <article className="near-places__card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <a href={link}>
           <img className="place-card__image" src={previewImage} width="260" height="200"

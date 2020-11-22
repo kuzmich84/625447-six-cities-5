@@ -17,6 +17,8 @@ export const ActionType = {
   IS_SEND_REVIEW: `IS_SEND_REVIEW`,
   LOAD_EMAIL: `LOAD_EMAIL`,
   LOAD_AVATAR: `LOAD_AVATAR`,
+  LOAD_FAVORITE: `LOAD_FAVORITE`,
+  SET_FAVORITE: `SET_FAVORITE`
 
 };
 
@@ -109,4 +111,14 @@ export const loadEmail = (email) => ({
 export const loadAvatar = (image) => ({
   type: ActionType.LOAD_AVATAR,
   payload: image,
+});
+
+export const loadFavorite = (favoritesOffers) => ({
+  type: ActionType.LOAD_FAVORITE,
+  payload: favoritesOffers,
+});
+
+export const setFavorite = (bool) => ({
+  type: ActionType.SET_FAVORITE,
+  payload: bool,
 });

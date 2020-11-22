@@ -24,7 +24,7 @@ const Header = (props) => {
                     : AppRoute.LOGIN
                 }>
                   <div className="header__avatar-wrapper user__avatar-wrapper"
-                    style={{backgroundImage: `url(${avatar})`}}>
+                    style={{backgroundImage: `url(${avatar})`, borderRadius: `50%`}}>
                   </div>
                   <span className={
                     authorizationStatus === AuthorizationStatus.AUTH

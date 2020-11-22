@@ -7,7 +7,7 @@ import {
   loadOffersOfCity,
   loadReviews,
   redirectToRoute,
-  requireAuthorization, setErrorReviews,
+  requireAuthorization, setErrorReviews, setFavorite,
 } from "./action";
 import {getOffersUtils} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
@@ -46,9 +46,11 @@ export const fetchOffer = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.HOTELS}/${offerId}`)
     .then(({data}) => {
       dispatch(loadOffer(camelcaseKeys(data, {deep: true})));
+      dispatch(setFavorite(camelcaseKeys(data).isFavorite));
     })
     .then(() => dispatch(isLoading(false)))
-    .then(() => dispatch(activeId(offerId)))
+    .then(() => dispatch(activeId(parseInt(offerId, 10))))
+
     .catch(({response}) => {
       dispatch(isLoading(false));
       dispatch(getErrorOffer(response.status));
@@ -76,3 +78,18 @@ export const commentPost = (offerId, {comment, rating}, func) => (dispatch, _get
     .then(() => console.log(`false`))
     .catch(({response}) => dispatch(setErrorReviews(response.status)))
 );
+
+export const favorite = (offerId, isFavorite) => (dispatch, _getState, api) => {
+  if (isFavorite) {
+    api.post(`${APIRoute.FAVORITE}/${offerId}/${0}`)
+      .then(() => dispatch(setFavorite(false)))
+      .catch(() => {
+      });
+  } else {
+    api.post(`${APIRoute.FAVORITE}/${offerId}/${1}`)
+      .then(() => dispatch(setFavorite(true)))
+      .catch(() => {
+      });
+  }
+
+};

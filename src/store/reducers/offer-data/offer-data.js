@@ -8,6 +8,8 @@ const initialState = {
   isLoading: false,
   isSending: false,
   error: null,
+  favorites: [],
+  isFavorite: false
 };
 
 
@@ -36,6 +38,14 @@ export const offerData = (state = initialState, action) => {
     case ActionType.GET_ERROR_OFFER:
       return extend(state, {
         error: action.payload,
+      });
+    case ActionType.LOAD_FAVORITE:
+      return extend(state, {
+        favorites: action.payload,
+      });
+    case ActionType.SET_FAVORITE:
+      return extend(state, {
+        isFavorite: action.payload,
       });
   }
   return state;

@@ -2,10 +2,15 @@ import React from "react";
 import propTypes from "prop-types";
 
 const Button = (props) => {
-  const {disabled = false, type = `submit`, title} = props;
+  const {disabled = false, type = `submit`, title, className, onClick} = props;
   return (
-    <button className="reviews__submit form__submit button" type={type}
-      disabled={disabled}>{title}
+    <button
+      className={className}
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {title}
     </button>
   );
 };
@@ -13,7 +18,10 @@ const Button = (props) => {
 Button.propTypes = {
   disabled: propTypes.bool.isRequired,
   type: propTypes.string,
-  title: propTypes.string.isRequired,
+  title: propTypes.any,
+  className: propTypes.string,
+  onClick: propTypes.func,
 };
 
 export default Button;
+
