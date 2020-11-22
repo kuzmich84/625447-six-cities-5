@@ -16,6 +16,7 @@ const iconDefault = new L.Icon({
 
 const iconActive = new L.Icon({
   iconUrl: `img/pin-active.svg`,
+  iconSize: [30, 30],
 });
 
 
@@ -41,13 +42,20 @@ class Map extends PureComponent {
       ],
     });
     this.renderMarkers(offers);
+
   }
 
   componentDidUpdate() {
-    const {offers, geoCenterOfCity} = this.props;
+    const {offers, geoCenterOfCity, offer} = this.props;
     const [lat, lng] = geoCenterOfCity;
     this.map.setView(new L.LatLng(lat, lng));
+    if (offer) {
+      L.marker([offer.location.latitude, offer.location.longitude], {icon: iconActive}).addTo(this.map);
+      console.log(offer)
+    }
     this.renderMarkers(offers);
+
+
   }
 
   handlerHoverMarker(e) {
@@ -57,6 +65,7 @@ class Map extends PureComponent {
   handlerUnHoverMarker(e) {
     e.target.setIcon(iconDefault);
   }
+
 
   renderMarkers(markersData) {
     markersData.map((marker) => {
@@ -73,7 +82,8 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   geoCenterOfCity: propTypes.array,
-  offers: propTypes.array.isRequired
+  offers: propTypes.array.isRequired,
+  offer: propTypes.object,
 };
 
 

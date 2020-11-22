@@ -144,7 +144,7 @@ class Room extends PureComponent {
                   </div>
                 </div>
                 <section className="property__map map">
-                  <Map offers={nearby} geoCenterOfCity={cityGeoCenter[city.name]}/>
+                  <Map offers={nearby} offer={offer} geoCenterOfCity={cityGeoCenter[city.name]}/>
                 </section>
               </section>
               <div className="container">
