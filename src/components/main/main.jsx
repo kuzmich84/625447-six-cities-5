@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import MenuList from "../menu-list/menu-list";
 import Filter from "../filter/filter";
 import {getCity, getOffersOfCity} from "../../store/selectors/offers-selectors";
+import MainEmpty from "../main-empty/main-empty";
 
 
 const Main = (props) => {
@@ -16,9 +17,28 @@ const Main = (props) => {
 
   const {offersOfCity, changeCityAction, city} = props;
 
-  if (!offersOfCity || offersOfCity.length === 0) {
-    return null;
-  }
+
+  const renderMain = () => {
+    if (offersOfCity.length === 0) {
+      return <MainEmpty cityName={city}/>;
+    } else {
+      return (<div className="cities__places-container container">
+        <section className="cities__places places">
+          <h2 className="visually-hidden">Places</h2>
+          <b className="places__found">{offersOfCity.length} places to stay in {toCapitalize(city)}</b>
+          <Filter/>
+          <div className="cities__places-list places__list tabs__content">
+            <ListCards/>
+          </div>
+        </section>
+        <div className="cities__right-section">
+          <section className="cities__map map">
+            <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
+          </section>
+        </div>
+      </div>);
+    }
+  };
 
 
   return (
@@ -30,21 +50,7 @@ const Main = (props) => {
         </section>
       </div>
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{offersOfCity.length} places to stay in {toCapitalize(city)}</b>
-            <Filter/>
-            <div className="cities__places-list places__list tabs__content">
-              <ListCards />
-            </div>
-          </section>
-          <div className="cities__right-section">
-            <section className="cities__map map">
-              <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
-            </section>
-          </div>
-        </div>
+        {renderMain()}
       </div>
     </main>
   );
