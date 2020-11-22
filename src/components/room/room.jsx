@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import {offerPropTypes, reviewsPropTypes} from "../../custom-prop-types/custom-prop-types";
-import {transferRatingToPercent} from "../../utils/utils";
+import {transferRatingToPercent, shuffle} from "../../utils/utils";
 import ReviewsForm from "../reviews-form/reviews-form";
 import {cityGeoCenter} from "../../mocks/constants";
 import Map from "../map/map";
@@ -46,6 +46,8 @@ class Room extends PureComponent {
         const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, isFavorite, description, id, city} = offer;
         const {avatarUrl, name, isPro} = host;
 
+        const getImages = shuffle(images).slice(0, 6);
+
         return (
           <div className="page">
             <Header/>
@@ -53,7 +55,7 @@ class Room extends PureComponent {
               <section className="property">
                 <div className="property__gallery-container container">
                   <div className="property__gallery">
-                    {images.map((image, i) => {
+                    {getImages.map((image, i) => {
                       return (<div className="property__image-wrapper" key={id + i}>
                         <img className="property__image" src={image} alt="Photo studio"/>
                       </div>);

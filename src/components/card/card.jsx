@@ -11,6 +11,7 @@ const Card = (props) => {
   const {title, images, price, type, isPremium, isFavorite, rating} = offer;
   const link = `${AppRoute.OFFER}/${offer.id}`;
 
+
   return (<article className="cities__place-card place-card" onMouseOver={() => handleHoverCard(offer.id)}>
     {isPremium
       ? (<div className="place-card__mark">
