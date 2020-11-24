@@ -1,14 +1,16 @@
 import React from 'react';
 import {offersPropTypes} from "../../custom-prop-types/custom-prop-types";
-import {transferRatingToPercent} from "../../utils/utils";
+import {toCapitalize, transferRatingToPercent} from "../../utils/utils";
 import {connect} from "react-redux";
 import Header from "../header/header";
+import {AppRoute} from "../../store/const";
+import {Link} from "react-router-dom";
+import {changeCity as changeCityAction} from "../../store/action";
 
 
 const Favorites = (props) => {
-  const {offers} = props;
-
-  const uniqueCities = [...new Set(offers.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
+  const {favorites, changeCity} = props;
+  const uniqueCities = [...new Set(favorites.filter((offer) => offer.isFavorite).map((offer) => offer.city.name))];
 
   return (
     <div className="page">
@@ -23,16 +25,18 @@ const Favorites = (props) => {
                 return (<li className="favorites__locations-items" key={city}>
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href={`/city/${city.toLowerCase()}`}>
+                      <Link className="locations__item-link" to={`${AppRoute.CITY}/${city.toLowerCase()}`} onClick={() => {
+                        changeCity(city);
+                      }}>
                         <span>{city}</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {offers.filter((offer) => offer.city.name === city && offer.isFavorite).map((offer) => {
+                    {favorites.filter((offer) => offer.city.name === city && offer.isFavorite).map((offer) => {
                       return (<article key={offer.id} className="favorites__card place-card">
                         <div className="favorites__image-wrapper place-card__image-wrapper">
-                          <a href={`/offer/${offer.id}`}>
+                          <a href={`${AppRoute.OFFER}/${offer.id}`}>
                             <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image"/>
                           </a>
                         </div>
@@ -56,7 +60,7 @@ const Favorites = (props) => {
                             </div>
                           </div>
                           <h2 className="place-card__name">
-                            <a href={`/offer/${offer.id}`}>{offer.title}</a>
+                            <a href={`${AppRoute.OFFER}/${offer.id}`}>{offer.title}</a>
                           </h2>
                           <p className="place-card__type">{offer.type}</p>
                         </div>
@@ -81,10 +85,16 @@ const Favorites = (props) => {
 
 Favorites.propTypes = offersPropTypes;
 
-const mapStateToProps = ({DATA}) => ({
-  offers: DATA.offers
+const mapStateToProps = ({OFFER}) => ({
+  favorites: OFFER.favorites
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(city) {
+    dispatch(changeCityAction(toCapitalize(city)));
+  }
 });
 
 
 export {Favorites};
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

@@ -41,3 +41,11 @@ export const shuffle = (array) => {
   return array;
 };
 
+
+export const getOfferFavoriteStatus = (isFavorite) => {
+  if (isFavorite) {
+    return 0;
+  } else {
+    return 1;
+  }
+};

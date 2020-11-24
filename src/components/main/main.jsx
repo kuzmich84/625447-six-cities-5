@@ -8,7 +8,7 @@ import {changeCity, loadOffersOfCity} from "../../store/action";
 import {connect} from "react-redux";
 import MenuList from "../menu-list/menu-list";
 import Filter from "../filter/filter";
-import {getCity, getOffersOfCity} from "../../store/selectors/offers-selectors";
+import {getOffersOfCity} from "../../store/selectors/offers-selectors";
 import MainEmpty from "../main-empty/main-empty";
 
 
@@ -16,7 +16,6 @@ const Main = (props) => {
 
 
   const {offersOfCity, changeCityAction, city} = props;
-
 
   const renderMain = () => {
     if (offersOfCity.length === 0) {
@@ -63,7 +62,6 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: getCity(state),
   offersOfCity: getOffersOfCity(state),
 });
 

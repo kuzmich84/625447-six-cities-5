@@ -1,6 +1,11 @@
 export const defaultCity = `Paris`;
 export const defaultFilter = `popular`;
 
+export const TypeCard = {
+  CITIES: `cities`,
+  NEAR_BY: `near`,
+};
+
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
@@ -11,7 +16,7 @@ export const AppRoute = {
   ROOT: `/`,
   FAVORITES: `/favorites`,
   OFFER: `/offer`,
-  CITY: `/city/:cityName`,
+  CITY: `/city`,
   COMMENTS: `/comments`,
   NEARBY: `/nearby`,
 };

@@ -2,24 +2,24 @@ import React from "react";
 import {Cities} from "../../mocks/constants";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-import {getOffers} from "../../store/selectors/offers-selectors";
+import {getCity, getOffers} from "../../store/selectors/offers-selectors";
+import {AppRoute} from "../../store/const";
+import {Link} from "react-router-dom";
 
 
 const MenuList = (props) => {
   const {changeCity, city, offers} = props;
-
   return (
     <ul className="locations__list tabs__list">
       {Cities.map((cityItem) => {
         return (<li className="locations__item" key={cityItem}>
-          <a className={`locations__item-link tabs__item ${city === cityItem ? `tabs__item--active` : ``} `} href={`/city/${cityItem.toLowerCase()}`}
-            onClick={(evt) => {
-              evt.preventDefault();
+          <Link className={`locations__item-link tabs__item ${city === cityItem ? `tabs__item--active` : ``} `} to={`${AppRoute.CITY}/${cityItem.toLowerCase()}`}
+            onClick={() => {
               changeCity(cityItem, offers);
             }}
           >
             <span>{cityItem}</span>
-          </a>
+          </Link>
         </li>);
       })}
     </ul>
@@ -34,7 +34,8 @@ MenuList.propTypes = {
 };
 
 const mapStateToProps = (state)=>({
-  offers: getOffers(state)
+  offers: getOffers(state),
+  city: getCity(state),
 });
 
 export {MenuList};

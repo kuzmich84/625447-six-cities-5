@@ -7,7 +7,7 @@ import PageMain from "../page-main/page-main";
 import PrivateRoute from "../private-route/private-route";
 import RouteLoginToMain from "../route-login-to-main/route-login-to-main";
 import browserHistory from "../../browser-history";
-import {AppRoute} from "../../store/const";
+import {AppRoute, defaultCity} from "../../store/const";
 
 const App = () => {
 
@@ -15,9 +15,9 @@ const App = () => {
     <Router history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <PageMain/>
+          <PageMain cityName={defaultCity}/>
         </Route>
-        <Route exact path={AppRoute.CITY} render={({match}) => {
+        <Route exact path={`${AppRoute.CITY}/:cityName`} render={({match}) => {
           const {cityName} = match.params;
           return <PageMain cityName={cityName}/>;
         }}>

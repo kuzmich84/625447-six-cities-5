@@ -1,6 +1,6 @@
 import {
   activeId, getError, getErrorOffer, getErrorReviews,
-  isLoading, isSendingReview, isSendReview, loadAvatar, loadEmail,
+  isLoading, isSendingReview, isSendReview, loadAvatar, loadEmail, loadFavorite,
   loadNearby,
   loadOffer,
   loadOffers,
@@ -9,9 +9,10 @@ import {
   redirectToRoute,
   requireAuthorization, setErrorReviews, setFavorite,
 } from "./action";
-import {getOffersUtils} from "../utils/utils";
+import {getOfferFavoriteStatus, getOffersUtils} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
 import {APIRoute, AppRoute, AuthorizationStatus, defaultCity} from "./const";
+import {getIsFavorite} from "./selectors/offers-selectors";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
@@ -79,17 +80,25 @@ export const commentPost = (offerId, {comment, rating}, func) => (dispatch, _get
     .catch(({response}) => dispatch(setErrorReviews(response.status)))
 );
 
-export const favorite = (offerId, isFavorite) => (dispatch, _getState, api) => {
-  if (isFavorite) {
-    api.post(`${APIRoute.FAVORITE}/${offerId}/${0}`)
-      .then(() => dispatch(setFavorite(false)))
-      .catch(() => {
-      });
-  } else {
-    api.post(`${APIRoute.FAVORITE}/${offerId}/${1}`)
-      .then(() => dispatch(setFavorite(true)))
-      .catch(() => {
-      });
-  }
+const postFavorite = (offer, api) => api.post(`${APIRoute.FAVORITE}/${offer.id}/${getOfferFavoriteStatus(offer.isFavorite)}`);
 
+export const toggleFavoriteRoom = (offer) => (dispatch, _getState, api) => {
+  postFavorite(offer, api)
+    .then(() => dispatch(fetchOffer(offer.id)))
+    .catch(() => {
+    });
 };
+
+export const toggleFavorite = (offer) => (dispatch, _getState, api) => {
+  postFavorite(offer, api)
+    .then(() => dispatch(fetchOffersList()));
+};
+
+export const fetchFavorite = () => (dispatch, _getState, api) => {
+  api.get(`${APIRoute.FAVORITE}`)
+    .then(({data}) => dispatch(loadFavorite((camelcaseKeys(data, {deep: true})))));
+};
+
+export const toggleFavorites = () => (dispatch, _getState, api) => ({
+
+});

@@ -7,7 +7,7 @@ import Map from "../map/map";
 import {connect} from "react-redux";
 import Header from "../header/header";
 import ListReviews from "../list-reviews/list-reviews";
-import {favorite, fetchOffer, fetchOfferNearby, fetchOfferReviews} from "../../store/api-actions";
+import {fetchOffer, fetchOfferNearby, fetchOfferReviews, toggleFavoriteRoom} from "../../store/api-actions";
 import {activeId as activeIdAction, isLoading as isLoadingAction} from "../../store/action";
 import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
 import {
@@ -19,7 +19,7 @@ import {
 import {getAuthorizationStatus} from "../../store/selectors/user-selectors";
 import {AuthorizationStatus} from "../../store/const";
 import {getSortedReviewsOfDate} from "../../store/selectors/reviews-selectors";
-import ButtonFavorite from "../button-favorite/button-favorite";
+import Button from "../button/button";
 
 const buttonTitle = (<>
   <svg className="property__bookmark-icon" width="31" height="33">
@@ -43,15 +43,15 @@ class Room extends PureComponent {
   }
 
   renderTemplate() {
-    const {isLoading, activeId, error, isFavorite} = this.props;
+    const {isLoading, activeId, error} = this.props;
     if (!error) {
       if (isLoading) {
         return <p>Загружаю...</p>;
 
       } else if (activeId) {
 
-        const {reviews, offer, nearby, authorizationStatus} = this.props;
-        const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, description, id, city} = offer;
+        const {reviews, offer, nearby, authorizationStatus, toggleFavorite} = this.props;
+        const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, description, id, city, isFavorite} = offer;
         const {avatarUrl, name, isPro} = host;
 
         const getImages = shuffle(images).slice(0, 6);
@@ -81,8 +81,8 @@ class Room extends PureComponent {
                       <h1 className="property__name">
                         {title}
                       </h1>
-                      <ButtonFavorite disabled={false} title={buttonTitle} type={`button`} activeId={activeId} isFavorite={isFavorite}
-                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`}/>
+                      <Button disabled={false} title={buttonTitle} type={`button`}
+                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`} onClick={()=>toggleFavorite(offer)}/>
                     </div>
                     <div className="property__rating rating">
                       <div className="property__stars rating__stars">
@@ -203,8 +203,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadNearby(offerId) {
     dispatch(fetchOfferNearby(offerId));
   },
-  setFavorite(offerId, isFavorite) {
-    dispatch(favorite(offerId, isFavorite));
+  toggleFavorite(offer) {
+    dispatch(toggleFavoriteRoom(offer));
   },
 
 });

@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import propTypes from "prop-types";
 import {connect} from "react-redux";
-import {favorite} from "../store/api-actions";
+import {toggleFavorite} from "../store/api-actions";
 
 
 export const withSetFavoriteButton = (Component) => {
@@ -12,8 +12,8 @@ export const withSetFavoriteButton = (Component) => {
     }
 
     handleClickButton() {
-      const {setFavorite, activeId, isFavorite} = this.props;
-      setFavorite(activeId, isFavorite);
+      const {setFavorite, offer} = this.props;
+      setFavorite(offer);
     }
 
     render() {
@@ -28,14 +28,12 @@ export const withSetFavoriteButton = (Component) => {
 
   WithSetFavoriteButton.propTypes = {
     setFavorite: propTypes.func.isRequired,
-    activeId: propTypes.number,
-    isFavorite: propTypes.bool,
+    offer: propTypes.object.isRequired,
   };
 
-
   const mapDispatchToProps = (dispatch) => ({
-    setFavorite(offerId, isFavorite) {
-      dispatch(favorite(offerId, isFavorite));
+    setFavorite(offer) {
+      dispatch(toggleFavorite(offer));
     },
   });
   return connect(null, mapDispatchToProps)(WithSetFavoriteButton);

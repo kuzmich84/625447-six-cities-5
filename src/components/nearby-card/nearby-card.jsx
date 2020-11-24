@@ -9,7 +9,7 @@ const NearbyCard = (props) => {
   const {previewImage, price, isFavorite, rating, title, type, id} = offer;
   const link = `${AppRoute.OFFER}/${id}`;
   return (
-    <article className="near-places__card place-card">
+    <article className="near__places-card place-card">
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <a href={link}>
           <img className="place-card__image" src={previewImage} width="260" height="200"

@@ -6,7 +6,7 @@ import {Provider} from "react-redux";
 import rootReducer from "./store/reducers/root-reducer";
 import thunk from "redux-thunk";
 import {createAPI} from "./services/api";
-import {checkAuth, fetchLogin, fetchOffersList} from "./store/api-actions";
+import {checkAuth, fetchFavorite, fetchLogin, fetchOffersList} from "./store/api-actions";
 import {composeWithDevTools} from "redux-devtools-extension";
 import {requireAuthorization} from "./store/action";
 import {AuthorizationStatus} from "./store/const";
@@ -36,5 +36,6 @@ Promise.all([
   store.dispatch(fetchOffersList()),
   store.dispatch(checkAuth()),
   store.dispatch(fetchLogin()),
+  store.dispatch(fetchFavorite())
 ])
   .then(init);
