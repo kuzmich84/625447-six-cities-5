@@ -7,6 +7,7 @@ export const getCity = (state) => state.APP.city;
 export const getFilterValue = (state) => state.APP.value;
 export const getOffer = (state) => state.OFFER.offer;
 export const getNearbyOffers = (state) => state.OFFER.nearby;
+export const getFavoritesOffers = (state) => state.OFFER.favorites;
 export const getActiveId = (state) => state.OFFER.activeId;
 export const getIsLoading = (state) => state.OFFER.isLoading;
 export const getIsSending = (state) => state.OFFER.isSending;

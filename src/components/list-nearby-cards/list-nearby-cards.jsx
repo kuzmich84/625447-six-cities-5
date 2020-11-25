@@ -2,19 +2,21 @@ import React from "react";
 import propTypes from "prop-types";
 import Card from "../card/card";
 import {TypeCard} from "../../store/const";
+import {withActiveItem} from "../../hocs/with-active-item";
 
 
 const ListCardsNearby = (props) => {
-  const {offers} = props;
+  const {nearbyOffers, handleHoverCard} = props;
   return (
     <div className="near-places__list places__list">
-      {offers.map((offer) => <Card typeCard={TypeCard.NEAR_BY} offer={offer} key={offer.id}/>)}
+      {nearbyOffers.map((offer) => <Card typeCard={TypeCard.NEAR_BY} offers={nearbyOffers} offer={offer} key={offer.id} handleHoverCard={handleHoverCard}/>)}
     </div>
   );
 };
 
 ListCardsNearby.propTypes = {
-  offers: propTypes.array.isRequired,
+  nearbyOffers: propTypes.array.isRequired,
+  handleHoverCard: propTypes.func.isRequired,
 };
 
-export default ListCardsNearby;
+export default withActiveItem(ListCardsNearby);

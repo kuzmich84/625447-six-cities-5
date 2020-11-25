@@ -49,3 +49,13 @@ export const getOfferFavoriteStatus = (isFavorite) => {
     return 1;
   }
 };
+
+export const newList = (oldList, newObject) => {
+  return oldList.map((object) => {
+    if (object.id === newObject.id) {
+      return newObject;
+    }
+    return object;
+  });
+};
+

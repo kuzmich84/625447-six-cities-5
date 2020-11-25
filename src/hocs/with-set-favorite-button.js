@@ -12,8 +12,8 @@ export const withSetFavoriteButton = (Component) => {
     }
 
     handleClickButton() {
-      const {setFavorite, offer} = this.props;
-      setFavorite(offer);
+      const {setFavorite, offer, offers} = this.props;
+      setFavorite(offer, offers);
     }
 
     render() {
@@ -28,12 +28,13 @@ export const withSetFavoriteButton = (Component) => {
 
   WithSetFavoriteButton.propTypes = {
     setFavorite: propTypes.func.isRequired,
-    offer: propTypes.object.isRequired,
+    offer: propTypes.object,
+    offers: propTypes.array,
   };
 
   const mapDispatchToProps = (dispatch) => ({
-    setFavorite(offer) {
-      dispatch(toggleFavorite(offer));
+    setFavorite(offer, offers) {
+      dispatch(toggleFavorite(offer, offers));
     },
   });
   return connect(null, mapDispatchToProps)(WithSetFavoriteButton);

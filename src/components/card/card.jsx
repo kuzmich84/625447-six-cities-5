@@ -2,21 +2,32 @@ import React from "react";
 import {offerPropTypes} from "../../custom-prop-types/custom-prop-types";
 import {transferRatingToPercent} from "../../utils/utils";
 import {Link} from "react-router-dom";
-import {AppRoute} from "../../store/const";
+import {AppRoute, TypeCard} from "../../store/const";
 import ButtonFavorite from "../button-favorite/button-favorite";
+import ButtonNearbyFavorite from "../button-nearby-favorite/button-nearby-favorite";
 
 
-const buttonTitle = (<>
+export const buttonTitle = (<>
   <svg className="place-card__bookmark-icon" width="18" height="19">
     <use xlinkHref="#icon-bookmark"/>
   </svg>
   <span className="visually-hidden">In bookmarks</span></>);
 
 const Card = (props) => {
-  const {offer, handleHoverCard, typeCard} = props;
+  const {offer, handleHoverCard, typeCard, offers} = props;
   const {title, price, type, isPremium, rating, isFavorite, previewImage, id} = offer;
   const link = `${AppRoute.OFFER}/${id}`;
 
+  const renderButton = () => {
+    if (typeCard === TypeCard.CITIES) {
+      return <ButtonFavorite
+        className={`place-card__bookmark-button ${isFavorite ? `place-card__bookmark-button--active` : ``} button place-card__bookmark-button button`}
+        type={`button`} title={buttonTitle} offer={offer} offers={offers}/>;
+    } else {
+      return <ButtonNearbyFavorite className={`place-card__bookmark-button ${isFavorite ? `place-card__bookmark-button--active` : ``} button place-card__bookmark-button button`}
+        type={`button`} title={buttonTitle} offer={offer} offers={offers}/>;
+    }
+  };
 
   return (
     <article className={`${typeCard}__place-card place-card`} onMouseOver={() => handleHoverCard(offer, id)}>
@@ -37,9 +48,7 @@ const Card = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <ButtonFavorite
-            className={`place-card__bookmark-button ${isFavorite ? `place-card__bookmark-button--active` : ``} button place-card__bookmark-button button`}
-            type={`button`} title={buttonTitle} offer={offer}/>
+          {renderButton()}
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

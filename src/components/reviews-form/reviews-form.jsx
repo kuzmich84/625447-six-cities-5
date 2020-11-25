@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {commentPost, fetchOfferReviews} from "../../store/api-actions";
 import propTypes from "prop-types";
 import {getActiveId} from "../../store/selectors/offers-selectors";
-import {getErrorReviews, isSendingReview as isSendingAction} from "../../store/action";
+import {isSendingReview as isSendingAction} from "../../store/action";
 import {getErrorOfReviews, getIsSendingOfReviews, getIsSendReview} from "../../store/selectors/reviews-selectors";
 
 const star = <svg className="form__star-image" width="37" height="33">

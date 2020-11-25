@@ -39,7 +39,16 @@ class Room extends PureComponent {
     this.props.loadOfferServer(offerId);
     this.props.loadReviews(offerId);
     this.props.loadNearby(offerId);
+  }
 
+  componentDidUpdate(prevProps) {
+    const {offerId} = this.props;
+    if (offerId !== prevProps.offerId) {
+      this.props.setIsLoading(true);
+      this.props.loadOfferServer(offerId);
+      this.props.loadReviews(offerId);
+      this.props.loadNearby(offerId);
+    }
   }
 
   renderTemplate() {
@@ -82,7 +91,7 @@ class Room extends PureComponent {
                         {title}
                       </h1>
                       <Button disabled={false} title={buttonTitle} type={`button`}
-                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`} onClick={()=>toggleFavorite(offer)}/>
+                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`} onClick={() => toggleFavorite(offer)}/>
                     </div>
                     <div className="property__rating rating">
                       <div className="property__stars rating__stars">
@@ -152,7 +161,7 @@ class Room extends PureComponent {
               <div className="container">
                 <section className="near-places places">
                   <h2 className="near-places__title">Other places in the neighbourhood</h2>
-                  <ListCardsNearby offers={nearby}/>
+                  <ListCardsNearby nearbyOffers={nearby}/>
                 </section>
               </div>
             </main>

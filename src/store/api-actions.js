@@ -1,6 +1,6 @@
 import {
-  activeId, getError, getErrorOffer, getErrorReviews,
-  isLoading, isSendingReview, isSendReview, loadAvatar, loadEmail, loadFavorite,
+  activeId, getErrorOffer,
+  isLoading, isSendReview, loadAvatar, loadEmail, loadFavorite,
   loadNearby,
   loadOffer,
   loadOffers,
@@ -9,10 +9,9 @@ import {
   redirectToRoute,
   requireAuthorization, setErrorReviews, setFavorite,
 } from "./action";
-import {getOfferFavoriteStatus, getOffersUtils} from "../utils/utils";
+import {getOfferFavoriteStatus, getOffersUtils, newList} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
 import {APIRoute, AppRoute, AuthorizationStatus, defaultCity} from "./const";
-import {getIsFavorite} from "./selectors/offers-selectors";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
@@ -72,11 +71,10 @@ export const fetchOfferNearby = (offerId) => (dispatch, _getState, api) => (
     })
 );
 
-export const commentPost = (offerId, {comment, rating}, func) => (dispatch, _getState, api) => (
-  api.post(`${AppRoute.COMMENT}/${offerId}`, {comment, rating})
+export const commentPost = (offerId, {comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`${AppRoute.COMMENTS}/${offerId}`, {comment, rating})
     .then(() => dispatch(isSendReview(true)))
     .then(() => dispatch(fetchOfferReviews(offerId)))
-    .then(() => console.log(`false`))
     .catch(({response}) => dispatch(setErrorReviews(response.status)))
 );
 
@@ -89,16 +87,30 @@ export const toggleFavoriteRoom = (offer) => (dispatch, _getState, api) => {
     });
 };
 
-export const toggleFavorite = (offer) => (dispatch, _getState, api) => {
+
+export const toggleFavorite = (offer, offers) => (dispatch, _getState, api) => {
   postFavorite(offer, api)
-    .then(() => dispatch(fetchOffersList()));
+    .then(({data}) => dispatch(loadOffers(newList(offers, (camelcaseKeys(data, {deep: true}))))))
+    .then(({payload}) => dispatch(loadOffersOfCity(getOffersUtils(payload, offer.city.name))));
 };
+
+export const toggleFavoriteNearby = (offer, offers) => (dispatch, _getState, api) => {
+  postFavorite(offer, api)
+    .then(({data}) => dispatch(loadNearby(newList(offers, (camelcaseKeys(data, {deep: true}))))));
+};
+
 
 export const fetchFavorite = () => (dispatch, _getState, api) => {
   api.get(`${APIRoute.FAVORITE}`)
     .then(({data}) => dispatch(loadFavorite((camelcaseKeys(data, {deep: true})))));
 };
 
-export const toggleFavorites = () => (dispatch, _getState, api) => ({
 
-});
+const deleteObject = (array, object) => array.filter((obj) => obj.id !== object.id);
+
+
+export const toggleFavorites = (offer, favoriteOffers) => (dispatch, _getState, api) => {
+  postFavorite(offer, api)
+    .then(({data}) => dispatch(loadFavorite(deleteObject(favoriteOffers, (camelcaseKeys(data, {deep: true}))))));
+
+};

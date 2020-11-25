@@ -57,6 +57,7 @@ Header.propTypes = {
   avatar: propTypes.string,
   getFavorite: propTypes.func.isRequired,
   changeCity: propTypes.func.isRequired,
+  offers: propTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
