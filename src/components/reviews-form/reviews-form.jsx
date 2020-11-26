@@ -17,6 +17,7 @@ const titles = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
 const defaultState = () => {
   return {
     isFormValid: false,
+    errorMassage: ``,
     formControls: {
       rating: {
         value: ``,
@@ -45,6 +46,19 @@ class ReviewsForm extends PureComponent {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {isSend, error} = this.props;
+    if (isSend !== prevProps.isSend && !error) {
+      this.clearForm();
+    }
+
+    if (error !== prevProps.error) {
+      this.setState({
+        errorMassage: `Your feedback didn't send. Please try again.`,
+      });
+    }
   }
 
   validateControl(value, validation) {
@@ -86,17 +100,12 @@ class ReviewsForm extends PureComponent {
   }
 
   sendReview() {
-    const {onSentComment, offerId, error} = this.props;
-    if (!error) {
+    const {onSentComment, offerId} = this.props;
+    onSentComment(offerId, {
+      comment: this.state.formControls.describe.value,
+      rating: this.state.formControls.rating.value,
+    });
 
-      onSentComment(offerId, {
-        comment: this.state.formControls.describe.value,
-        rating: this.state.formControls.rating.value,
-      });
-
-    } else {
-      console.log(error);
-    }
   }
 
   clearForm() {
@@ -121,7 +130,6 @@ class ReviewsForm extends PureComponent {
       title={`${title}`}
       label={star}
       disabled={this.props.isSending}
-      checked={this.state.formControls.rating.value}
     />).reverse();
   }
 
@@ -143,8 +151,10 @@ class ReviewsForm extends PureComponent {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <Button disabled={!this.state.isFormValid || this.props.isSending} title={`Submit`} className={`reviews__submit form__submit button`}/>
+        <Button disabled={!this.state.isFormValid || this.props.isSending} title={`Submit`}
+          className={`reviews__submit form__submit button`}/>
       </div>
+      <span style={{color: `red`}}>{this.state.errorMassage}</span>
     </form>);
   }
 }
@@ -167,8 +177,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSentComment(offerId, comment, func) {
-    dispatch(commentPost(offerId, comment, func));
+  onSentComment(offerId, comment) {
+    dispatch(commentPost(offerId, comment));
   },
   setIsSending(bull) {
     dispatch(isSendingAction(bull));

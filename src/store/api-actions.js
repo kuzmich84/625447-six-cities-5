@@ -75,6 +75,7 @@ export const commentPost = (offerId, {comment, rating}) => (dispatch, _getState,
   api.post(`${AppRoute.COMMENTS}/${offerId}`, {comment, rating})
     .then(() => dispatch(isSendReview(true)))
     .then(() => dispatch(fetchOfferReviews(offerId)))
+    .then(() => dispatch(isSendReview(false)))
     .catch(({response}) => dispatch(setErrorReviews(response.status)))
 );
 
