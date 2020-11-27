@@ -18,7 +18,7 @@ const Header = (props) => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Link to={`${AppRoute.CITY}/${defaultCity.toLowerCase()}`} className="header__logo-link header__logo-link--active" onClick={() => changeCity(defaultCity, offers)}>
+            <Link to={`${AppRoute.ROOT}`} className="header__logo-link header__logo-link--active" onClick={() => changeCity(defaultCity, offers)}>
               <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41"/></Link>
           </div>
           <nav className="header__nav">

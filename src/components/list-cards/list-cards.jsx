@@ -9,9 +9,16 @@ import {withSetFavoriteButton} from "../../hocs/with-set-favorite-button";
 
 
 const ListCards = (props) => {
-  const {handleHoverCard, filteredOffersOfCity, offers, handleClickButton} = props;
+  const {handleHoverCard, filteredOffersOfCity, offers, handleClickButton, handleHoverOutCard} = props;
   return filteredOffersOfCity.map((offer) => {
-    return <Card offer={offer} key={offer.id} handleClickButton={handleClickButton} handleHoverCard={handleHoverCard} offers={offers} typeCard={TypeCard.CITIES}/>;
+    return <Card
+      offer={offer}
+      key={offer.id}
+      handleClickButton={handleClickButton}
+      handleHoverCard={handleHoverCard} o
+      ffers={offers}
+      typeCard={TypeCard.CITIES}
+      handleHoverOutCard={handleHoverOutCard}/>;
   });
 };
 

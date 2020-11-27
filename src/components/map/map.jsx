@@ -23,8 +23,6 @@ const iconActive = new L.Icon({
 class Map extends PureComponent {
   constructor(props) {
     super(props);
-    this.handlerHoverMarker = this.handlerHoverMarker.bind(this);
-    this.handlerUnHoverMarker = this.handlerUnHoverMarker.bind(this);
   }
 
   componentDidMount() {
@@ -42,33 +40,40 @@ class Map extends PureComponent {
       ],
     });
     this.renderMarkers(offers);
-
   }
 
-  componentDidUpdate() {
-    const {offers, geoCenterOfCity, offer} = this.props;
-    const [lat, lng] = geoCenterOfCity;
-    this.map.setView(new L.LatLng(lat, lng));
-    if (offer) {
+  componentDidUpdate(prevProps) {
+    const {offers, geoCenterOfCity, offer, activeId, hoverOffer} = this.props;
+    const [lat, long] = geoCenterOfCity;
+    this.map.setView(new L.LatLng(lat, long));
+    this.renderMarkers(offers);
+    console.log(`update`)
+
+    // if (Object.keys(offer).length !== 0) {
+    //   L.marker([offer.location.latitude, offer.location.longitude], {icon: iconActive}).addTo(this.map);
+    // }
+    if (offer && offer.id !== prevProps.offer.id && activeId !== prevProps.activeId) {
+      const {location} = offer;
+      const {latitude, longitude} = location;
+      this.map.setView(new L.LatLng(latitude, longitude));
       L.marker([offer.location.latitude, offer.location.longitude], {icon: iconActive}).addTo(this.map);
     }
-    this.renderMarkers(offers);
+    if (Object.keys(hoverOffer).length !== 0 && hoverOffer.id !== prevProps.hoverOffer.id) {
+      const {location} = hoverOffer;
+      const {latitude, longitude} = location;
+      this.map.setView(new L.LatLng(latitude, longitude));
+      L.marker([hoverOffer.location.latitude, hoverOffer.location.longitude], {icon: iconActive}).addTo(this.map);
+    }
 
-
-  }
-
-  handlerHoverMarker(e) {
-    e.target.setIcon(iconActive);
-  }
-
-  handlerUnHoverMarker(e) {
-    e.target.setIcon(iconDefault);
+    if (activeId !== prevProps.activeId && activeId === null) {
+      this.renderMarkers(offers);
+    }
   }
 
 
   renderMarkers(markersData) {
     markersData.map((marker) => {
-      return L.marker([marker.location.latitude, marker.location.longitude], {icon: iconDefault}).addTo(this.map).on(`mouseover`, this.handlerHoverMarker).on(`mouseout`, this.handlerUnHoverMarker);
+      return L.marker([marker.location.latitude, marker.location.longitude], {icon: iconDefault}).addTo(this.map);
     });
   }
 
@@ -83,6 +88,8 @@ Map.propTypes = {
   geoCenterOfCity: propTypes.array,
   offers: propTypes.array.isRequired,
   offer: propTypes.object,
+  hoverOffer: propTypes.object.isRequired,
+  activeId: propTypes.number,
 };
 
 

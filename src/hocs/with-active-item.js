@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import propTypes from "prop-types";
-import {activeId, loadOffer} from "../store/action";
+import {activeId, loadHoverOffer as loadHoverOfferAction} from "../store/action";
 import {connect} from "react-redux";
 
 
@@ -9,11 +9,17 @@ export const withActiveItem = (Component) => {
     constructor(props) {
       super(props);
       this.handleHoverCard = this.handleHoverCard.bind(this);
+      this.handleHoverOutCard = this.handleHoverOutCard.bind(this);
     }
 
     handleHoverCard(offer, offerId) {
       this.props.setActiveId(parseInt(offerId, 10));
-      this.props.loadOfferActive(offer);
+      this.props.loadHoverOffer(offer);
+    }
+
+    handleHoverOutCard() {
+      this.props.setActiveId(null);
+      this.props.loadHoverOffer({});
     }
 
     render() {
@@ -21,19 +27,20 @@ export const withActiveItem = (Component) => {
         {...this.props}
 
         handleHoverCard={this.handleHoverCard}
+        handleHoverOutCard={this.handleHoverOutCard}
       >
       </Component>);
     }
   }
 
   WithActiveItem.propTypes = {
-    loadOfferActive: propTypes.func.isRequired,
     setActiveId: propTypes.func.isRequired,
+    loadHoverOffer: propTypes.func.isRequired,
   };
 
   const mapDispatchToProps = (dispatch) => ({
-    loadOfferActive(offer) {
-      dispatch(loadOffer(offer));
+    loadHoverOffer(offer) {
+      dispatch(loadHoverOfferAction(offer));
     },
     setActiveId(offerId) {
       dispatch(activeId(offerId));

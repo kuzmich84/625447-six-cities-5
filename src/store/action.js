@@ -18,7 +18,8 @@ export const ActionType = {
   LOAD_EMAIL: `LOAD_EMAIL`,
   LOAD_AVATAR: `LOAD_AVATAR`,
   LOAD_FAVORITE: `LOAD_FAVORITE`,
-  SET_FAVORITE: `SET_FAVORITE`
+  SET_FAVORITE: `SET_FAVORITE`,
+  LOAD_HOVER_OFFER: `LOAD_HOVER_OFFER`,
 
 };
 
@@ -121,4 +122,9 @@ export const loadFavorite = (favoritesOffers) => ({
 export const setFavorite = (bool) => ({
   type: ActionType.SET_FAVORITE,
   payload: bool,
+});
+
+export const loadHoverOffer = (offer) => ({
+  type: ActionType.LOAD_HOVER_OFFER,
+  payload: offer,
 });

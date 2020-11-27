@@ -8,10 +8,14 @@ import {connect} from "react-redux";
 import Header from "../header/header";
 import ListReviews from "../list-reviews/list-reviews";
 import {fetchOffer, fetchOfferNearby, fetchOfferReviews, toggleFavoriteRoom} from "../../store/api-actions";
-import {activeId as activeIdAction, isLoading as isLoadingAction} from "../../store/action";
+import {
+  activeId as activeIdAction,
+  isLoading as isLoadingAction,
+  loadHoverOffer as loadHoverOfferAction,
+} from "../../store/action";
 import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
 import {
-  getActiveId, getError, getIsFavorite,
+  getActiveId, getError, getHoverOffer, getIsFavorite,
   getIsLoading,
   getNearbyOffers,
   getOffer,
@@ -34,32 +38,37 @@ class Room extends PureComponent {
   }
 
   componentDidMount() {
-    const {offerId} = this.props;
+    const {match, offer} = this.props;
+    const {params: {offerId}} = match;
     this.props.setIsLoading(true);
     this.props.loadOfferServer(offerId);
     this.props.loadReviews(offerId);
     this.props.loadNearby(offerId);
+    this.props.loadHoverOffer(offer);
   }
 
   componentDidUpdate(prevProps) {
-    const {offerId} = this.props;
-    if (offerId !== prevProps.offerId) {
+    const {match, offer} = this.props;
+    const {params: {offerId}} = match;
+    if (match !== prevProps.match) {
       this.props.setIsLoading(true);
       this.props.loadOfferServer(offerId);
       this.props.loadReviews(offerId);
       this.props.loadNearby(offerId);
+      this.props.loadHoverOffer(offer);
     }
   }
 
   renderTemplate() {
-    const {isLoading, activeId, error} = this.props;
+    const {isLoading, error, match, activeId} = this.props;
+    const {params: {offerId}} = match;
     if (!error) {
       if (isLoading) {
         return <p>Загружаю...</p>;
 
-      } else if (activeId) {
+      } else if (offerId) {
 
-        const {reviews, offer, nearby, authorizationStatus, toggleFavorite} = this.props;
+        const {reviews, offer, nearby, authorizationStatus, toggleFavorite, hoverOffer} = this.props;
         const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, description, id, city, isFavorite} = offer;
         const {avatarUrl, name, isPro} = host;
 
@@ -91,7 +100,8 @@ class Room extends PureComponent {
                         {title}
                       </h1>
                       <Button disabled={false} title={buttonTitle} type={`button`}
-                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`} onClick={() => toggleFavorite(offer)}/>
+                        className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`}
+                        onClick={() => toggleFavorite(offer)}/>
                     </div>
                     <div className="property__rating rating">
                       <div className="property__stars rating__stars">
@@ -155,7 +165,8 @@ class Room extends PureComponent {
                   </div>
                 </div>
                 <section className="property__map map">
-                  <Map offers={nearby} offer={offer} geoCenterOfCity={cityGeoCenter[city.name]}/>
+                  <Map offers={nearby} hoverOffer={hoverOffer} offer={offer} activeId={activeId}
+                    geoCenterOfCity={cityGeoCenter[city.name]}/>
                 </section>
               </section>
               <div className="container">
@@ -194,6 +205,7 @@ const mapStateToProps = (state) => ({
   isLoading: getIsLoading(state),
   error: getError(state),
   isFavorite: getIsFavorite(state),
+  hoverOffer: getHoverOffer(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -215,7 +227,9 @@ const mapDispatchToProps = (dispatch) => ({
   toggleFavorite(offer) {
     dispatch(toggleFavoriteRoom(offer));
   },
-
+  loadHoverOffer(offer) {
+    dispatch(loadHoverOfferAction(offer));
+  },
 });
 
 export {Room};

@@ -8,14 +8,14 @@ import {changeCity, loadOffersOfCity} from "../../store/action";
 import {connect} from "react-redux";
 import MenuList from "../menu-list/menu-list";
 import Filter from "../filter/filter";
-import {getOffersOfCity} from "../../store/selectors/offers-selectors";
+import {getActiveId, getCity, getHoverOffer, getOffer, getOffersOfCity} from "../../store/selectors/offers-selectors";
 import MainEmpty from "../main-empty/main-empty";
 
 
 const Main = (props) => {
 
 
-  const {offersOfCity, changeCityAction, city} = props;
+  const {offersOfCity, changeCityAction, city, offer, hoverOffer, activeId} = props;
 
   const renderMain = () => {
     if (offersOfCity.length === 0) {
@@ -32,7 +32,7 @@ const Main = (props) => {
         </section>
         <div className="cities__right-section">
           <section className="cities__map map">
-            <Map offers={offersOfCity} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
+            <Map offers={offersOfCity} offer={offer} hoverOffer={hoverOffer} activeId={activeId} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
           </section>
         </div>
       </div>);
@@ -59,10 +59,15 @@ Main.propTypes = {
   offersOfCity: propTypes.array.isRequired,
   changeCityAction: propTypes.func.isRequired,
   city: propTypes.string.isRequired,
+  activeId: propTypes.any,
 };
 
 const mapStateToProps = (state) => ({
   offersOfCity: getOffersOfCity(state),
+  offer: getOffer(state),
+  hoverOffer: getHoverOffer(state),
+  city: getCity(state),
+  activeId: getActiveId(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

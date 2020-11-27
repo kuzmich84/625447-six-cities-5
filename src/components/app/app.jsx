@@ -35,10 +35,7 @@ const App = () => {
             return <Favorites/>;
           }}
         />
-        <Route exact path={`${AppRoute.OFFER}/:id`} render={({match}) => {
-          const {id} = match.params;
-          return <Room offerId={id}/>;
-        }}/>
+        <Route exact path={`${AppRoute.OFFER}/:offerId`} component={Room}/>
       </Switch>
     </Router>
   );

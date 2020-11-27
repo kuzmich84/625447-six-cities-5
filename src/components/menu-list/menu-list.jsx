@@ -13,8 +13,10 @@ const MenuList = (props) => {
     <ul className="locations__list tabs__list">
       {Cities.map((cityItem) => {
         return (<li className="locations__item" key={cityItem}>
-          <Link className={`locations__item-link tabs__item ${city === cityItem ? `tabs__item--active` : ``} `} to={`${AppRoute.CITY}/${cityItem.toLowerCase()}`}
-            onClick={() => {
+          <Link className={`locations__item-link tabs__item ${city === cityItem ? `tabs__item--active` : ``} `}
+            to={`${AppRoute.CITY}/${cityItem.toLowerCase()}`}
+            onClick={(e) => {
+              e.preventDefault();
               changeCity(cityItem, offers);
             }}
           >
@@ -30,10 +32,10 @@ const MenuList = (props) => {
 MenuList.propTypes = {
   changeCity: propTypes.func.isRequired,
   city: propTypes.string.isRequired,
-  offers: propTypes.array.isRequired
+  offers: propTypes.array.isRequired,
 };
 
-const mapStateToProps = (state)=>({
+const mapStateToProps = (state) => ({
   offers: getOffers(state),
   city: getCity(state),
 });

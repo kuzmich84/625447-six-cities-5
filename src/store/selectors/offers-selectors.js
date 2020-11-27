@@ -13,7 +13,7 @@ export const getIsLoading = (state) => state.OFFER.isLoading;
 export const getIsSending = (state) => state.OFFER.isSending;
 export const getError = (state) => state.OFFER.error;
 export const getIsFavorite = (state) => state.OFFER.clickFavorite;
-
+export const getHoverOffer = (state) => state.OFFER.hoverOffer;
 
 export const getFilteredOffersOfCity = createSelector([getOffersOfCity, getFilterValue], (offers, value) => {
   switch (value) {

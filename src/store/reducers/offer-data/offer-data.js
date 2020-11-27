@@ -3,6 +3,7 @@ import {ActionType} from "../../action";
 
 const initialState = {
   offer: {},
+  hoverOffer: {},
   activeId: null,
   nearby: [],
   isLoading: false,
@@ -46,6 +47,10 @@ export const offerData = (state = initialState, action) => {
     case ActionType.SET_FAVORITE:
       return extend(state, {
         isFavorite: action.payload,
+      });
+    case ActionType.LOAD_HOVER_OFFER:
+      return extend(state, {
+        hoverOffer: action.payload,
       });
   }
   return state;

@@ -7,7 +7,7 @@ import {
   loadOffersOfCity,
   loadReviews,
   redirectToRoute,
-  requireAuthorization, setErrorReviews, setFavorite,
+  requireAuthorization, setErrorReviews,
 } from "./action";
 import {getOfferFavoriteStatus, getOffersUtils, newList} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
@@ -17,6 +17,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
     .then(({data}) => dispatch(loadOffers(camelcaseKeys(data, {deep: true}))))
     .then(({payload}) => dispatch(loadOffersOfCity(getOffersUtils(payload, defaultCity))))
+    .then(({payload}) => dispatch(loadOffer(camelcaseKeys(payload[0], {deep: true}))))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -46,7 +47,6 @@ export const fetchOffer = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.HOTELS}/${offerId}`)
     .then(({data}) => {
       dispatch(loadOffer(camelcaseKeys(data, {deep: true})));
-      dispatch(setFavorite(camelcaseKeys(data).isFavorite));
     })
     .then(() => dispatch(isLoading(false)))
     .then(() => dispatch(activeId(parseInt(offerId, 10))))

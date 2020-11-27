@@ -14,7 +14,7 @@ export const buttonTitle = (<>
   <span className="visually-hidden">In bookmarks</span></>);
 
 const Card = (props) => {
-  const {offer, handleHoverCard, typeCard, offers} = props;
+  const {offer, handleHoverCard, typeCard, offers, handleHoverOutCard} = props;
   const {title, price, type, isPremium, rating, isFavorite, previewImage, id} = offer;
   const link = `${AppRoute.OFFER}/${id}`;
 
@@ -30,7 +30,7 @@ const Card = (props) => {
   };
 
   return (
-    <article className={`${typeCard}__place-card place-card`} onMouseOver={() => handleHoverCard(offer, id)}>
+    <article className={`${typeCard}__place-card place-card`} onMouseOver={() => handleHoverCard(offer, id)} onMouseOut={()=>handleHoverOutCard()}>
       {isPremium
         ? (<div className="place-card__mark">
           <span>Premium</span>
