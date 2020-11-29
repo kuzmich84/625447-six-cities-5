@@ -34,7 +34,7 @@ Input.propTypes = {
   label: propTypes.any,
   required: propTypes.bool,
   disabled: propTypes.bool,
-  checked: propTypes.string,
+  checked: propTypes.bool.isRequired,
 };
 
 export default Input;
