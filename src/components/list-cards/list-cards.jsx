@@ -15,8 +15,8 @@ const ListCards = (props) => {
       offer={offer}
       key={offer.id}
       handleClickButton={handleClickButton}
-      handleHoverCard={handleHoverCard} o
-      ffers={offers}
+      handleHoverCard={handleHoverCard}
+      offers={offers}
       typeCard={TypeCard.CITIES}
       handleHoverOutCard={handleHoverOutCard}/>;
   });
