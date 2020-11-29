@@ -15,7 +15,7 @@ import MainEmpty from "../main-empty/main-empty";
 const Main = (props) => {
 
 
-  const {offersOfCity, changeCityAction, city, offer, hoverOffer, activeId} = props;
+  const {offersOfCity, changeCityAction, city, hoverOffer, activeId} = props;
 
   const renderMain = () => {
     if (offersOfCity.length === 0) {
@@ -32,7 +32,8 @@ const Main = (props) => {
         </section>
         <div className="cities__right-section">
           <section className="cities__map map">
-            <Map offers={offersOfCity} offer={offer} hoverOffer={hoverOffer} activeId={activeId} geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
+            <Map offers={offersOfCity} offer={{}} hoverOffer={hoverOffer} activeId={activeId}
+              geoCenterOfCity={cityGeoCenter[toCapitalize(city)]}/>
           </section>
         </div>
       </div>);
@@ -60,6 +61,7 @@ Main.propTypes = {
   changeCityAction: propTypes.func.isRequired,
   city: propTypes.string.isRequired,
   activeId: propTypes.any,
+  hoverOffer: propTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

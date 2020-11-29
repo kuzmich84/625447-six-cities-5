@@ -23,6 +23,7 @@ const iconActive = new L.Icon({
 class Map extends PureComponent {
   constructor(props) {
     super(props);
+    this.markers = [];
   }
 
   componentDidMount() {
@@ -46,23 +47,19 @@ class Map extends PureComponent {
     const {offers, geoCenterOfCity, offer, activeId, hoverOffer} = this.props;
     const [lat, long] = geoCenterOfCity;
     this.map.setView(new L.LatLng(lat, long));
+    this.removeMarkers();
     this.renderMarkers(offers);
-    console.log(`update`)
 
-    // if (Object.keys(offer).length !== 0) {
-    //   L.marker([offer.location.latitude, offer.location.longitude], {icon: iconActive}).addTo(this.map);
-    // }
-    if (offer && offer.id !== prevProps.offer.id && activeId !== prevProps.activeId) {
-      const {location} = offer;
-      const {latitude, longitude} = location;
-      this.map.setView(new L.LatLng(latitude, longitude));
-      L.marker([offer.location.latitude, offer.location.longitude], {icon: iconActive}).addTo(this.map);
+
+    if (Object.keys(offer).length !== 0) {
+      this.renderMarker(offer, iconActive);
     }
+
     if (Object.keys(hoverOffer).length !== 0 && hoverOffer.id !== prevProps.hoverOffer.id) {
       const {location} = hoverOffer;
       const {latitude, longitude} = location;
       this.map.setView(new L.LatLng(latitude, longitude));
-      L.marker([hoverOffer.location.latitude, hoverOffer.location.longitude], {icon: iconActive}).addTo(this.map);
+      this.renderMarker(hoverOffer, iconActive);
     }
 
     if (activeId !== prevProps.activeId && activeId === null) {
@@ -70,11 +67,22 @@ class Map extends PureComponent {
     }
   }
 
+  renderMarker(data, iconView) {
+    return L.marker([data.location.latitude, data.location.longitude], {icon: iconView}).addTo(this.map);
+  }
 
   renderMarkers(markersData) {
-    markersData.map((marker) => {
-      return L.marker([marker.location.latitude, marker.location.longitude], {icon: iconDefault}).addTo(this.map);
+    markersData.map((item) => {
+      const marker = this.renderMarker(item, iconDefault);
+      this.markers = [...this.markers, marker];
     });
+  }
+
+  removeMarkers() {
+    this.markers.forEach((marker) => {
+      marker.remove(this.map);
+    });
+    this.markers = [];
   }
 
   render() {
@@ -94,4 +102,3 @@ Map.propTypes = {
 
 
 export default Map;
-
