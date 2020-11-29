@@ -11,7 +11,7 @@ import {fetchOffer, fetchOfferNearby, fetchOfferReviews, toggleFavoriteRoom} fro
 import {
   activeId as activeIdAction,
   isLoading as isLoadingAction,
-  loadHoverOffer as loadHoverOfferAction,
+  loadHoverOffer as loadHoverOfferAction, redirectToRoute,
 } from "../../store/action";
 import ListCardsNearby from "../list-nearby-cards/list-nearby-cards";
 import {
@@ -21,7 +21,7 @@ import {
   getOffer,
 } from "../../store/selectors/offers-selectors";
 import {getAuthorizationStatus} from "../../store/selectors/user-selectors";
-import {AuthorizationStatus} from "../../store/const";
+import {AppRoute, AuthorizationStatus} from "../../store/const";
 import {getSortedReviewsOfDate} from "../../store/selectors/reviews-selectors";
 import Button from "../button/button";
 
@@ -101,7 +101,7 @@ class Room extends PureComponent {
                       </h1>
                       <Button disabled={false} title={buttonTitle} type={`button`}
                         className={`property__bookmark-button ${isFavorite ? `property__bookmark-button--active` : ``}  button`}
-                        onClick={() => toggleFavorite(offer)}/>
+                        onClick={() => toggleFavorite(offer, authorizationStatus)}/>
                     </div>
                     <div className="property__rating rating">
                       <div className="property__stars rating__stars">
@@ -224,8 +224,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadNearby(offerId) {
     dispatch(fetchOfferNearby(offerId));
   },
-  toggleFavorite(offer) {
-    dispatch(toggleFavoriteRoom(offer));
+  toggleFavorite(offer, status) {
+    return status === AuthorizationStatus.AUTH ? dispatch(toggleFavoriteRoom(offer)) : dispatch(redirectToRoute(AppRoute.LOGIN));
   },
   loadHoverOffer(offer) {
     dispatch(loadHoverOfferAction(offer));

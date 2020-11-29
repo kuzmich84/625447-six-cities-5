@@ -17,7 +17,6 @@ export const withSetFavoriteButton = (Component) => {
     handleClickButton() {
       const {setFavorite, offer, offers, authorizationStatus} = this.props;
       setFavorite(offer, offers, authorizationStatus);
-
     }
 
     render() {
