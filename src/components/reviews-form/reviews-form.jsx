@@ -8,6 +8,7 @@ import {getActiveId} from "../../store/selectors/offers-selectors";
 import {isSendingReview as isSendingAction} from "../../store/action";
 import {getErrorOfReviews, getIsSendingOfReviews, getIsSendReview} from "../../store/selectors/reviews-selectors";
 
+
 const star = <svg className="form__star-image" width="37" height="33">
   <use xlinkHref="#icon-star"/>
 </svg>;
@@ -17,7 +18,6 @@ const titles = [`terribly`, `badly`, `not bad`, `good`, `perfect`];
 const defaultState = () => {
   return {
     isFormValid: false,
-    errorMassage: ``,
     formControls: {
       rating: {
         value: ``,
@@ -52,12 +52,6 @@ class ReviewsForm extends PureComponent {
     const {isSend, error} = this.props;
     if (isSend !== prevProps.isSend && !error) {
       this.clearForm();
-    }
-
-    if (error !== prevProps.error) {
-      this.setState({
-        errorMassage: `Your feedback didn't send. Please try again.`,
-      });
     }
   }
 
@@ -141,10 +135,10 @@ class ReviewsForm extends PureComponent {
         {this.renderInputs()}
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
-                onChange={(event) => this.handleChange(event, `describe`)}
-                placeholder="Tell how was your stay, what you like and what can be improved"
-                disabled={this.props.isSending}
-                value={this.state.formControls.describe.value}
+        onChange={(event) => this.handleChange(event, `describe`)}
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={this.props.isSending}
+        value={this.state.formControls.describe.value}
       />
 
       <div className="reviews__button-wrapper">
@@ -153,9 +147,8 @@ class ReviewsForm extends PureComponent {
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <Button disabled={!this.state.isFormValid || this.props.isSending} title={`Submit`}
-                className={`reviews__submit form__submit button`}/>
+          className={`reviews__submit form__submit button`}/>
       </div>
-      <span style={{color: `red`}}>{this.state.errorMassage}</span>
     </form>);
   }
 }

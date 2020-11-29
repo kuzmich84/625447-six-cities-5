@@ -78,7 +78,11 @@ export const commentPost = (offerId, {comment, rating}) => (dispatch, _getState,
     .then(() => dispatch(isSendReview(true)))
     .then(() => dispatch(fetchOfferReviews(offerId)))
     .then(() => dispatch(isSendReview(false)))
-    .catch(({response}) => dispatch(setErrorReviews(response.status)))
+    .then(()=>cogoToast.success(`Your review send successfully.`))
+    .catch(({response}) => {
+      dispatch(setErrorReviews(response.status));
+      cogoToast.error(`Your review didn't sent. Please try again.`);
+    })
 );
 
 const postFavorite = (offer, api) => api.post(`${APIRoute.FAVORITE}/${offer.id}/${getOfferFavoriteStatus(offer.isFavorite)}`);
