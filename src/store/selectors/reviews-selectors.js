@@ -3,7 +3,6 @@ import {Index} from "../const";
 
 
 export const getReviews = (state) => state.REVIEWS.reviews;
-export const getIsLoadingOfReviews = (state) => state.REVIEWS.isLoading;
 export const getIsSendingOfReviews = (state) => state.REVIEWS.isSending;
 export const getErrorOfReviews = (state) => state.REVIEWS.error;
 export const getIsSendReview = (state) => state.REVIEWS.isSend;

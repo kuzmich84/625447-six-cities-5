@@ -1,5 +1,5 @@
 export const transferRatingToPercent = (rating) => {
-  return rating * 100 / 5;
+  return Math.round(rating) * 100 / 5;
 };
 
 export const setDateToString = (datestring) => {
@@ -59,3 +59,4 @@ export const newList = (oldList, newObject) => {
   });
 };
 
+export const deleteObject = (array, object) => array.filter((obj) => obj.id !== object.id);

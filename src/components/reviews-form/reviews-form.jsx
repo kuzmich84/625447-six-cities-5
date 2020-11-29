@@ -130,6 +130,7 @@ class ReviewsForm extends PureComponent {
       title={`${title}`}
       label={star}
       disabled={this.props.isSending}
+      checked={this.state.formControls.rating.value === (index + 1).toString()}
     />).reverse();
   }
 
@@ -140,10 +141,10 @@ class ReviewsForm extends PureComponent {
         {this.renderInputs()}
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
-        onChange={(event) => this.handleChange(event, `describe`)}
-        placeholder="Tell how was your stay, what you like and what can be improved"
-        disabled={this.props.isSending}
-        value={this.state.formControls.describe.value}
+                onChange={(event) => this.handleChange(event, `describe`)}
+                placeholder="Tell how was your stay, what you like and what can be improved"
+                disabled={this.props.isSending}
+                value={this.state.formControls.describe.value}
       />
 
       <div className="reviews__button-wrapper">
@@ -152,7 +153,7 @@ class ReviewsForm extends PureComponent {
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <Button disabled={!this.state.isFormValid || this.props.isSending} title={`Submit`}
-          className={`reviews__submit form__submit button`}/>
+                className={`reviews__submit form__submit button`}/>
       </div>
       <span style={{color: `red`}}>{this.state.errorMassage}</span>
     </form>);

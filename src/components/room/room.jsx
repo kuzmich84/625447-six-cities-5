@@ -22,7 +22,7 @@ import {
 } from "../../store/selectors/offers-selectors";
 import {getAuthorizationStatus} from "../../store/selectors/user-selectors";
 import {AppRoute, AuthorizationStatus} from "../../store/const";
-import {getSortedReviewsOfDate} from "../../store/selectors/reviews-selectors";
+import {getReviews, getSortedReviewsOfDate} from "../../store/selectors/reviews-selectors";
 import Button from "../button/button";
 
 const buttonTitle = (<>
@@ -64,11 +64,11 @@ class Room extends PureComponent {
     const {params: {offerId}} = match;
     if (!error) {
       if (isLoading) {
-        return <p>Загружаю...</p>;
+        return <p>Loading...</p>;
 
       } else if (offerId) {
 
-        const {reviews, offer, nearby, authorizationStatus, toggleFavorite, hoverOffer} = this.props;
+        const {reviews, offer, nearby, authorizationStatus, toggleFavorite, hoverOffer, allReviews} = this.props;
         const {title, images, isPremium, rating, type, bedrooms, adults, price, goods, host, description, id, city, isFavorite} = offer;
         const {avatarUrl, name, isPro} = host;
 
@@ -155,7 +155,7 @@ class Room extends PureComponent {
                     </div>
                     <section className="property__reviews reviews">
                       <h2 className="reviews__title">Reviews &middot; <span
-                        className="reviews__amount">{reviews.length}</span></h2>
+                        className="reviews__amount">{allReviews.length}</span></h2>
                       <ListReviews reviews={reviews}/>
                       {authorizationStatus === AuthorizationStatus.AUTH
                         ? <ReviewsForm/>
@@ -179,10 +179,10 @@ class Room extends PureComponent {
           </div>
         );
       } else {
-        return <p>Загружаю...</p>;
+        return <p>Loading...</p>;
       }
     } else {
-      return <p>Страница не найдена</p>;
+      return <p>Page no found</p>;
     }
   }
 
@@ -206,6 +206,7 @@ const mapStateToProps = (state) => ({
   error: getError(state),
   isFavorite: getIsFavorite(state),
   hoverOffer: getHoverOffer(state),
+  allReviews: getReviews(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

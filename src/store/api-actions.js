@@ -9,7 +9,7 @@ import {
   redirectToRoute,
   requireAuthorization, setErrorReviews,
 } from "./action";
-import {getOfferFavoriteStatus, getOffersUtils, newList} from "../utils/utils";
+import {deleteObject, getOfferFavoriteStatus, getOffersUtils, newList} from "../utils/utils";
 import camelcaseKeys from "camelcase-keys";
 import {APIRoute, AppRoute, AuthorizationStatus, defaultCity} from "./const";
 
@@ -18,6 +18,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(loadOffers(camelcaseKeys(data, {deep: true}))))
     .then(({payload}) => dispatch(loadOffersOfCity(getOffersUtils(payload, defaultCity))))
     .then(({payload}) => dispatch(loadOffer(camelcaseKeys(payload[0], {deep: true}))))
+    .catch(({error})=> alert(`${error}`))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -105,10 +106,6 @@ export const fetchFavorite = () => (dispatch, _getState, api) => {
   api.get(`${APIRoute.FAVORITE}`)
     .then(({data}) => dispatch(loadFavorite((camelcaseKeys(data, {deep: true})))));
 };
-
-
-const deleteObject = (array, object) => array.filter((obj) => obj.id !== object.id);
-
 
 export const toggleFavorites = (offer, favoriteOffers) => (dispatch, _getState, api) => {
   postFavorite(offer, api)
